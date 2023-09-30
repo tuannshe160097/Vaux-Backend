@@ -10,6 +10,10 @@ namespace Vaux.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string? City { get; set; }
+        public string? District { get; set; }
+        public string? Street { get; set; }
+        public string? HouseNumber { get; set; }
         public string Phone { get; set; }
         public string? Email { get; set; }
         public string? CitizenId { get; set; }
@@ -27,6 +31,5 @@ namespace Vaux.Models
         public Image? CitizenIdImageRef { get; set; }
 
         public virtual ICollection<Notification>? Notifications { get; set; }
-        public virtual ICollection<Payment>? Payments { get; set; }
     }
 }

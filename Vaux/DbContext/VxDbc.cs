@@ -37,6 +37,10 @@
                 .HasMany(e => e.Images)
                 .WithMany(e => e.ItemApplications);
 
+            modelBuilder.Entity<Item>()
+                .HasMany(e => e.AuctionSessions)
+                .WithMany(e => e.Items);
+
             modelBuilder.Entity<Role>().HasData(
                 new Role()
                 {
@@ -73,6 +77,9 @@
         public DbSet<Category> Categories { get; set; }
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Payment> Payment { get; set; }
+        public DbSet<AuctionSession> AuctionSessions { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Shipment> Shipments { get; set; }
+        public DbSet<SellerPayment> SellerPayments { get; set;}
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Vaux.Models
 {
@@ -6,6 +7,8 @@ namespace Vaux.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Status { get; set; }
+        public int ReservePrice { get; set; } = 0;
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
@@ -31,5 +34,10 @@ namespace Vaux.Models
         public virtual ICollection<Bid>? Bids { get; set; }
 
         public virtual ICollection<Comment>? Comments { get; set; }
+
+        public virtual ICollection<AuctionSession>? AuctionSessions { get; set; }
+
+        public int? OrderId { get; set; }
+        public Order? Order { get; set; }
     }
 }
