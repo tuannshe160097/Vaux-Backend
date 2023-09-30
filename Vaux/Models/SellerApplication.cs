@@ -2,15 +2,13 @@
 
 namespace Vaux.Models
 {
-    public class SellerApplication
+    public class SellerApplication : ModelBase
     {
         public int Id { get; set; }
         public int Status { get; set; }
         public string CitizenId { get; set; }
         public string Content { get; set; }
         public string? StatusChangeReason { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
 
         [ForeignKey(nameof(StatusChangedByRef))]
         public int? StatusChangedBy { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Vaux.Models
 {
-    public class ItemProperty
+    public class ItemProperty : ModelBase
     {
         public int Id { get; set; }
         public string Label { get; set; }

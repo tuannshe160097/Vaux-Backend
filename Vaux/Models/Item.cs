@@ -2,7 +2,7 @@
 
 namespace Vaux.Models
 {
-    public class Item
+    public class Item : ModelBase
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -16,10 +16,6 @@ namespace Vaux.Models
         public string Description { get; set; }
 
         public virtual ICollection<ItemProperty>? ItemProperties { get; set; }
-
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
-        public DateTime Deleted { get; set; }
 
         [ForeignKey(nameof(ThumbnailRef))]
         public int? Thumbnail { get; set; }

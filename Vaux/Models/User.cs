@@ -6,16 +6,13 @@ namespace Vaux.Models
 
     [Index(nameof(Phone), IsUnique = true)]
     [Index(nameof(Email), IsUnique = true)]
-    public class User
+    public class User : ModelBase
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public string? Email { get; set; }
         public string? CitizenId { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
-        public DateTime? Deleted { get; set; }
         public string? DeletedReason { get; set; }
 
         public int RoleId { get; set; }
