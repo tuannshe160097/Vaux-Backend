@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Vaux.DbContext;
+
 namespace Vaux
 {
     public class Program
@@ -12,6 +15,8 @@ namespace Vaux
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<VxDbc>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("VxConnString")));
 
             var app = builder.Build();
 
