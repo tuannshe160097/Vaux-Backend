@@ -8,7 +8,7 @@ namespace Vaux.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Status { get; set; }
-        public int ReservePrice { get; set; } = 0;
+        public int ReservePrice { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
@@ -20,15 +20,15 @@ namespace Vaux.Models
 
         public virtual ICollection<ItemProperty>? ItemProperties { get; set; }
 
-        [ForeignKey(nameof(ThumbnailRef))]
-        public int? Thumbnail { get; set; }
-        public Image? ThumbnailRef { get; set; }
+        [ForeignKey(nameof(Thumbnail))]
+        public int? ThumbnailId { get; set; }
+        public Image? Thumbnail { get; set; }
 
         public virtual ICollection<Image>? Images { get; set;}
 
-        [ForeignKey(nameof(HighestBidRef))]
-        public int? HighestBid { get; set; }
-        public Bid? HighestBidRef { get; set; }
+        [ForeignKey(nameof(HighestBid))]
+        public int? HighestBidId { get; set; }
+        public Bid? HighestBid { get; set; }
 
         [InverseProperty(nameof(Bid.Item))]
         public virtual ICollection<Bid>? Bids { get; set; }
@@ -39,5 +39,10 @@ namespace Vaux.Models
 
         public int? OrderId { get; set; }
         public Order? Order { get; set; }
+
+        public int? ShipmentId { get; set; }
+        public Shipment? Shipment { get; set; }
+
+        public virtual ICollection<StatusChange> StatusChanges { get; set; }
     }
 }

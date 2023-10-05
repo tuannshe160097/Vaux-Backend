@@ -1,4 +1,6 @@
-﻿namespace Vaux.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Vaux.Models
 {
     public class Order : ModelBase
     {
@@ -12,7 +14,7 @@
         public string? Street { get; set; }
         public string? HouseNumber { get; set; }
 
-        public long Amount { get; set; }
+        public long TotalCost { get; set; } = 0;
 
         public virtual ICollection<Item> Items { get; set; }
         public virtual ICollection<Shipment> Shipment { get; set; }

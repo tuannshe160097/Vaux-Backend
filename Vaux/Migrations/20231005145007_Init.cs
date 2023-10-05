@@ -4,14 +4,33 @@ using Vaux.Models;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Vaux.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDb : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AuctionSessions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuctionSessions", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -73,8 +92,8 @@ namespace Vaux.Migrations
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CitizenId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
-                    FaceImage = table.Column<int>(type: "int", nullable: true),
-                    CitizenIdImage = table.Column<int>(type: "int", nullable: true),
+                    PortraitId = table.Column<int>(type: "int", nullable: true),
+                    CitizenIdImageId = table.Column<int>(type: "int", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -83,13 +102,13 @@ namespace Vaux.Migrations
                 {
                     table.PrimaryKey("PK_SuperUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SuperUsers_Images_CitizenIdImage",
-                        column: x => x.CitizenIdImage,
+                        name: "FK_SuperUsers_Images_CitizenIdImageId",
+                        column: x => x.CitizenIdImageId,
                         principalTable: "Images",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SuperUsers_Images_FaceImage",
-                        column: x => x.FaceImage,
+                        name: "FK_SuperUsers_Images_PortraitId",
+                        column: x => x.PortraitId,
                         principalTable: "Images",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -107,13 +126,17 @@ namespace Vaux.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CitizenId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: false),
-                    FaceImage = table.Column<int>(type: "int", nullable: true),
-                    CitizenIdImage = table.Column<int>(type: "int", nullable: true),
+                    PortraitId = table.Column<int>(type: "int", nullable: true),
+                    CitizenIdImageId = table.Column<int>(type: "int", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -122,13 +145,13 @@ namespace Vaux.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Images_CitizenIdImage",
-                        column: x => x.CitizenIdImage,
+                        name: "FK_Users_Images_CitizenIdImageId",
+                        column: x => x.CitizenIdImageId,
                         principalTable: "Images",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Users_Images_FaceImage",
-                        column: x => x.FaceImage,
+                        name: "FK_Users_Images_PortraitId",
+                        column: x => x.PortraitId,
                         principalTable: "Images",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -137,37 +160,6 @@ namespace Vaux.Migrations
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ItemApplications",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StatusChangeReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SellerId = table.Column<int>(type: "int", nullable: true),
-                    StatusChangedBy = table.Column<int>(type: "int", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ItemApplications", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ItemApplications_SuperUsers_StatusChangedBy",
-                        column: x => x.StatusChangedBy,
-                        principalTable: "SuperUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ItemApplications_Users_SellerId",
-                        column: x => x.SellerId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -201,22 +193,26 @@ namespace Vaux.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payment",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<long>(type: "bigint", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Amount = table.Column<long>(type: "bigint", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payment", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payment_Users_UserId",
+                        name: "FK_Orders_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -232,11 +228,9 @@ namespace Vaux.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     CitizenId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StatusChangeReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatusChangedBy = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    FaceImage = table.Column<int>(type: "int", nullable: true),
-                    CitizenIdImage = table.Column<int>(type: "int", nullable: true),
+                    PortraitId = table.Column<int>(type: "int", nullable: true),
+                    CitizenIdImageId = table.Column<int>(type: "int", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -245,19 +239,14 @@ namespace Vaux.Migrations
                 {
                     table.PrimaryKey("PK_SellerApplications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SellerApplications_Images_CitizenIdImage",
-                        column: x => x.CitizenIdImage,
+                        name: "FK_SellerApplications_Images_CitizenIdImageId",
+                        column: x => x.CitizenIdImageId,
                         principalTable: "Images",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SellerApplications_Images_FaceImage",
-                        column: x => x.FaceImage,
+                        name: "FK_SellerApplications_Images_PortraitId",
+                        column: x => x.PortraitId,
                         principalTable: "Images",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SellerApplications_SuperUsers_StatusChangedBy",
-                        column: x => x.StatusChangedBy,
-                        principalTable: "SuperUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SellerApplications_Users_UserId",
@@ -268,25 +257,71 @@ namespace Vaux.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ImageItemApplication",
+                name: "SellerPayments",
                 columns: table => new
                 {
-                    ImagesId = table.Column<int>(type: "int", nullable: false),
-                    ItemApplicationsId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<long>(type: "bigint", nullable: false),
+                    ApprovedById = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImageItemApplication", x => new { x.ImagesId, x.ItemApplicationsId });
+                    table.PrimaryKey("PK_SellerPayments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ImageItemApplication_Images_ImagesId",
-                        column: x => x.ImagesId,
-                        principalTable: "Images",
+                        name: "FK_SellerPayments_SuperUsers_ApprovedById",
+                        column: x => x.ApprovedById,
+                        principalTable: "SuperUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ImageItemApplication_ItemApplications_ItemApplicationsId",
-                        column: x => x.ItemApplicationsId,
-                        principalTable: "ItemApplications",
+                        name: "FK_SellerPayments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shipments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shipments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Shipments_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuctionSessionItem",
+                columns: table => new
+                {
+                    AuctionSessionsId = table.Column<int>(type: "int", nullable: false),
+                    ItemsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuctionSessionItem", x => new { x.AuctionSessionsId, x.ItemsId });
+                    table.ForeignKey(
+                        name: "FK_AuctionSessionItem_AuctionSessions_AuctionSessionsId",
+                        column: x => x.AuctionSessionsId,
+                        principalTable: "AuctionSessions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -322,11 +357,14 @@ namespace Vaux.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    ReservePrice = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     SellerId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Thumbnail = table.Column<int>(type: "int", nullable: true),
-                    HighestBid = table.Column<int>(type: "int", nullable: true),
+                    ThumbnailId = table.Column<int>(type: "int", nullable: true),
+                    HighestBidId = table.Column<int>(type: "int", nullable: true),
+                    OrderId = table.Column<int>(type: "int", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -335,8 +373,8 @@ namespace Vaux.Migrations
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Bids_HighestBid",
-                        column: x => x.HighestBid,
+                        name: "FK_Items_Bids_HighestBidId",
+                        column: x => x.HighestBidId,
                         principalTable: "Bids",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -346,9 +384,14 @@ namespace Vaux.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Items_Images_Thumbnail",
-                        column: x => x.Thumbnail,
+                        name: "FK_Items_Images_ThumbnailId",
+                        column: x => x.ThumbnailId,
                         principalTable: "Images",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Items_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Items_Users_SellerId",
@@ -434,6 +477,60 @@ namespace Vaux.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "StatusChanges",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StatusChangeReason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StatusChangedBy = table.Column<int>(type: "int", nullable: false),
+                    StatusChangedByRefId = table.Column<int>(type: "int", nullable: false),
+                    StatusFrom = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StatusTo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ItemId = table.Column<int>(type: "int", nullable: true),
+                    SellerApplicationId = table.Column<int>(type: "int", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StatusChanges", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StatusChanges_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_StatusChanges_SellerApplications_SellerApplicationId",
+                        column: x => x.SellerApplicationId,
+                        principalTable: "SellerApplications",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_StatusChanges_SuperUsers_StatusChangedByRefId",
+                        column: x => x.StatusChangedByRefId,
+                        principalTable: "SuperUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Deleted", "Title" },
+                values: new object[,]
+                {
+                    { 1, null, "Admin" },
+                    { 2, null, "Expert" },
+                    { 3, null, "Seller" },
+                    { 4, null, "Buyer" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuctionSessionItem_ItemsId",
+                table: "AuctionSessionItem",
+                column: "ItemsId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Bids_ItemId",
                 table: "Bids",
@@ -460,21 +557,6 @@ namespace Vaux.Migrations
                 column: "ItemsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ImageItemApplication_ItemApplicationsId",
-                table: "ImageItemApplication",
-                column: "ItemApplicationsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemApplications_SellerId",
-                table: "ItemApplications",
-                column: "SellerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemApplications_StatusChangedBy",
-                table: "ItemApplications",
-                column: "StatusChangedBy");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ItemProperties_ItemId",
                 table: "ItemProperties",
                 column: "ItemId");
@@ -485,9 +567,14 @@ namespace Vaux.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_HighestBid",
+                name: "IX_Items_HighestBidId",
                 table: "Items",
-                column: "HighestBid");
+                column: "HighestBidId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_OrderId",
+                table: "Items",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_SellerId",
@@ -495,9 +582,9 @@ namespace Vaux.Migrations
                 column: "SellerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_Thumbnail",
+                name: "IX_Items_ThumbnailId",
                 table: "Items",
-                column: "Thumbnail");
+                column: "ThumbnailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_SuperUserId",
@@ -510,24 +597,19 @@ namespace Vaux.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_UserId",
-                table: "Payment",
+                name: "IX_Orders_UserId",
+                table: "Orders",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SellerApplications_CitizenIdImage",
+                name: "IX_SellerApplications_CitizenIdImageId",
                 table: "SellerApplications",
-                column: "CitizenIdImage");
+                column: "CitizenIdImageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SellerApplications_FaceImage",
+                name: "IX_SellerApplications_PortraitId",
                 table: "SellerApplications",
-                column: "FaceImage");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SellerApplications_StatusChangedBy",
-                table: "SellerApplications",
-                column: "StatusChangedBy");
+                column: "PortraitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SellerApplications_UserId",
@@ -535,9 +617,39 @@ namespace Vaux.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SuperUsers_CitizenIdImage",
+                name: "IX_SellerPayments_ApprovedById",
+                table: "SellerPayments",
+                column: "ApprovedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SellerPayments_UserId",
+                table: "SellerPayments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shipments_OrderId",
+                table: "Shipments",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StatusChanges_ItemId",
+                table: "StatusChanges",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StatusChanges_SellerApplicationId",
+                table: "StatusChanges",
+                column: "SellerApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StatusChanges_StatusChangedByRefId",
+                table: "StatusChanges",
+                column: "StatusChangedByRefId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SuperUsers_CitizenIdImageId",
                 table: "SuperUsers",
-                column: "CitizenIdImage");
+                column: "CitizenIdImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SuperUsers_Email",
@@ -546,15 +658,15 @@ namespace Vaux.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SuperUsers_FaceImage",
-                table: "SuperUsers",
-                column: "FaceImage");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SuperUsers_Phone",
                 table: "SuperUsers",
                 column: "Phone",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SuperUsers_PortraitId",
+                table: "SuperUsers",
+                column: "PortraitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SuperUsers_RoleId",
@@ -562,9 +674,9 @@ namespace Vaux.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CitizenIdImage",
+                name: "IX_Users_CitizenIdImageId",
                 table: "Users",
-                column: "CitizenIdImage");
+                column: "CitizenIdImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
@@ -574,20 +686,28 @@ namespace Vaux.Migrations
                 filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_FaceImage",
-                table: "Users",
-                column: "FaceImage");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_Phone",
                 table: "Users",
                 column: "Phone",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_PortraitId",
+                table: "Users",
+                column: "PortraitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
                 table: "Users",
                 column: "RoleId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AuctionSessionItem_Items_ItemsId",
+                table: "AuctionSessionItem",
+                column: "ItemsId",
+                principalTable: "Items",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Bids_Items_ItemId",
@@ -596,19 +716,22 @@ namespace Vaux.Migrations
                 principalTable: "Items",
                 principalColumn: "Id");
 
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("AuctionSessions"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Bids"));
             migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Categories"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Comments"));
             migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Images"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Items"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("ItemProperties"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Notifications"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Orders"));
             migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Roles"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("SellerApplications"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("SellerPayments"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Shipments"));
+            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("StatusChanges"));
             migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("SuperUsers"));
             migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Users"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("ItemApplications"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Notifications"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Payment"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("SellerApplications"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Bids"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Items"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Comments"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("ItemProperties"));
         }
 
         /// <inheritdoc />
@@ -619,13 +742,13 @@ namespace Vaux.Migrations
                 table: "Bids");
 
             migrationBuilder.DropTable(
+                name: "AuctionSessionItem");
+
+            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "ImageItem");
-
-            migrationBuilder.DropTable(
-                name: "ImageItemApplication");
 
             migrationBuilder.DropTable(
                 name: "ItemProperties");
@@ -634,13 +757,19 @@ namespace Vaux.Migrations
                 name: "Notifications");
 
             migrationBuilder.DropTable(
-                name: "Payment");
+                name: "SellerPayments");
+
+            migrationBuilder.DropTable(
+                name: "Shipments");
+
+            migrationBuilder.DropTable(
+                name: "StatusChanges");
+
+            migrationBuilder.DropTable(
+                name: "AuctionSessions");
 
             migrationBuilder.DropTable(
                 name: "SellerApplications");
-
-            migrationBuilder.DropTable(
-                name: "ItemApplications");
 
             migrationBuilder.DropTable(
                 name: "SuperUsers");
@@ -653,6 +782,9 @@ namespace Vaux.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Users");

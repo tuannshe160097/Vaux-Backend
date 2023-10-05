@@ -33,13 +33,17 @@
                 .HasMany(e => e.Images)
                 .WithMany(e => e.Items);
 
-            modelBuilder.Entity<ItemApplication>()
-                .HasMany(e => e.Images)
-                .WithMany(e => e.ItemApplications);
-
             modelBuilder.Entity<Item>()
                 .HasMany(e => e.AuctionSessions)
                 .WithMany(e => e.Items);
+
+            modelBuilder.Entity<Item>()
+                .Property(e => e.ReservePrice)
+                .HasDefaultValue(0);
+
+            modelBuilder.Entity<Order>()
+                .Property(e => e.TotalCost)
+                .HasDefaultValue(0);
 
             modelBuilder.Entity<Role>().HasData(
                 new Role()
@@ -72,7 +76,6 @@
         public DbSet<SellerApplication> SellerApplications { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Item> Items { get; set; }
-        public DbSet<ItemApplication> ItemApplications { get; set; }
         public DbSet<ItemProperty> ItemProperties { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Bid> Bids { get; set; }
@@ -81,5 +84,6 @@
         public DbSet<Order> Orders { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<SellerPayment> SellerPayments { get; set;}
+        public DbSet<StatusChange> StatusChanges { get; set; }
     }
 }

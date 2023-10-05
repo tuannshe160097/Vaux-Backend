@@ -8,10 +8,9 @@ namespace Vaux.Models
         public string Url { get; set; }
         public string? Note { get; set; }
 
-        [InverseProperty(nameof(Item.ThumbnailRef))]
-        public virtual ICollection<Item>? ItemThumbnailRef { get; set; }
+        [InverseProperty(nameof(Item.Thumbnail))]
+        public virtual ICollection<Item>? ItemThumbnails { get; set; }
 
         public virtual ICollection<Item>? Items { get; set; }
-        public virtual ICollection<ItemApplication>? ItemApplications { get; set; }
     }
 }

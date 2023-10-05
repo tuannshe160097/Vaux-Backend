@@ -11,19 +11,20 @@ namespace Vaux.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
+        public string? OtpHash { get; set; }
         public string Email { get; set; }
         public string CitizenId { get; set; }
 
         public int RoleId { get; set; }
         public Role Role { get; set; }
 
-        [ForeignKey(nameof(FaceImageRef))]
-        public int? FaceImage { get; set; }
-        public Image? FaceImageRef { get; set; }
+        [ForeignKey(nameof(Portrait))]
+        public int? PortraitId { get; set; }
+        public Image? Portrait { get; set; }
 
-        [ForeignKey(nameof(CitizenIdImageRef))]
-        public int? CitizenIdImage { get; set; }
-        public Image? CitizenIdImageRef { get; set; }
+        [ForeignKey(nameof(CitizenIdImage))]
+        public int? CitizenIdImageId { get; set; }
+        public Image? CitizenIdImage { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
     }
 }
