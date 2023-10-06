@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vaux.DbContext;
 
@@ -11,9 +12,11 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    partial class VxDbcModelSnapshot : ModelSnapshot
+    [Migration("20231006080617_UpdateBid")]
+    partial class UpdateBid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -563,9 +566,6 @@ namespace Vaux.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Updated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -577,8 +577,6 @@ namespace Vaux.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApprovedById");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("UserId");
 
@@ -985,17 +983,11 @@ namespace Vaux.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Vaux.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
                     b.HasOne("Vaux.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("ApprovedBy");
-
-                    b.Navigation("Order");
 
                     b.Navigation("User");
                 });

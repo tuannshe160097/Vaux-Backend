@@ -26,10 +26,6 @@ namespace Vaux.Models
 
         public virtual ICollection<Image>? Images { get; set;}
 
-        [ForeignKey(nameof(HighestBid))]
-        public int? HighestBidId { get; set; }
-        public Bid? HighestBid { get; set; }
-
         [InverseProperty(nameof(Bid.Item))]
         public virtual ICollection<Bid>? Bids { get; set; }
 

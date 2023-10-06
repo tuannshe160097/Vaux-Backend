@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Vaux.Models;
 
 #nullable disable
 
@@ -48,32 +49,7 @@ namespace Vaux.Migrations
                 principalTable: "Shipments",
                 principalColumn: "Id");
 
-            migrationBuilder.Sql(
-                @"
-                    CREATE TRIGGER [dbo].[TOTALCOST_UPDATE] ON [dbo].[Shipments]
-                        AFTER INSERT
-                    AS
-                    BEGIN
-                        SET NOCOUNT ON;
-
-                        IF ((SELECT TRIGGER_NESTLEVEL()) > 1) RETURN;
-
-                        DECLARE @OrderId INT
-                        DECLARE @ItemCost INT
-                        DECLARE @ShipmentCost INT
-
-                        SELECT 
-                            @OrderId = INSERTED.OrderId,
-                            @ItemCost = INSERTED.ItemCost,
-                            @ShipmentCost = INSERTED.ShipmentCost
-                        FROM INSERTED
-
-                        UPDATE [dbo].[Orders]
-                        SET [TotalCost] = [TotalCost] + @ItemCost + @ShipmentCost
-                        WHERE [Id] = @OrderId
-                    END
-                "
-            );
+            migrationBuilder.Sql(Shipment.OrderTotalCostTriggerSql());
         }
 
         /// <inheritdoc />
@@ -103,6 +79,8 @@ namespace Vaux.Migrations
                 name: "TotalCost",
                 table: "Orders",
                 newName: "Amount");
+
+            migrationBuilder.Sql("DROP TRIGGER [dbo].[TOTALCOST_UPDATE]");
         }
     }
 }

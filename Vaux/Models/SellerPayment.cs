@@ -5,6 +5,9 @@
         public int Id { get; set; }
         public long Amount { get; set; }
 
+        public int? OrderId { get; set; }
+        public Order? Order { get; set; }
+
         public int ApprovedById { get; set; }
         public SuperUser ApprovedBy { get; set; }
 

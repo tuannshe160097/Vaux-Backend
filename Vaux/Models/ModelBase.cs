@@ -11,24 +11,25 @@ namespace Vaux.Models
 
         public static string GenerateUpdateTriggerSql(string tableName)
         {
+            string triggerName = tableName.ToUpper() + "_UPDATE";
             return
                 @$"
-                    CREATE TRIGGER [dbo].[{tableName.ToUpper()}_UPDATE] ON [dbo].[{tableName}]
+                    CREATE TRIGGER [dbo].[{triggerName}] ON [dbo].[{tableName}]
                         AFTER UPDATE
                     AS
                     BEGIN
                         SET NOCOUNT ON;
 
-                        IF ((SELECT TRIGGER_NESTLEVEL()) > 1) RETURN;
+                        IF ((SELECT TRIGGER_NESTLEVEL(OBJECT_ID('dbo_{triggerName}'))) > 1) RETURN;
 
                         DECLARE @Id INT
 
-                        SELECT @Id = INSERTED.Id
-                        FROM INSERTED
+                        SELECT @Id = [Id]
+                        FROM [inserted]
 
                         UPDATE dbo.{tableName}
                         SET Updated = GETDATE()
-                        WHERE Id = @Id
+                        WHERE [Id] = @Id
                     END
                 ";
         }
