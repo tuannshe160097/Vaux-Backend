@@ -20,6 +20,8 @@ namespace Vaux.Models
         public string? CitizenId { get; set; }
         public string? DeletedReason { get; set; }
 
+        public bool IsVerified { get; set; }
+
         public int RoleId { get; set; }
         public Role Role { get; set;}
 

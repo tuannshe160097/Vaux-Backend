@@ -41,8 +41,9 @@
                 .Property(e => e.ReservePrice)
                 .HasDefaultValue(0);
 
-            /*modelBuilder.Entity<Bid>()
-                .ToTable(table => table.HasCheckConstraint("CK_Bids_Amount", "[Amount] > (SELECT ISNULL(MAX(Amount), 0) FROM [dbo].[Bids] WHERE ItemId = @ItemId)"));*/
+            modelBuilder.Entity<User>()
+                .Property(e => e.IsVerified)
+                .HasDefaultValue(0);
 
             modelBuilder.Entity<Order>()
                 .Property(e => e.TotalCost)
