@@ -16,15 +16,15 @@ namespace Vaux.Models
         public string CitizenId { get; set; }
 
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
 
         [ForeignKey(nameof(Portrait))]
         public int? PortraitId { get; set; }
-        public Image? Portrait { get; set; }
+        public virtual Image? Portrait { get; set; }
 
         [ForeignKey(nameof(CitizenIdImage))]
         public int? CitizenIdImageId { get; set; }
-        public Image? CitizenIdImage { get; set; }
+        public virtual Image? CitizenIdImage { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

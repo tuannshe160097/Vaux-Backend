@@ -13,6 +13,11 @@
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Ignore<ModelBase>();
@@ -52,25 +57,49 @@
             modelBuilder.Entity<Role>().HasData(
                 new Role()
                 {
-                    Id = 1,
-                    Title = "Admin"
+                    Id = (int)Models.Enums.Role.ADMIN,
+                    Title = "ADMIN"
                 },
                 new Role()
                 {
-                    Id = 2,
-                    Title = "Expert"
+                    Id = (int)Models.Enums.Role.EXPERT,
+                    Title = "EXPERT"
                 },
                 new Role()
                 {
-                    Id = 3,
-                    Title = "Seller"
+                    Id = (int)Models.Enums.Role.SELLER,
+                    Title = "SELLER"
                 },
                 new Role()
                 {
-                    Id = 4,
-                    Title = "Buyer"
+                    Id = (int)Models.Enums.Role.BUYER,
+                    Title = "BUYER"
                 }
             );
+
+            modelBuilder.Entity<SuperUser>().HasData(new SuperUser()
+            {
+                Id = 1,
+                RoleId = (int)Models.Enums.Role.ADMIN,
+                Name = "Admin",
+                Phone = "0855068490",
+                Email = "tuannshe160097@fpt.edu.vn",
+                CitizenId = "",
+            });
+        }
+
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is ModelBase && (e.State == EntityState.Added || e.State == EntityState.Modified));
+
+            foreach (var entityEntry in entries)
+            {
+                ((ModelBase)entityEntry.Entity).Updated = DateTime.Now;
+            }
+
+            return base.SaveChanges();
         }
 
         public DbSet<User> Users { get; set; }

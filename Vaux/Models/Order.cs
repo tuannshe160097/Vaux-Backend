@@ -7,7 +7,7 @@ namespace Vaux.Models
         public int Id { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public string? City { get; set; }
         public string? District { get; set; }

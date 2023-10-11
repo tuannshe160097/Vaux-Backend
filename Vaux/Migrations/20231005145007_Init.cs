@@ -715,23 +715,6 @@ namespace Vaux.Migrations
                 column: "ItemId",
                 principalTable: "Items",
                 principalColumn: "Id");
-
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("AuctionSessions"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Bids"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Categories"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Comments"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Images"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Items"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("ItemProperties"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Notifications"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Orders"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Roles"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("SellerApplications"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("SellerPayments"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Shipments"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("StatusChanges"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("SuperUsers"));
-            migrationBuilder.Sql(ModelBase.GenerateUpdateTriggerSql("Users"));
         }
 
         /// <inheritdoc />

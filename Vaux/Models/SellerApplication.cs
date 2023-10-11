@@ -10,15 +10,15 @@ namespace Vaux.Models
         public string Content { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         [ForeignKey(nameof(Portrait))]
         public int? PortraitId { get; set; }
-        public Image? Portrait { get; set; }
+        public virtual Image? Portrait { get; set; }
 
         [ForeignKey(nameof(CitizenIdImage))]
         public int? CitizenIdImageId { get; set; }
-        public Image? CitizenIdImage { get; set; }
+        public virtual Image? CitizenIdImage { get; set; }
 
         public virtual ICollection<StatusChange> StatusChanges { get; set; }
     }

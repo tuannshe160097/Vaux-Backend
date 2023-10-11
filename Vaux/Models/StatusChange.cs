@@ -9,15 +9,15 @@ namespace Vaux.Models
 
         [ForeignKey(nameof(StatusChangedBy))]
         public int StatusChangedById { get; set; }
-        public SuperUser StatusChangedBy { get; set; }
+        public virtual SuperUser StatusChangedBy { get; set; }
 
         public string StatusFrom { get; set; }
         public string StatusTo { get; set; }
 
         public int? ItemId { get; set; }
-        public Item? Item { get; set; }
+        public virtual Item? Item { get; set; }
 
         public int? SellerApplicationId { get; set; }
-        public SellerApplication? SellerApplication { get; set; }
+        public virtual SellerApplication? SellerApplication { get; set; }
     }
 }
