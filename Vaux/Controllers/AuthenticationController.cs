@@ -84,7 +84,7 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "BUYER")]
         [Route("/protected")]
         public IActionResult Protected() 
         {

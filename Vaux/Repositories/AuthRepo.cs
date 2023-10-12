@@ -11,12 +11,12 @@ namespace Vaux.Repositories
     public class AuthRepo : IAuthRepo
     {
         private VxDbc _vxDbc;
-        private IConfiguration _configuration;
+        private IConfiguration _config;
 
         public AuthRepo(VxDbc dbc, IConfiguration config) 
         {
             _vxDbc = dbc;
-            _configuration = config;
+            _config = config;
         }
 
         public bool CheckOtp(int id, string otp)
@@ -30,21 +30,24 @@ namespace Vaux.Repositories
         {
             var u = _vxDbc.Users.FirstOrDefault(u => u.Id == id);
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[] {
+            var authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, u.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, u.Phone),
-                new Claim(ClaimTypes.Role, u.Role.Title),
+                new Claim(ClaimTypes.Name, u.Name),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString())
+                new Claim(ClaimTypes.Role, u.Role.Title),
             };
 
+            var key = Encoding.UTF8.GetBytes(_config["JWT:Secret"]);
+
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Issuer"],
-                claims: claims,
-                signingCredentials: credentials);
+                issuer: _config["JWT:Issuer"],
+                audience: _config["JWT:Audience"],
+                expires: DateTime.Now.AddHours(3),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
