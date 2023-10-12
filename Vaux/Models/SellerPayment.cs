@@ -7,12 +7,12 @@
         public int Status { get; set; }
 
         public int? OrderId { get; set; }
-        public Order? Order { get; set; }
+        public virtual Order? Order { get; set; }
 
         public int? ApprovedById { get; set; }
-        public SuperUser? ApprovedBy { get; set; }
+        public virtual SuperUser? ApprovedBy { get; set; }
 
         public int? UserId { get; set; }
-        public User? User { get; set; }
+        public virtual User? User { get; set; }
     }
 }

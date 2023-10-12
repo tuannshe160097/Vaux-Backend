@@ -16,6 +16,7 @@ namespace Vaux.Models
         public string? HouseNumber { get; set; }
         public string Phone { get; set; }
         public string? OtpHash { get; set; }
+        public DateTime? OtpExpiry { get; set; }
         public string? Email { get; set; }
         public string? CitizenId { get; set; }
         public string? DeletedReason { get; set; }
@@ -23,15 +24,15 @@ namespace Vaux.Models
         public bool IsVerified { get; set; }
 
         public int RoleId { get; set; }
-        public Role Role { get; set;}
+        public virtual Role Role { get; set;}
 
         [ForeignKey(nameof(Portrait))]
         public int? PortraitId { get; set; }
-        public Image? Portrait { get; set; }
+        public virtual Image? Portrait { get; set; }
 
         [ForeignKey(nameof(CitizenIdImage))]
         public int? CitizenIdImageId { get; set; }
-        public Image? CitizenIdImage { get; set; }
+        public virtual Image? CitizenIdImage { get; set; }
 
         public virtual ICollection<Notification>? Notifications { get; set; }
     }
