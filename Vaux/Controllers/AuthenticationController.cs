@@ -13,7 +13,7 @@ namespace Vaux.Controllers
         private IAuthRepo _authRepo;
         private IUserRepo _userRepo;
 
-        public AuthenticationController(IAuthRepo authRepo, IUserRepo userRepo) 
+        public AuthenticationController(IAuthRepo authRepo, IUserRepo userRepo)
         {
             _authRepo = authRepo;
             _userRepo = userRepo;
@@ -84,7 +84,7 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "BUYER")]
+        [Authorize]
         [Route("/protected")]
         public IActionResult Protected() 
         {
