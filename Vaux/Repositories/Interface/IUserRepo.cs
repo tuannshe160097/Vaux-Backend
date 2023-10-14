@@ -1,4 +1,5 @@
-﻿using Vaux.Models;
+﻿using Vaux.DTO;
+using Vaux.Models;
 
 namespace Vaux.Repositories.Interface
 {
@@ -9,5 +10,6 @@ namespace Vaux.Repositories.Interface
         public List<User> GetAll();
         public User Create(string name, string phone);
         public void VerifyAccount(int id);
+        public void UpdateProfile(int id, ProfileUpdateDTO profileUpdate);
     }
 }
