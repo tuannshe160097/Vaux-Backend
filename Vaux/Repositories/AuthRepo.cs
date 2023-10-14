@@ -26,7 +26,17 @@ namespace Vaux.Repositories
         {
             var u = _vxDbc.Users.FirstOrDefault(u => u.Id == id);
 
-            return BCrypt.Net.BCrypt.Verify(otp, u.OtpHash);
+            var res = BCrypt.Net.BCrypt.Verify(otp, u.OtpHash);
+
+            if (res)
+            {
+                u.OtpHash = null;
+                u.OtpExpiry = null;
+
+                _vxDbc.SaveChanges();
+            }
+
+            return res;
         }
 
         public string GenerateJWT(int id)
@@ -89,7 +99,17 @@ namespace Vaux.Repositories
         {
             var u = _vxDbc.SuperUsers.FirstOrDefault(u => u.Id == id);
 
-            return BCrypt.Net.BCrypt.Verify(otp, u.OtpHash);
+            var res = BCrypt.Net.BCrypt.Verify(otp, u.OtpHash);
+
+            if (res)
+            {
+                u.OtpHash = null;
+                u.OtpExpiry = null;
+
+                _vxDbc.SaveChanges();
+            }
+
+            return res;
         }
 
         public string GenerateJWTAdmin(int id)

@@ -52,5 +52,9 @@ namespace Vaux.Repositories
             _mapper.Map(profileUpdate, user);
             _vxDbc.SaveChanges();
         }
+        public List<User> GetAll()
+        {
+            return _vxDbc.Users.ToList();
+        }
     }
 }
