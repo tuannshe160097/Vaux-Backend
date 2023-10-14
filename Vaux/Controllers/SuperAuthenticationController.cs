@@ -1,44 +1,31 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Vaux.Models;
+using System.Numerics;
+using Vaux.DTO;
+using Vaux.Repositories;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
 {
-    [Route("api")]
+    [Route("api/Admin/")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class SuperAuthenticationController : ControllerBase
     {
+        private ISuperUserRepo _superUserRepo;
         private IAuthRepo _authRepo;
-        private IUserRepo _userRepo;
 
-        public AuthenticationController(IAuthRepo authRepo, IUserRepo userRepo)
+        public SuperAuthenticationController(IAuthRepo authRepo, ISuperUserRepo superUserRepo)
         {
             _authRepo = authRepo;
-            _userRepo = userRepo;
-        }
-
-        [HttpPost]
-        [Route("Register")]
-        public IActionResult Register(string name, string phone)
-        {
-            if (_userRepo.Get(phone) != null)
-            {
-                return BadRequest("User already exists");
-            }
-
-            User u = _userRepo.Create(name, phone);
-            _authRepo.GenerateAndSendOtp(u.Id);
-
-            return Ok();
+            _superUserRepo = superUserRepo;
         }
 
         [HttpPost]
         [Route("SendOtp")]
         public IActionResult SendOtp(string phone)
         {
-            var u = _userRepo.Get(phone);
+            var u = _superUserRepo.Get(phone);
             if (u == null)
             {
                 return BadRequest("User not found");
@@ -49,7 +36,7 @@ namespace Vaux.Controllers
                 return BadRequest("User banned");
             }
 
-            _authRepo.GenerateAndSendOtp(u.Id);
+            _authRepo.GenerateAndSendOtpAdmin(u.Id);
 
             return Ok();
         }
@@ -58,7 +45,7 @@ namespace Vaux.Controllers
         [Route("VerifyOtp")]
         public IActionResult VerifyOtp(string phone, string otp)
         {
-            var u = _userRepo.Get(phone);
+            var u = _superUserRepo.Get(phone);
 
             if (u == null)
             {
@@ -70,17 +57,26 @@ namespace Vaux.Controllers
                 return BadRequest("OTP has expired");
             }
 
-            if (!_authRepo.CheckOtp(u.Id, otp))
+            if (!_authRepo.CheckOtpAdmin(u.Id, otp))
             {
                 return BadRequest("Wrong OTP");
             }
 
-            if (!u.IsVerified)
+            return Ok(_authRepo.GenerateJWTAdmin(u.Id));
+        }
+
+        [HttpPost]
+        [Route("CreateAdmin")]
+        public IActionResult CreateAdmin(AdminCreateDTO adminDTO)
+        {
+            if (_superUserRepo.Get(adminDTO.Phone) != null)
             {
-                _userRepo.VerifyAccount(u.Id);
+                return BadRequest("User already exists");
             }
 
-            return Ok(_authRepo.GenerateJWT(u.Id));
+            var res = _superUserRepo.CreateAdmin(adminDTO);
+
+            return Ok(res);
         }
     }
 }

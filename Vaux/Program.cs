@@ -6,6 +6,7 @@ using System.Text;
 using Vaux.DbContext;
 using Vaux.Repositories;
 using Vaux.Repositories.Interface;
+using Vaux.ServiceConfiguration;
 
 namespace Vaux
 {
@@ -24,8 +25,8 @@ namespace Vaux
 
             builder.Services.AddDbContext<VxDbc>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("VxConnString")));
 
-            builder.Services.AddScoped<IAuthRepo, AuthRepo>();
-            builder.Services.AddScoped<IUserRepo, UserRepo>();
+            builder.Services.AddRepositories();
+            builder.Services.AddMapperServices();
 
             builder.Services.AddAuthentication(opt =>
             {
@@ -47,6 +48,7 @@ namespace Vaux
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
