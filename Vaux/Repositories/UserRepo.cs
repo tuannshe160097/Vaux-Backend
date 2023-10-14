@@ -40,5 +40,10 @@ namespace Vaux.Repositories
         {
             return _vxDbc.Users.FirstOrDefault(x => x.Id == id);
         }
+
+        public List<User> GetAll()
+        {
+            return _vxDbc.Users.ToList();
+        }
     }
 }
