@@ -1,4 +1,7 @@
-﻿using Vaux.DbContext;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Vaux.DbContext;
+using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
 
@@ -7,10 +10,12 @@ namespace Vaux.Repositories
     public class UserRepo : IUserRepo
     {
         private VxDbc _vxDbc;
+        private IMapper _mapper;
 
-        public UserRepo(VxDbc dbc)
+        public UserRepo(VxDbc dbc, IMapper mapper)
         {
             _vxDbc = dbc;
+            _mapper = mapper;
         }
 
         public void VerifyAccount(int id)
@@ -39,6 +44,13 @@ namespace Vaux.Repositories
         public User? Get(int id)
         {
             return _vxDbc.Users.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void UpdateProfile(int id ,ProfileUpdateDTO profileUpdate)
+        {
+            User user = _vxDbc.Users.FirstOrDefault(x => x.Id == id);
+            _mapper.Map(profileUpdate, user);
+            _vxDbc.SaveChanges();
         }
     }
 }

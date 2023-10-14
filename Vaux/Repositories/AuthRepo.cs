@@ -119,6 +119,7 @@ namespace Vaux.Repositories
             var authClaims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, id),
+                new Claim(ClaimTypes.Name, id),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role, role),
             };

@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
 {
-    [Route("api")]
+    [Route("/api")]
+    [Authorize]
     [ApiController]
     public class ProfileController : ControllerBase
     {
@@ -20,10 +22,10 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        [Route("/profile")]
-        public IActionResult ViewProfile(int id)
+        [Route("profile")]
+        public IActionResult ViewProfile()
         {
-            User u = _userRepo.Get(id);
+            User u = _userRepo.Get(int.Parse(User.Identity.Name));
 
             if (u == null)
             {
@@ -33,18 +35,16 @@ namespace Vaux.Controllers
             return Ok(u);
         }
 
-        [HttpGet]
-        [Route("/profile/update")]
-        public IActionResult UpdateProfile(int id)
+        [HttpPut]
+        [Route("profile")]
+        public IActionResult UpdateProfile(ProfileUpdateDTO profileUpdate)
         {
-            User u = _userRepo.Get(id);
-
-            if (u == null)
+            if (profileUpdate.Name == null)
             {
-                return BadRequest("User does not exist");
+                return BadRequest("Name cannot be null");
             }
-
-            return Ok(u);
+            _userRepo.UpdateProfile(int.Parse(User.Identity.Name), profileUpdate);
+            return Ok();
         }
     }
 }
