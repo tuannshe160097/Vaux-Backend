@@ -18,17 +18,26 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
-        public IActionResult GetAll()
+        [Route("Get")]
+        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
-            return Ok(_userRepo.GetAll());
+            return Ok(_userRepo.GetAll(pageNum, pageSize, search));
         }
 
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public IActionResult Get(int id)
         {
             return Ok(_userRepo.Get(id));
+        }
+
+        [HttpPatch]
+        [Route("ChangeAccess/{id}")]
+        public IActionResult ChangeAccess(int id)
+        {
+            _userRepo.ChangeAccess(id);
+
+            return Ok();
         }
     }
 }
