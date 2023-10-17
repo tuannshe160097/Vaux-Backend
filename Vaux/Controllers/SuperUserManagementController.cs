@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 using Vaux.DTO;
+using Vaux.Repositories;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
@@ -74,6 +75,20 @@ namespace Vaux.Controllers
             _userRepo.ChangeAccess(id);
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("CreateModerator")]
+        public IActionResult CreateMod(SuperUserDTO superUser)
+        {
+            if (_userRepo.Get(superUser.Phone) != null)
+            {
+                return BadRequest("User already exists");
+            }
+
+            var res = _userRepo.CreateModerator(superUser);
+
+            return Ok(res);
         }
     }
 }
