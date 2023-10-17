@@ -53,8 +53,8 @@ namespace Vaux
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
-                    ValidAudience = builder.Configuration["JWT:Issuer"],
-                    ValidIssuer = builder.Configuration["JWT:Audience"],
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
                     ClockSkew = TimeSpan.Zero
                 };
