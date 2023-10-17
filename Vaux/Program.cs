@@ -22,7 +22,9 @@ namespace Vaux
                 options.AddPolicy(name: allowClientOrigin,
                     policy =>
                     {
-                        policy.WithOrigins(builder.Configuration["JWT:Audience"]);
+                        policy.WithOrigins(builder.Configuration["JWT:Audience"])
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
 
