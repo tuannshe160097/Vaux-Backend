@@ -57,8 +57,8 @@
             modelBuilder.Entity<Role>().HasData(
                 new Role()
                 {
-                    Id = (int)Models.Enums.Role.ADMIN,
-                    Title = "ADMIN"
+                    Id = (int)Models.Enums.Role.MODERATOR,
+                    Title = "MOODERATOR"
                 },
                 new Role()
                 {
@@ -74,6 +74,11 @@
                 {
                     Id = (int)Models.Enums.Role.BUYER,
                     Title = "BUYER"
+                },
+                new Role()
+                {
+                    Id = (int)Models.Enums.Role.ADMIN,
+                    Title = "ADMIN"
                 }
             );
 

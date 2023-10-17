@@ -5,8 +5,11 @@ namespace Vaux.Repositories.Interface
 {
     public interface ISuperUserRepo
     {
-        public SuperUser? Get(int id);
-        public SuperUser? Get(string phone);
-        public SuperUser CreateAdmin(AdminCreateDTO user);
+        SuperUser? Get(int id);
+        SuperUser? Get(string phone);
+        SuperUser CreateModerator(SuperUserDTO user);
+        SuperUser Update(int id, SuperUserDTO profile);
+        List<SuperUser> GetAll(int pageNum, int pageSize, string? search = null);
+        void ChangeAccess(int id);
     }
 }

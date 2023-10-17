@@ -74,7 +74,7 @@ namespace Vaux.Controllers
                 return BadRequest("User already exists");
             }
 
-            var res = _superUserRepo.CreateAdmin(adminDTO);
+            var res = _superUserRepo.CreateModerator(adminDTO);
 
             return Ok(res);
         }
