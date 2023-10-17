@@ -43,7 +43,7 @@ namespace Vaux.Repositories
         {
             var u = _vxDbc.Users.FirstOrDefault(u => u.Id == id);
 
-            return new JwtSecurityTokenHandler().WriteToken(BuildJwt(u.Id.ToString(), u.Role.Title));
+            return new JwtSecurityTokenHandler().WriteToken(BuildJwt(u.Id.ToString(), u.Role.Title, DateTime.Now.AddYears(1)));
         }
 
         public void GenerateAndSendOtp(int id)
@@ -116,7 +116,7 @@ namespace Vaux.Repositories
         {
             var u = _vxDbc.SuperUsers.FirstOrDefault(u => u.Id == id);
 
-            return new JwtSecurityTokenHandler().WriteToken(BuildJwt(u.Id.ToString(), u.Role.Title));
+            return new JwtSecurityTokenHandler().WriteToken(BuildJwt(u.Id.ToString(), u.Role.Title, DateTime.Now.AddHours(1)));
         }
 
         public void GenerateAndSendOtpAdmin(int id)
@@ -134,7 +134,7 @@ namespace Vaux.Repositories
             _vxDbc.SaveChanges();
         }
 
-        private JwtSecurityToken BuildJwt(string id, string role)
+        private JwtSecurityToken BuildJwt(string id, string role, DateTime expiry)
         {
             var authClaims = new List<Claim>
             {
@@ -149,7 +149,7 @@ namespace Vaux.Repositories
             var token = new JwtSecurityToken(
                 issuer: _config["JWT:Issuer"],
                 audience: _config["JWT:Audience"],
-                expires: DateTime.Now.AddHours(3),
+                expires: expiry,
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
             );

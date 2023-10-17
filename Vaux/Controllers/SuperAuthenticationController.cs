@@ -64,19 +64,5 @@ namespace Vaux.Controllers
 
             return Ok(_authRepo.GenerateJWTAdmin(u.Id));
         }
-
-        [HttpPost]
-        [Route("CreateAdmin")]
-        public IActionResult CreateAdmin(AdminCreateDTO adminDTO)
-        {
-            if (_superUserRepo.Get(adminDTO.Phone) != null)
-            {
-                return BadRequest("User already exists");
-            }
-
-            var res = _superUserRepo.CreateAdmin(adminDTO);
-
-            return Ok(res);
-        }
     }
 }

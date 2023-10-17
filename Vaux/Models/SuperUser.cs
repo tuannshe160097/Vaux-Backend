@@ -13,6 +13,8 @@ namespace Vaux.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public string CitizenId { get; set; }
+        public string? Gender { get; set; }
+        public DateTime? DoB { get; set; }
 
         public string? OtpHash { get; set; }
         public DateTime? OtpExpiry { get; set; }

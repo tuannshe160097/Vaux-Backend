@@ -55,7 +55,32 @@ namespace Vaux.Repositories
 
         public List<User> GetAll(int pageNum, int pageSize, string? search = null)
         {
-            return _vxDbc.Users.ToList();
+            var res = _vxDbc.Users.AsQueryable();
+
+            if (search != null)
+            {
+                res = res.Where(x => x.Name.Contains(search) || (x.Email != null && x.Email.Contains(search)) || x.Phone.Contains(search));
+            }
+
+            res = res.Skip((pageNum-1) * pageSize).Take(pageSize);
+
+            return res.ToList();
+        }
+
+        public void ChangeAccess(int id)
+        {
+            var u = _vxDbc.Users.FirstOrDefault(x => x.Id == id);
+
+            if (u.Deleted == null)
+            {
+                u.Deleted = DateTime.Now;
+            }
+            else
+            {
+                u.Deleted = null;
+            }
+
+            _vxDbc.SaveChanges();
         }
     }
 }

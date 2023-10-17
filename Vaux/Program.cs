@@ -14,10 +14,21 @@ namespace Vaux
     {
         public static void Main(string[] args)
         {
+            var allowClientOrigin = "AllowClientOrigin";
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: allowClientOrigin,
+                    policy =>
+                    {
+                        policy.WithOrigins(builder.Configuration["JWT:Audience"])
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
 
+            // Add services to the container.
             builder.Services.AddControllers().AddNewtonsoftJson();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -40,10 +51,10 @@ namespace Vaux
                 opt.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
-                    ValidateAudience = false,
+                    ValidateAudience = true,
                     ValidateLifetime = true,
-                    ValidAudience = builder.Configuration["JWT:Issuer"],
-                    ValidIssuer = builder.Configuration["JWT:Audience"],
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
                     ClockSkew = TimeSpan.Zero
                 };
@@ -59,6 +70,8 @@ namespace Vaux
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(allowClientOrigin);
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -15,6 +15,8 @@ namespace Vaux.Models
         public string? Street { get; set; }
         public string? HouseNumber { get; set; }
         public string Phone { get; set; }
+        public string? Gender { get; set; }
+        public DateTime? DoB { get; set; }
         public string? OtpHash { get; set; }
         public DateTime? OtpExpiry { get; set; }
         public string? Email { get; set; }
