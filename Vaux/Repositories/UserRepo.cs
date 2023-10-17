@@ -52,7 +52,7 @@ namespace Vaux.Repositories
             _mapper.Map(profileUpdate, user);
             _vxDbc.SaveChanges();
         }
-        
+
         public List<User> GetAll(int pageNum, int pageSize, string? search = null)
         {
             var res = _vxDbc.Users.AsQueryable();
