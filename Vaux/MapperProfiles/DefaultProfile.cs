@@ -15,6 +15,12 @@ namespace Vaux.MapperProfiles
             CreateMap<SuperUserDTO, SuperUser>()
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());
+
+            CreateMap<CategoryDTO, Category>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Items, opt => opt.Ignore());
+
+            CreateMap<Category, CategoryDTO>();
         }
     }
 }
