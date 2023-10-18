@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vaux.DTO;
@@ -7,24 +8,21 @@ using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
 {
-    [Route("/api")]
+    [Route("/api/Profile")]
     [Authorize]
     [ApiController]
     public class ProfileController : ControllerBase
     {
         private IAuthRepo _authRepo;
         private IUserRepo _userRepo;
-        private ISuperUserRepo _superUserRepo;
 
-        public ProfileController(IAuthRepo authRepo, IUserRepo userRepo, ISuperUserRepo superUserRepo)
+        public ProfileController(IAuthRepo authRepo, IUserRepo userRepo)
         {
             _authRepo = authRepo;
             _userRepo = userRepo;
-            _superUserRepo = superUserRepo;
         }
 
         [HttpGet]
-        [Route("Profile")]
         public IActionResult ViewProfile()
         {
             User u = _userRepo.Get(int.Parse(User.Identity.Name));
@@ -39,27 +37,46 @@ namespace Vaux.Controllers
 
         [HttpPut]
         [Authorize(Roles = "BUYER,SELLER")]
-        [Route("Profile")]
-        public IActionResult UpdateProfile(ProfileUpdateDTO profileUpdate)
+        public IActionResult UpdateProfile(UserMinimalDTO profile)
         {
-            if (profileUpdate.Name == null)
+            var u = _userRepo.Get(int.Parse(User.Identity.Name));
+            if (u == null)
             {
-                return BadRequest("Name cannot be null");
+                return BadRequest("User does not exist");
             }
-            _userRepo.UpdateProfile(int.Parse(User.Identity.Name), profileUpdate);
+            if (u.Phone != profile.Phone && _userRepo.GetByPhone(profile.Phone) != null)
+            {
+                return BadRequest("Phone number already taken");
+            }
+            if (u.Email != profile.Email && _userRepo.GetByEmail(profile.Email) != null)
+            {
+                return BadRequest("Email already taken");
+            }
+
+            _userRepo.Update(u.Id, profile);
             return Ok();
         }
 
         [HttpPut]
-        [Authorize (Roles = "EXPERT,ADMIN,MODERATOR")]
-        [Route("Admin/Profile")]
-        public IActionResult UpdateProfile(SuperUserDTO profileUpdate)
+        [Authorize(Roles = "EXPERT,ADMIN,MODERATOR")]
+        [Route("/api/Mod/Profile")]
+        public IActionResult UpdateProfile(UserStrictDTO profile)
         {
-            if (profileUpdate.Name == null)
+            var u = _userRepo.Get(int.Parse(User.Identity.Name));
+            if (u == null)
             {
-                return BadRequest("Name cannot be null");
+                return BadRequest("User does not exist");
             }
-            _superUserRepo.Update(int.Parse(User.Identity.Name), profileUpdate);
+            if (u.Phone != profile.Phone && _userRepo.GetByPhone(profile.Phone) != null)
+            {
+                return BadRequest("Phone number already taken");
+            }
+            if (u.Email != profile.Email && _userRepo.GetByEmail(profile.Email) != null)
+            {
+                return BadRequest("Email already taken");
+            }
+
+            _userRepo.Update(u.Id, profile);
             return Ok();
         }
     }

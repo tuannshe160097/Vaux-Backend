@@ -1,6 +1,6 @@
 ﻿namespace Vaux.DTO
 {
-    public class SuperUserDTO
+    public class UserStrictDTO
     {
         public string Name { get; set; }
         public string Phone { get; set; }

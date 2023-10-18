@@ -82,14 +82,13 @@
                 }
             );
 
-            modelBuilder.Entity<SuperUser>().HasData(new SuperUser()
+            modelBuilder.Entity<User>().HasData(new User()
             {
                 Id = 1,
                 RoleId = (int)Models.Enums.Role.ADMIN,
                 Name = "Admin",
                 Phone = "0855068490",
-                Email = "tuannshe160097@fpt.edu.vn",
-                CitizenId = "",
+                Email = "tuannshe160097@fpt.edu.vn"
             });
         }
 
@@ -108,7 +107,6 @@
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<SuperUser> SuperUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<SellerApplication> SellerApplications { get; set; }

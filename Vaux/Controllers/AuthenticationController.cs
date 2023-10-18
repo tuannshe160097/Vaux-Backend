@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
 
@@ -21,14 +22,14 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public IActionResult Register(string name, string phone)
+        public IActionResult Register(UserMinimalDTO user)
         {
-            if (_userRepo.Get(phone) != null)
+            if (_userRepo.GetByPhone(user.Phone) != null)
             {
                 return BadRequest("User already exists");
             }
 
-            User u = _userRepo.Create(name, phone);
+            User u = _userRepo.Create(user);
             _authRepo.GenerateAndSendOtp(u.Id);
 
             return Ok();
@@ -38,7 +39,7 @@ namespace Vaux.Controllers
         [Route("SendOtp")]
         public IActionResult SendOtp(string phone)
         {
-            var u = _userRepo.Get(phone);
+            var u = _userRepo.GetByPhone(phone);
             if (u == null)
             {
                 return BadRequest("User not found");
@@ -58,7 +59,7 @@ namespace Vaux.Controllers
         [Route("VerifyOtp")]
         public IActionResult VerifyOtp(string phone, string otp)
         {
-            var u = _userRepo.Get(phone);
+            var u = _userRepo.GetByPhone(phone);
 
             if (u == null)
             {

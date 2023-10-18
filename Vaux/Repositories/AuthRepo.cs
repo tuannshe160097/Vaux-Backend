@@ -42,8 +42,17 @@ namespace Vaux.Repositories
         public string GenerateJWT(int id)
         {
             var u = _vxDbc.Users.FirstOrDefault(u => u.Id == id);
+            var expiry = DateTime.Now;
+            if (u.RoleId == (int)Models.Enums.Role.BUYER || u.RoleId == (int)Models.Enums.Role.SELLER || u.RoleId == (int)Models.Enums.Role.EXPERT)
+            {
+                expiry = expiry.AddYears(1);
+            }
+            else
+            {
+                expiry = expiry.AddMinutes(30);
+            }
 
-            return new JwtSecurityTokenHandler().WriteToken(BuildJwt(u.Id.ToString(), u.Role.Title, DateTime.Now.AddYears(1)));
+            return new JwtSecurityTokenHandler().WriteToken(BuildJwt(u.Id.ToString(), u.Role.Title, expiry));
         }
 
         public void GenerateAndSendOtp(int id)
@@ -88,45 +97,6 @@ namespace Vaux.Repositories
                 string strOutputXml = reader.ReadToEnd();
                 Console.WriteLine(strOutputXml);
             }
-
-            u.OtpHash = BCrypt.Net.BCrypt.HashPassword(otp);
-            u.OtpExpiry = DateTime.Now.AddMinutes(30);
-
-            _vxDbc.SaveChanges();
-        }
-
-        public bool CheckOtpAdmin(int id, string otp)
-        {
-            var u = _vxDbc.SuperUsers.FirstOrDefault(u => u.Id == id);
-
-            var res = BCrypt.Net.BCrypt.Verify(otp, u.OtpHash);
-
-            if (res)
-            {
-                u.OtpHash = null;
-                u.OtpExpiry = null;
-
-                _vxDbc.SaveChanges();
-            }
-
-            return res;
-        }
-
-        public string GenerateJWTAdmin(int id)
-        {
-            var u = _vxDbc.SuperUsers.FirstOrDefault(u => u.Id == id);
-
-            return new JwtSecurityTokenHandler().WriteToken(BuildJwt(u.Id.ToString(), u.Role.Title, DateTime.Now.AddHours(1)));
-        }
-
-        public void GenerateAndSendOtpAdmin(int id)
-        {
-            var u = _vxDbc.SuperUsers.FirstOrDefault(u => u.Id == id);
-
-            Random rng = new Random();
-            string otp = rng.Next(0, 1000000).ToString("D6");
-
-            Console.WriteLine(otp);
 
             u.OtpHash = BCrypt.Net.BCrypt.HashPassword(otp);
             u.OtpExpiry = DateTime.Now.AddMinutes(30);
