@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 using Vaux.DbContext;
 using Vaux.DTO;
 using Vaux.Models;
@@ -26,17 +27,12 @@ namespace Vaux.Repositories
             _vxDbc.SaveChanges();
         }
 
-        public User Create(string name, string phone)
+        public User? GetByEmail(string email)
         {
-            var u = new User { Name = name, Phone = phone, RoleId = (int)Models.Enums.Role.BUYER };
-
-            _vxDbc.Users.Add(u);
-            _vxDbc.SaveChanges();
-
-            return u;
+            return _vxDbc.Users.FirstOrDefault(x => x.Email == email);
         }
 
-        public User? Get(string phone)
+        public User? GetByPhone(string phone)
         {
             return _vxDbc.Users.FirstOrDefault(x => x.Phone == phone);
         }
@@ -46,11 +42,22 @@ namespace Vaux.Repositories
             return _vxDbc.Users.FirstOrDefault(x => x.Id == id);
         }
 
-        public void UpdateProfile(int id ,ProfileUpdateDTO profileUpdate)
+        public User Update(int id, UserMinimalDTO newData)
         {
             User user = _vxDbc.Users.FirstOrDefault(x => x.Id == id);
-            _mapper.Map(profileUpdate, user);
+            _mapper.Map(newData, user);
             _vxDbc.SaveChanges();
+
+            return user;
+        }
+
+        public User Update(int id, UserStrictDTO newData)
+        {
+            User user = _vxDbc.Users.FirstOrDefault(x => x.Id == id);
+            _mapper.Map(newData, user);
+            _vxDbc.SaveChanges();
+
+            return user;
         }
 
         public List<User> GetAll(int pageNum, int pageSize, string? search = null)
@@ -81,6 +88,28 @@ namespace Vaux.Repositories
             }
 
             _vxDbc.SaveChanges();
+        }
+
+        public User Create(UserMinimalDTO user)
+        {
+            var u = _mapper.Map<User>(user);
+            u.RoleId = (int)Models.Enums.Role.BUYER;
+
+            _vxDbc.Users.Add(u);
+            _vxDbc.SaveChanges();
+
+            return u;
+        }
+
+        public User Create(UserStrictDTO user, Models.Enums.Role role)
+        {
+            var u = _mapper.Map<User>(user);
+            u.RoleId = (int)role;
+
+            _vxDbc.Users.Add(u);
+            _vxDbc.SaveChanges();
+
+            return u;
         }
     }
 }

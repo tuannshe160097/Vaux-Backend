@@ -6,11 +6,14 @@ namespace Vaux.Repositories.Interface
     public interface IUserRepo
     {
         public User? Get(int id);
-        public User? Get(string phone);
+        public User? GetByPhone(string phone);
+        public User? GetByEmail(string email);
         public List<User> GetAll(int page, int ipp, string? search = null);
-        public User Create(string name, string phone);
+        public User Create(UserMinimalDTO user);
+        public User Create(UserStrictDTO user, Models.Enums.Role role);
         public void VerifyAccount(int id);
         public void ChangeAccess(int id);
-        public void UpdateProfile(int id, ProfileUpdateDTO profileUpdate);
+        public User Update(int id, UserMinimalDTO newData);
+        public User Update(int id, UserStrictDTO newData);
     }
 }

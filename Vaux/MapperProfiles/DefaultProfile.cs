@@ -8,11 +8,11 @@ namespace Vaux.MapperProfiles
     {
         public DefaultProfile() 
         {
-            CreateMap<ProfileUpdateDTO, User>()
+            CreateMap<UserMinimalDTO, User>()
                 .ForMember(dest => dest.IsVerified, opt => opt.Ignore())
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());
-            CreateMap<SuperUserDTO, SuperUser>()
+            CreateMap<UserStrictDTO, User>()
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());
 

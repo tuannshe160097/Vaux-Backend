@@ -35,14 +35,14 @@ namespace Vaux.Controllers
         }
 
         [HttpPost]
-        [Route("/api/Admin/Category")]
+        [Route("/api/Mod/Category")]
         public IActionResult Create([FromBody] CategoryDTO categoryDTO)
         {
             return Ok(_categoryRepo.Create(categoryDTO));
         }
 
         [HttpPut]
-        [Route("/api/Admin/Category/{id}")]
+        [Route("/api/Mod/Category/{id}")]
         public IActionResult Update(int id, [FromBody] CategoryDTO categoryDTO)
         {
             var c = _categoryRepo.Get(id);
