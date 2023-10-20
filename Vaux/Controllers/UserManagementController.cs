@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 using Vaux.DTO;
+using Vaux.Models.Enums;
 using Vaux.Repositories;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
 {
     [Route("api/Admin/Account")]
-    [Authorize(Roles = "ADMIN")]
+    [Authorize(Roles = nameof(RoleId.ADMIN))]
     [ApiController]
     public class UserManagementController : ControllerBase
     {
@@ -22,7 +23,7 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Route("/api/Mod/Account")]
-        [Authorize(Roles = "MODERATOR,ADMIN")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
             return Ok(_userRepo.GetAll(pageNum, pageSize, search));
@@ -30,7 +31,7 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Route("/api/Mod/Account/{id}")]
-        [Authorize(Roles = "MODERATOR,ADMIN")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult Get(int id)
         {
             return Ok(_userRepo.Get(id));
@@ -74,7 +75,7 @@ namespace Vaux.Controllers
 
         [HttpPatch]
         [Route("/api/Mod/Account/ChangeAccess/{id}")]
-        [Authorize("MODERATOR,ADMIN")]
+        [Authorize($"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult ChangeAccess(int id)
         {
             var u = _userRepo.Get(id);
@@ -82,7 +83,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("User not found");
             }
-            if (u.RoleId == (int)Models.Enums.Role.ADMIN || u.RoleId == (int)Models.Enums.Role.MODERATOR)
+            if (u.RoleId == (int)RoleId.ADMIN || u.RoleId == (int)RoleId.MODERATOR)
             {
                 return Forbid();
             }
@@ -115,7 +116,7 @@ namespace Vaux.Controllers
                 return BadRequest("User already exists");
             }
 
-            var res = _userRepo.Create(superUser, Models.Enums.Role.MODERATOR);
+            var res = _userRepo.Create(superUser, RoleId.MODERATOR);
 
             return Ok(res);
         }

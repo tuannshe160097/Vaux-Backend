@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vaux.DTO;
+using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
 {
     [Route("api/Category")]
     [ApiController]
-    [Authorize(Roles = "MODERATOR,ADMIN")]
+    [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
     public class CategoryController : ControllerBase
     {
         private ICategoryRepo _categoryRepo;

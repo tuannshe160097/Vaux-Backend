@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using Vaux.Models.Enums;
 
 namespace Vaux.Models
 {
@@ -7,7 +8,7 @@ namespace Vaux.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Status { get; set; }
+        public ItemStatus Status { get; set; }
         public int ReservePrice { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
@@ -39,6 +40,6 @@ namespace Vaux.Models
         public int? ShipmentId { get; set; }
         public virtual Shipment? Shipment { get; set; }
 
-        public virtual ICollection<StatusChange> StatusChanges { get; set; }
+        public virtual ICollection<StatusChange>? StatusChanges { get; set; }
     }
 }

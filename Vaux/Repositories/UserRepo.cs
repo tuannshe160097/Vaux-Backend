@@ -4,6 +4,7 @@ using System.Numerics;
 using Vaux.DbContext;
 using Vaux.DTO;
 using Vaux.Models;
+using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Repositories
@@ -29,22 +30,22 @@ namespace Vaux.Repositories
 
         public User? GetByEmail(string email)
         {
-            return _vxDbc.Users.FirstOrDefault(x => x.Email == email);
+            return _vxDbc.Users.IgnoreQueryFilters().FirstOrDefault(x => x.Email == email);
         }
 
         public User? GetByPhone(string phone)
         {
-            return _vxDbc.Users.FirstOrDefault(x => x.Phone == phone);
+            return _vxDbc.Users.IgnoreQueryFilters().FirstOrDefault(x => x.Phone == phone);
         }
 
         public User? Get(int id)
         {
-            return _vxDbc.Users.FirstOrDefault(x => x.Id == id);
+            return _vxDbc.Users.IgnoreQueryFilters().IgnoreQueryFilters().FirstOrDefault(x => x.Id == id);
         }
 
         public User Update(int id, UserMinimalDTO newData)
         {
-            User user = _vxDbc.Users.FirstOrDefault(x => x.Id == id);
+            User user = _vxDbc.Users.IgnoreQueryFilters().FirstOrDefault(x => x.Id == id);
             _mapper.Map(newData, user);
             _vxDbc.SaveChanges();
 
@@ -53,7 +54,7 @@ namespace Vaux.Repositories
 
         public User Update(int id, UserStrictDTO newData)
         {
-            User user = _vxDbc.Users.FirstOrDefault(x => x.Id == id);
+            User user = _vxDbc.Users.IgnoreQueryFilters().FirstOrDefault(x => x.Id == id);
             _mapper.Map(newData, user);
             _vxDbc.SaveChanges();
 
@@ -62,7 +63,7 @@ namespace Vaux.Repositories
 
         public List<User> GetAll(int pageNum, int pageSize, string? search = null)
         {
-            var res = _vxDbc.Users.AsQueryable();
+            var res = _vxDbc.Users.IgnoreQueryFilters().AsQueryable();
 
             if (search != null)
             {
@@ -76,7 +77,7 @@ namespace Vaux.Repositories
 
         public void ChangeAccess(int id)
         {
-            var u = _vxDbc.Users.FirstOrDefault(x => x.Id == id);
+            var u = _vxDbc.Users.IgnoreQueryFilters().FirstOrDefault(x => x.Id == id);
 
             if (u.Deleted == null)
             {
@@ -93,7 +94,7 @@ namespace Vaux.Repositories
         public User Create(UserMinimalDTO user)
         {
             var u = _mapper.Map<User>(user);
-            u.RoleId = (int)Models.Enums.Role.BUYER;
+            u.RoleId = (int)RoleId.BUYER;
 
             _vxDbc.Users.Add(u);
             _vxDbc.SaveChanges();
@@ -101,7 +102,7 @@ namespace Vaux.Repositories
             return u;
         }
 
-        public User Create(UserStrictDTO user, Models.Enums.Role role)
+        public User Create(UserStrictDTO user, RoleId role)
         {
             var u = _mapper.Map<User>(user);
             u.RoleId = (int)role;

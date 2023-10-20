@@ -1,10 +1,16 @@
 ﻿namespace Vaux.DbContext
 {
+    using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata;
+    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Microsoft.EntityFrameworkCore.Migrations;
+    using Microsoft.EntityFrameworkCore.Query;
+    using System.Linq.Expressions;
     using System.Reflection;
     using System.Runtime.CompilerServices;
     using Vaux.Models;
+    using Vaux.Models.Enums;
 
     public class VxDbc : DbContext
     {
@@ -22,15 +28,22 @@
         {
             modelBuilder.Ignore<ModelBase>();
 
+            Expression<Func<ModelBase, bool>> notDeletedExpr = mb => mb.Deleted != null;
             foreach (var e in modelBuilder.Model.GetEntityTypes())
             {
                 if (e.ClrType.IsSubclassOf(typeof(ModelBase)))
                 {
                     e.FindProperty(nameof(ModelBase.Created)).SetDefaultValueSql("GETDATE()");
-                    e.FindProperty(nameof(ModelBase.Created)).ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
+                    e.FindProperty(nameof(ModelBase.Created)).ValueGenerated = ValueGenerated.OnAdd;
 
                     e.FindProperty(nameof(ModelBase.Updated)).SetDefaultValueSql("GETDATE()");
-                    e.FindProperty(nameof(ModelBase.Updated)).ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
+                    e.FindProperty(nameof(ModelBase.Updated)).ValueGenerated = ValueGenerated.OnAdd;
+
+                    var parameter = Expression.Parameter(e.ClrType);
+                    var body = ReplacingExpressionVisitor.Replace(notDeletedExpr.Parameters.First(), parameter, notDeletedExpr.Body);
+                    var lambdaExpression = Expression.Lambda(body, parameter);
+
+                    e.SetQueryFilter(lambdaExpression);
                 }
             }
 
@@ -46,6 +59,10 @@
                 .Property(e => e.ReservePrice)
                 .HasDefaultValue(0);
 
+            modelBuilder.Entity<Item>()
+                .Property(e => e.Status)
+                .HasDefaultValue(ItemStatus.EXAMINATION_PENDING);
+
             modelBuilder.Entity<User>()
                 .Property(e => e.IsVerified)
                 .HasDefaultValue(0);
@@ -57,35 +74,35 @@
             modelBuilder.Entity<Role>().HasData(
                 new Role()
                 {
-                    Id = (int)Models.Enums.Role.MODERATOR,
-                    Title = "MOODERATOR"
+                    Id = (int)RoleId.MODERATOR,
+                    Title = nameof(RoleId.MODERATOR)
                 },
                 new Role()
                 {
-                    Id = (int)Models.Enums.Role.EXPERT,
-                    Title = "EXPERT"
+                    Id = (int)RoleId.EXPERT,
+                    Title = nameof(RoleId.EXPERT)
                 },
                 new Role()
                 {
-                    Id = (int)Models.Enums.Role.SELLER,
-                    Title = "SELLER"
+                    Id = (int)RoleId.SELLER,
+                    Title = nameof(RoleId.SELLER)
                 },
                 new Role()
                 {
-                    Id = (int)Models.Enums.Role.BUYER,
-                    Title = "BUYER"
+                    Id = (int)RoleId.BUYER,
+                    Title = nameof(RoleId.BUYER)
                 },
                 new Role()
                 {
-                    Id = (int)Models.Enums.Role.ADMIN,
-                    Title = "ADMIN"
+                    Id = (int)RoleId.ADMIN,
+                    Title = nameof(RoleId.ADMIN)
                 }
             );
 
             modelBuilder.Entity<User>().HasData(new User()
             {
                 Id = 1,
-                RoleId = (int)Models.Enums.Role.ADMIN,
+                RoleId = (int)RoleId.ADMIN,
                 Name = "Admin",
                 Phone = "0855068490",
                 Email = "tuannshe160097@fpt.edu.vn"
