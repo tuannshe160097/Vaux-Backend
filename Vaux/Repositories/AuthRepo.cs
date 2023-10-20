@@ -7,6 +7,7 @@ using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Vaux.DbContext;
 using Vaux.Models;
+using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Repositories
@@ -43,7 +44,7 @@ namespace Vaux.Repositories
         {
             var u = _vxDbc.Users.FirstOrDefault(u => u.Id == id);
             var expiry = DateTime.Now;
-            if (u.RoleId == (int)Models.Enums.Role.BUYER || u.RoleId == (int)Models.Enums.Role.SELLER || u.RoleId == (int)Models.Enums.Role.EXPERT)
+            if (u.RoleId == (int)RoleId.BUYER || u.RoleId == (int)RoleId.SELLER || u.RoleId == (int)RoleId.EXPERT)
             {
                 expiry = expiry.AddYears(1);
             }

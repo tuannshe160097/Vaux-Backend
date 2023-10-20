@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vaux.DTO;
 using Vaux.Models;
+using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
@@ -36,7 +37,7 @@ namespace Vaux.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "BUYER,SELLER")]
+        [Authorize(Roles = $"{nameof(RoleId.BUYER)},{nameof(RoleId.SELLER)}")]
         public IActionResult UpdateProfile(UserMinimalDTO profile)
         {
             var u = _userRepo.Get(int.Parse(User.Identity.Name));
@@ -58,7 +59,7 @@ namespace Vaux.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "EXPERT,ADMIN,MODERATOR")]
+        [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Mod/Profile")]
         public IActionResult UpdateProfile(UserStrictDTO profile)
         {

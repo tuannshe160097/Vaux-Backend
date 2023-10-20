@@ -1,6 +1,6 @@
 ﻿namespace Vaux.Models.Enums
 {
-    public enum Role
+    public enum RoleId
     {
         MODERATOR = 1,
         EXPERT = 2,

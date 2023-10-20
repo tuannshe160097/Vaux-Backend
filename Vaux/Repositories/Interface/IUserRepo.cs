@@ -1,5 +1,6 @@
 ﻿using Vaux.DTO;
 using Vaux.Models;
+using Vaux.Models.Enums;
 
 namespace Vaux.Repositories.Interface
 {
@@ -10,7 +11,7 @@ namespace Vaux.Repositories.Interface
         public User? GetByEmail(string email);
         public List<User> GetAll(int page, int ipp, string? search = null);
         public User Create(UserMinimalDTO user);
-        public User Create(UserStrictDTO user, Models.Enums.Role role);
+        public User Create(UserStrictDTO user, RoleId role);
         public void VerifyAccount(int id);
         public void ChangeAccess(int id);
         public User Update(int id, UserMinimalDTO newData);
