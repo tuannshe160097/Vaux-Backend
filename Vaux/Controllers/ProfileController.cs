@@ -14,12 +14,10 @@ namespace Vaux.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        private IAuthRepo _authRepo;
         private IUserRepo _userRepo;
 
-        public ProfileController(IAuthRepo authRepo, IUserRepo userRepo)
+        public ProfileController(IUserRepo userRepo)
         {
-            _authRepo = authRepo;
             _userRepo = userRepo;
         }
 

@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Vaux.Models.Enums;
 
 namespace Vaux.Models
 {
     public class SellerApplication : ModelBase
     {
         public int Id { get; set; }
-        public int Status { get; set; }
+        public SellerApplicationStatus Status { get; set; }
         public string CitizenId { get; set; }
         public string Content { get; set; }
 

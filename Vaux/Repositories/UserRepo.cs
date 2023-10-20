@@ -61,6 +61,15 @@ namespace Vaux.Repositories
             return user;
         }
 
+        public User Update(int id, SellerApplicationDTO newData)
+        {
+            User user = _vxDbc.Users.IgnoreQueryFilters().FirstOrDefault(x => x.Id == id);
+            _mapper.Map(newData, user);
+            _vxDbc.SaveChanges();
+
+            return user;
+        }
+
         public List<User> GetAll(int pageNum, int pageSize, string? search = null)
         {
             var res = _vxDbc.Users.IgnoreQueryFilters().AsQueryable();

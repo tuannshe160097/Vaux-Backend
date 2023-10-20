@@ -26,6 +26,13 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
 
             CreateMap<Category, CategoryDTO>();
+
+            CreateMap<SellerApplicationDTO, SellerApplication>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<SellerApplicationDTO, User>()
+                .ForMember(dest => dest.CitizenIdImageId, opt => opt.Ignore())
+                .ForMember(dest => dest.PortraitId, opt => opt.Ignore())
+                .ForMember(dest => dest.CitizenId, opt => opt.Ignore());
         }
     }
 }
