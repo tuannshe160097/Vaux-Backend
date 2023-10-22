@@ -2,7 +2,6 @@
 {
     public class Shipment : ModelBase
     {
-        public int Id { get; set; }
         public int Status { get; set; }
 
         public long ShipmentCost { get; set; }

@@ -10,9 +10,10 @@ namespace Vaux.ServiceConfiguration
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            services.AddScoped(typeof(Repositories.Interface.IBaseRepo<>), typeof(Repositories.BaseRepo<>));
+
             services.AddScoped<IAuthRepo, AuthRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
-            services.AddScoped<ICategoryRepo, CategoryRepo>();
             services.AddScoped<IItemRepo, ItemRepo>();
 
             return services;

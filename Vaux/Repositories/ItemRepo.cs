@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Linq.Expressions;
 using Vaux.DbContext;
 using Vaux.DTO;
 using Vaux.Models;
@@ -7,64 +8,39 @@ using Vaux.Repositories.Interface;
 
 namespace Vaux.Repositories
 {
-    public class ItemRepo : IItemRepo
+    public class ItemRepo : BaseRepo<Item>, IItemRepo
     {
-        private VxDbc _vxDbc;
-        private IMapper _mapper;
-
-        public ItemRepo(VxDbc vxDbc, IMapper mapper)
+        public ItemRepo(VxDbc vxDbc, IMapper mapper) : base(vxDbc, mapper)
         {
-            _vxDbc = vxDbc;
-            _mapper = mapper;
+
         }
 
-        public Item Create(int seller, ItemApplicationDTO item)
+        public TOut Create<TOut, TIn>(TIn item, int seller)
         {
-            var i = _mapper.Map<Item>(item);
+            var i = base.Create(item);
             i.SellerId = seller;
 
-            _vxDbc.Items.Add(i);
-            _vxDbc.SaveChanges();
+            Save();
 
-            return i;
+            return _mapper.Map<TOut>(i);
         }
 
-        public Item Delete(int id)
+        public override TOut Delete<TOut>(Expression<Func<Item, bool>> predicate)
         {
-            var item = _vxDbc.Items.FirstOrDefault(i => i.Id == id);
+            var item = base.Delete(predicate);
             item.Status = ItemStatus.REMOVED;
-            item.Deleted = DateTime.Now;
 
-            _vxDbc.SaveChanges();
+            Save();
 
-            return item;
+            return _mapper.Map<TOut>(item);
         }
 
-        public Item? GetByUser(int id)
+        public override TOut Update<TOut, TIn>(Expression<Func<Item, bool>> predicate, TIn data)
         {
-            return _vxDbc.Items.FirstOrDefault(i => i.SellerId == id);
-        }
-
-        public Item? Get(int id)
-        {
-            return _vxDbc.Items.FirstOrDefault(i => i.Id == id);
-        }
-
-        public List<Item> GetAll()
-        {
-            return _vxDbc.Items.ToList();
-        }
-
-        public Item Update(int id, ItemApplicationDTO item)
-        {
-            var i = _vxDbc.Items.FirstOrDefault(c => c.Id == id);
-
+            var i = Get<Item>(predicate);
             _vxDbc.ItemProperties.RemoveRange(i.ItemProperties);
 
-            _mapper.Map(item, i);
-            _vxDbc.SaveChanges();
-
-            return i;
+            return base.Update<TOut, TIn>(predicate, data);
         }
     }
 }

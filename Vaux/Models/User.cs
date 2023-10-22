@@ -8,7 +8,6 @@ namespace Vaux.Models
     [Index(nameof(Email), IsUnique = true)]
     public class User : ModelBase
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string? City { get; set; }
         public string? District { get; set; }
