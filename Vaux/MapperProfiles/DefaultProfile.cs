@@ -12,6 +12,14 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.IsVerified, opt => opt.Ignore())
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());
+
+            CreateMap<UserMinimalNonOptionalDTO, User>()
+                .ForMember(dest => dest.IsVerified, opt => opt.Ignore())
+                .ForMember(dest => dest.Role, opt => opt.Ignore())
+                .ForMember(dest => dest.RoleId, opt => opt.Ignore());
+
+            CreateMap<User, UserMinimalDTO>();
+
             CreateMap<UserStrictDTO, User>()
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());
@@ -24,6 +32,9 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<ItemPropertyDTO, ItemProperty>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<Item, ItemDTO>()
+                .ForMember(dest => dest.StatusString, opt => opt.MapFrom(src => nameof(src.Status)));
 
             CreateMap<Category, CategoryDTO>();
 

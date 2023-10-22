@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Numerics;
 using Vaux.DTO;
+using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories;
 using Vaux.Repositories.Interface;
@@ -26,7 +28,7 @@ namespace Vaux.Controllers
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
-            return Ok(_userRepo.GetAll(pageNum, pageSize, search));
+            return Ok(_userRepo.GetAll<User>(e => search.IsNullOrEmpty() ? true : e.Email == search || e.Phone == search || e.Name == search, e => e.Id, (pageNum-1) * pageSize, pageSize));
         }
 
         [HttpGet]
@@ -34,28 +36,28 @@ namespace Vaux.Controllers
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult Get(int id)
         {
-            return Ok(_userRepo.Get(id));
+            return Ok(_userRepo.Get<User>(e => e.Id == id));
         }
 
         [HttpPut]
         [Route("{id}")]
         public IActionResult Update(int id, [FromBody] UserStrictDTO profile)
         {
-            var u = _userRepo.Get(id);
+            var u = _userRepo.Get<User>(e => e.Id == id);
             if (u == null)
             {
                 return BadRequest("User does not exist");
             }
-            if (u.Phone != profile.Phone && _userRepo.GetByPhone(profile.Phone) != null)
+            if (u.Phone != profile.Phone && _userRepo.Get<User>(e => e.Phone == profile.Phone) != null)
             {
                 return BadRequest("Phone number already taken");
             }
-            if (u.Email != profile.Email && _userRepo.GetByEmail(profile.Email) != null)
+            if (u.Email != profile.Email && _userRepo.Get<User>(e => e.Email == profile.Email) != null)
             {
                 return BadRequest("Email already taken");
             }
 
-            var res = _userRepo.Update(id, profile);
+            var res = _userRepo.Update<User, UserStrictDTO>(e => e.Id == id, profile);
             return Ok(res);
         }
 
@@ -78,7 +80,7 @@ namespace Vaux.Controllers
         [Authorize($"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult ChangeAccess(int id)
         {
-            var u = _userRepo.Get(id);
+            var u = _userRepo.Get<User>(e => e.Id == id);
             if (u == null)
             {
                 return BadRequest("User not found");
@@ -97,7 +99,7 @@ namespace Vaux.Controllers
         [Route("ChangeAccess/{id}")]
         public IActionResult AdminChangeAccess(int id)
         {
-            var u = _userRepo.Get(id);
+            var u = _userRepo.Get<User>(e => e.Id == id);
             if (u == null)
             {
                 return BadRequest("User not found");
@@ -111,12 +113,12 @@ namespace Vaux.Controllers
         [Route("CreateModerator")]
         public IActionResult CreateMod(UserStrictDTO superUser)
         {
-            if (_userRepo.GetByPhone(superUser.Phone) != null)
+            if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
             {
                 return BadRequest("User already exists");
             }
 
-            var res = _userRepo.Create(superUser, RoleId.MODERATOR);
+            var res = _userRepo.Create<User>(superUser, RoleId.MODERATOR);
 
             return Ok(res);
         }
