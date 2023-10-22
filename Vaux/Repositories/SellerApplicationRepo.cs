@@ -4,32 +4,24 @@ using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
 using Vaux.Models.Enums;
+using System.Linq.Expressions;
 
 namespace Vaux.Repositories
 {
-    public class SellerApplicationRepo : ISellerApplicationRepo
+    public class SellerApplicationRepo : BaseRepo<SellerApplication>, ISellerApplicationRepo
     {
-        private VxDbc _vxDbc;
-        private IMapper _mapper;
-
-        public SellerApplicationRepo(VxDbc dbc, IMapper mapper)
+        public SellerApplicationRepo(VxDbc vxDbc, IMapper mapper) : base(vxDbc, mapper)
         {
-            _vxDbc = dbc;
-            _mapper = mapper;
         }
-        public SellerApplication SendApplication(SellerApplicationDTO application)
+
+
+        public override TOut Create<TOut, TIn>(TIn data)
         {
-            var a = _mapper.Map<SellerApplication>(application);
+            var a = base.Create(data);
             a.Status = SellerApplicationStatus.PENDING;
-
-            _vxDbc.SellerApplications.Add(a);
-            _vxDbc.SaveChanges();
-            return a;
+            Save();          
+            return _mapper.Map<TOut>(a);
         }
 
-        public SellerApplication UpdateApplication(SellerApplicationDTO application)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

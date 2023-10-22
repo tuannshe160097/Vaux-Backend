@@ -3,10 +3,7 @@ using Vaux.Models;
 
 namespace Vaux.Repositories.Interface
 {
-    public interface ISellerApplicationRepo
+    public interface ISellerApplicationRepo : IBaseRepo<SellerApplication>
     {
-        public SellerApplication SendApplication(SellerApplicationDTO application);
-
-        public SellerApplication UpdateApplication(SellerApplicationDTO application);
     }
 }
