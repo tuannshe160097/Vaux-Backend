@@ -22,13 +22,13 @@ namespace Vaux.Controllers
         {
             _userRepo = userRepo;
         }
-
+         
         [HttpGet]
         [Route("/api/Mod/Account")]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
-            return Ok(_userRepo.GetAll<User>(e => search.IsNullOrEmpty() ? true : e.Email == search || e.Phone == search || e.Name == search, e => e.Id, (pageNum-1) * pageSize, pageSize));
+            return Ok(_userRepo.GetAll<User>(e => search.IsNullOrEmpty() ? true : (e.Email != null && e.Email.Contains(search)) || e.Phone.Contains(search) || e.Name.Contains(search), e => e.Id, (pageNum-1) * pageSize, pageSize));
         }
 
         [HttpGet]

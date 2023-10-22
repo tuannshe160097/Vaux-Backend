@@ -11,7 +11,7 @@ namespace Vaux.Controllers
 {
     [Route("api/Seller/ItemApplication")]
     [ApiController]
-    [Authorize(Roles = nameof(RoleId.SELLER))]
+    [Authorize(Roles = $"{nameof(RoleId.SELLER)}")]
     public class ItemApplicationController : ControllerBase
     {
         private IItemRepo _itemRepo;

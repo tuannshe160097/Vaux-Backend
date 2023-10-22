@@ -83,5 +83,13 @@ namespace Vaux.Controllers
 
             return Ok(_authRepo.GenerateJWT(u.Id));
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("RefreshToken")]
+        public IActionResult RefreshToken()
+        {
+            return Ok(_authRepo.GenerateJWT(int.Parse(User.Identity.Name)));
+        }
     }
 }
