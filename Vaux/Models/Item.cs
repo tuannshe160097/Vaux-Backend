@@ -6,7 +6,6 @@ namespace Vaux.Models
 {
     public class Item : ModelBase
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public ItemStatus Status { get; set; }
         public int ReservePrice { get; set; }

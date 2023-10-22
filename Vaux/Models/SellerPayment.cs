@@ -2,7 +2,6 @@
 {
     public class SellerPayment : ModelBase
     {
-        public int Id { get; set; }
         public long Amount { get; set; }
         public int Status { get; set; }
 

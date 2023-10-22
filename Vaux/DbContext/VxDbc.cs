@@ -28,7 +28,7 @@
         {
             modelBuilder.Ignore<ModelBase>();
 
-            Expression<Func<ModelBase, bool>> notDeletedExpr = mb => mb.Deleted != null;
+            Expression<Func<ModelBase, bool>> notDeletedExpr = mb => mb.Deleted == null;
             foreach (var e in modelBuilder.Model.GetEntityTypes())
             {
                 if (e.ClrType.IsSubclassOf(typeof(ModelBase)))

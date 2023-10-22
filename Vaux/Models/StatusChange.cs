@@ -4,7 +4,6 @@ namespace Vaux.Models
 {
     public class StatusChange : ModelBase
     {
-        public int Id { get; set; }
         public string StatusChangeReason { get; set; }
 
         [ForeignKey(nameof(StatusChangedBy))]

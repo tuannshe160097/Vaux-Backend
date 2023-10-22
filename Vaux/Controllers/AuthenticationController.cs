@@ -22,14 +22,14 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public IActionResult Register(UserMinimalDTO user)
+        public IActionResult Register(UserMinimalNonOptionalDTO user)
         {
-            if (_userRepo.GetByPhone(user.Phone) != null)
+            if (_userRepo.Get<User>(e => e.Phone == user.Phone) != null)
             {
                 return BadRequest("User already exists");
             }
 
-            User u = _userRepo.Create(user);
+            User u = _userRepo.Create<User, UserMinimalNonOptionalDTO>(user);
             _authRepo.GenerateAndSendOtp(u.Id);
 
             return Ok();
@@ -39,7 +39,7 @@ namespace Vaux.Controllers
         [Route("SendOtp")]
         public IActionResult SendOtp(string phone)
         {
-            var u = _userRepo.GetByPhone(phone);
+            var u = _userRepo.Get<User>(e => e.Phone == phone);
             if (u == null)
             {
                 return BadRequest("User not found");
@@ -59,7 +59,7 @@ namespace Vaux.Controllers
         [Route("VerifyOtp")]
         public IActionResult VerifyOtp(string phone, string otp)
         {
-            var u = _userRepo.GetByPhone(phone);
+            var u = _userRepo.Get<User>(e => e.Phone == phone);
 
             if (u == null)
             {

@@ -4,7 +4,6 @@ namespace Vaux.Models
 {
     public class Bid : ModelBase
     {
-        public int Id { get; set; }
         public long Amount { get; set; }
 
         public int? ItemId { get; set; }

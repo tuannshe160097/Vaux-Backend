@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Vaux.DTO;
+using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
 
@@ -12,19 +14,18 @@ namespace Vaux.Controllers
     [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
     public class CategoryController : ControllerBase
     {
-        private ICategoryRepo _categoryRepo;
+        private IBaseRepo<Category> _categoryRepo;
 
-        public CategoryController(ICategoryRepo categoryRepo)
+        public CategoryController(IBaseRepo<Category> categoryRepo)
         {
             _categoryRepo = categoryRepo;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
-            return Ok(_categoryRepo.GetAll(pageNum, pageSize, search));
+            return Ok(_categoryRepo.GetAll<CategoryDTO>(e => search.IsNullOrEmpty() ? true : e.Name == search, e => e.Id, (pageNum-1) * pageSize, pageSize));
         }
 
         [HttpGet]
@@ -32,27 +33,27 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(_categoryRepo.Get(id));
+            return Ok(_categoryRepo.Get<CategoryDTO>(e => e.Id == id));
         }
 
         [HttpPost]
         [Route("/api/Mod/Category")]
         public IActionResult Create([FromBody] CategoryDTO categoryDTO)
         {
-            return Ok(_categoryRepo.Create(categoryDTO));
+            return Ok(_categoryRepo.Create<CategoryDTO, CategoryDTO>(categoryDTO));
         }
 
         [HttpPut]
         [Route("/api/Mod/Category/{id}")]
         public IActionResult Update(int id, [FromBody] CategoryDTO categoryDTO)
         {
-            var c = _categoryRepo.Get(id);
+            var c = _categoryRepo.Get<Category>(e => e.Id == id);
             if (c == null)
             {
                 return BadRequest("Category doesn't exist");
             }
 
-            return Ok(_categoryRepo.Update(id, categoryDTO));
+            return Ok(_categoryRepo.Update<CategoryDTO, CategoryDTO>(e => e.Id == id, categoryDTO));
         }
     }
 }
