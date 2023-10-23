@@ -75,10 +75,17 @@ namespace Vaux.Repositories
             return null;
         }
 
-        public async Task<string> DriveUpload(MemoryStream image, string name)
+        public async Task<string> DriveUpload(IFormFile formFile, string name)
         {
             try
             {
+                long length = formFile.Length;
+                if (length < 0)
+                    return "Failed";
+                using var filestream = formFile.OpenReadStream();
+                byte[] bytes = new byte[length];
+                filestream.Read(bytes, 0, (int)length);
+                MemoryStream image = new MemoryStream(bytes);
                 // Load the Service account credentials and define the scope of its access.
                 var credential = GoogleCredential.FromFile(PathToServiceAccountKeyFile)
                                 .CreateScoped(DriveService.ScopeConstants.Drive);
@@ -138,5 +145,70 @@ namespace Vaux.Repositories
             }
             return null;
         }
+
+
+/*        public async Task<string> DriveUpdate(MemoryStream image, string name)
+        {
+            try
+            {
+                // Load the Service account credentials and define the scope of its access.
+                var credential = GoogleCredential.FromFile(PathToServiceAccountKeyFile)
+                                .CreateScoped(DriveService.ScopeConstants.Drive);
+
+                var service = new DriveService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = "Drive API Snippets"
+                });
+
+                // Upload file Metadata
+                var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+                {
+                    Name = $"{name}.jpg",
+                    Parents = new List<string>() { DirectoryId }
+                };
+                string uploadedFileId;
+                await using (var msSource = image)
+                {
+                    // Create a new file, with metadata and stream.
+                    var request = service.Files.Update(fileMetadata, msSource, "image/jpeg");
+                    request.Fields = "*";
+                    var results = request.Upload();
+
+                    if (results.Status == UploadStatus.Failed)
+                    {
+                        Console.WriteLine($"Error uploading file: {results.Exception.Message}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Succ");
+                    }
+
+                    // the file id of the new file we created
+                    uploadedFileId = request.ResponseBody?.Id;
+                }
+
+                // Prints the uploaded file id.
+                Console.WriteLine("File ID: " + uploadedFileId);
+                return uploadedFileId;
+            }
+            catch (Exception e)
+            {
+                // TODO(developer) - handle error appropriately
+                if (e is AggregateException)
+                {
+                    Console.WriteLine("Credential Not found");
+                }
+                else if (e is FileNotFoundException)
+                {
+                    Console.WriteLine("File not found");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return null;
+        }*/
     }
 }

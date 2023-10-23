@@ -2,7 +2,7 @@
 {
     public interface IPhotoRepo
     {
-        public Task<string> DriveUpload(MemoryStream image, string name);
+        public Task<string> DriveUpload(IFormFile formFile, string name);
 
         public MemoryStream DriveDownloadFile(string fileId);
     }

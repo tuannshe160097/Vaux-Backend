@@ -29,8 +29,8 @@ namespace Vaux.Controllers
         {
             Image portraitImg = new Image();
             Image citizenidImg = new Image();
-            portraitImg.Url = Upload(sellerApplication.RawPortrait, "Vaux-portrait");
-            citizenidImg.Url = Upload(sellerApplication.RawCitizenIdImage, "Vaux-citizenId");
+            portraitImg.Url = _photoRepo.DriveUpload(sellerApplication.RawPortrait, "Vaux-portrait").Result;
+            citizenidImg.Url = _photoRepo.DriveUpload(sellerApplication.RawCitizenIdImage, "Vaux-citizenId").Result;
             sellerApplication.Portrait = portraitImg;
             sellerApplication.CitizenIdImage = citizenidImg;
             sellerApplication.UserId = int.Parse(User.Identity.Name);
@@ -55,19 +55,6 @@ namespace Vaux.Controllers
             MemoryStream ms = _photoRepo.DriveDownloadFile(fileId);
             byte[] bytes = ms.ToArray();
             return File(bytes, "image/jpeg");
-        }
-
-
-        private string Upload(IFormFile formFile, string name)
-        {
-            long length = formFile.Length;
-            if (length < 0)
-                return "Failed";
-            using var filestream = formFile.OpenReadStream();
-            byte[] bytes = new byte[length];
-            filestream.Read(bytes, 0, (int)length);
-            MemoryStream stream = new MemoryStream(bytes);
-            return _photoRepo.DriveUpload(stream, name).Result;
         }
     }
 }
