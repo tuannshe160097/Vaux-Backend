@@ -37,6 +37,11 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.StatusString, opt => opt.MapFrom(src => nameof(src.Status)));
 
             CreateMap<Category, CategoryDTO>();
+
+            CreateMap<SellerApplicationDTO, SellerApplication>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<SellerApplication, SellerApplicationDTO>();
+            CreateMap<SellerApplication, User>();
         }
     }
 }
