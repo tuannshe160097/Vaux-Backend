@@ -24,13 +24,14 @@ namespace Vaux.Controllers
         [Route("Register")]
         public IActionResult Register(UserMinimalNonOptionalDTO user)
         {
-            if (_userRepo.Get<User>(e => e.Phone == user.Phone) != null)
+            var u = _userRepo.Get<User>(e => e.Phone == user.Phone);
+            if (u != null && u.IsVerified)
             {
                 return BadRequest("User already exists");
             }
 
-            User u = _userRepo.Create<User, UserMinimalNonOptionalDTO>(user);
-            _authRepo.GenerateAndSendOtp(u.Id);
+            User res = _userRepo.Create<User, UserMinimalNonOptionalDTO>(user);
+            _authRepo.GenerateAndSendOtp(res.Id);
 
             return Ok();
         }
