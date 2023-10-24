@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using Vaux.Models;
 using Vaux.ValidationAttributes;
@@ -7,6 +8,7 @@ namespace Vaux.DTO
 {
     public class SellerApplicationDTO
     {
+        [JsonIgnore]
         public int? UserId { get; set; }
         public string CitizenId { get; set; }
         public string Content { get; set; }
@@ -21,11 +23,15 @@ namespace Vaux.DTO
         [Required(ErrorMessage = "Pick an Image")]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg"})]
         public IFormFile RawPortrait { get; set; }
-        public Image? Portrait { get; set; }
+
+        [JsonIgnore]
+        public int? PortraitId { get; set; }
         [Display(Name = "Image")]
         [Required(ErrorMessage = "Pick an Image")]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg",})]
         public IFormFile RawCitizenIdImage { get; set; }
-        public Image? CitizenIdImage { get; set; }
+
+        [JsonIgnore]
+        public int? CitizenIdImageId { get; set; }
     }
 }
