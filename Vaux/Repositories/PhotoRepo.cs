@@ -147,10 +147,17 @@ namespace Vaux.Repositories
         }
 
 
-/*        public async Task<string> DriveUpdate(MemoryStream image, string name)
+        public async Task<string> DriveUpdate(IFormFile formFile, string fileId, string name)
         {
             try
             {
+                long length = formFile.Length;
+                if (length < 0)
+                    return "Failed";
+                using var filestream = formFile.OpenReadStream();
+                byte[] bytes = new byte[length];
+                filestream.Read(bytes, 0, (int)length);
+                MemoryStream image = new MemoryStream(bytes);
                 // Load the Service account credentials and define the scope of its access.
                 var credential = GoogleCredential.FromFile(PathToServiceAccountKeyFile)
                                 .CreateScoped(DriveService.ScopeConstants.Drive);
@@ -165,13 +172,12 @@ namespace Vaux.Repositories
                 var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                 {
                     Name = $"{name}.jpg",
-                    Parents = new List<string>() { DirectoryId }
                 };
                 string uploadedFileId;
                 await using (var msSource = image)
                 {
                     // Create a new file, with metadata and stream.
-                    var request = service.Files.Update(fileMetadata, msSource, "image/jpeg");
+                    var request = service.Files.Update(fileMetadata, fileId ,msSource, "image/jpeg");
                     request.Fields = "*";
                     var results = request.Upload();
 
@@ -209,6 +215,46 @@ namespace Vaux.Repositories
                 }
             }
             return null;
-        }*/
+        }
+
+        public string DriveDelete(string fileId)
+        {
+            try
+            {
+                // Load the Service account credentials and define the scope of its access.
+                var credential = GoogleCredential.FromFile(PathToServiceAccountKeyFile)
+                                .CreateScoped(DriveService.ScopeConstants.Drive);
+
+                var service = new DriveService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = "Drive API Snippets"
+                });
+                    // Create a new file, with metadata and stream.
+                    var request = service.Files.Delete(fileId);
+                    request.Fields = "*";
+                    var results = request.Execute();
+                // Prints the uploaded file id.
+                Console.WriteLine("Deleted file" + fileId);
+                return results;
+            }
+            catch (Exception e)
+            {
+                // TODO(developer) - handle error appropriately
+                if (e is AggregateException)
+                {
+                    Console.WriteLine("Credential Not found");
+                }
+                else if (e is FileNotFoundException)
+                {
+                    Console.WriteLine("File not found");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return null;
+        }
     }
 }
