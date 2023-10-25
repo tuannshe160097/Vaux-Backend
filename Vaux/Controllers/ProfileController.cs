@@ -16,9 +16,9 @@ namespace Vaux.Controllers
     {
         private IUserRepo _userRepo;
 
-        public ProfileController(IUserRepo profileRepo)
+        public ProfileController(IUserRepo userRepo)
         {
-            _userRepo = profileRepo;
+            _userRepo = userRepo;
         }
 
         [HttpGet]

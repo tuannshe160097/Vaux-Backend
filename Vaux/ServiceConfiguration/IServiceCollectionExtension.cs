@@ -15,6 +15,8 @@ namespace Vaux.ServiceConfiguration
             services.AddScoped<IAuthRepo, AuthRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IItemRepo, ItemRepo>();
+            services.AddScoped<ISellerApplicationRepo, SellerApplicationRepo>();
+            services.AddScoped<IPhotoRepo, PhotoRepo>();
 
             return services;
         }
