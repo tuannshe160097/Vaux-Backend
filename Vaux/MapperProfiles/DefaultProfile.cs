@@ -41,7 +41,8 @@ namespace Vaux.MapperProfiles
             CreateMap<SellerApplicationDTO, SellerApplication>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<SellerApplication, SellerApplicationDTO>();
-            CreateMap<SellerApplication, User>();
+            CreateMap<SellerApplication, User>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
         }
     }
 }

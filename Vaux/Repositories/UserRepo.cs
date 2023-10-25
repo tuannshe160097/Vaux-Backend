@@ -60,5 +60,14 @@ namespace Vaux.Repositories
 
             return _mapper.Map<TOut>(u);
         }
+
+        public TOut Update<TOut, TIn>(Expression<Func<User, bool>> predicate, TIn user, RoleId role)
+        {
+            var u = base.Update(predicate, user);
+            u.RoleId = (int)role;
+            Save();
+
+            return _mapper.Map<TOut>(u);
+        }
     }
 }
