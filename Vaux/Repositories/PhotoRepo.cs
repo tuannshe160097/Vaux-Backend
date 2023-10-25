@@ -4,14 +4,67 @@ using Google.Apis.Services;
 using Google.Apis.Upload;
 using Google.Apis.Download;
 using Vaux.Repositories.Interface;
+using Vaux.Models;
+using Vaux.DbContext;
+using AutoMapper;
 
 namespace Vaux.Repositories
 {
     public class PhotoRepo : IPhotoRepo
     {
-        private const string PathToServiceAccountKeyFile = @"C:\Users\haiph\source\repos\Vaux-Backend\Vaux\vaux-402415-cc9850aaa031.json";
+        private VxDbc _vxDbc;
+        private IMapper _mapper;
+        private const string PathToServiceAccountKeyFile = @"vaux-402415-cc9850aaa031.json";
         private const string DirectoryId = "1ETKk2RRtvOxB_ERo6drE_2jvLrpTqoVW";
-        public MemoryStream DriveDownloadFile(string fileId)
+
+        public PhotoRepo(VxDbc vxDbc, IMapper mapper)
+        {
+            _vxDbc = vxDbc;
+            _mapper = mapper;
+        }
+
+        public TOut Create<TOut>(IFormFile image)
+        {
+            var img = new Image();
+            img.Url = "tmp";
+
+            _vxDbc.Images.Add(img);
+            _vxDbc.SaveChanges();
+
+            img.Url = DriveUpload(image, img.Id.ToString()).Result;
+            _vxDbc.SaveChanges();
+
+            return _mapper.Map<TOut>(img);
+        }
+
+        public TOut Update<TOut>(int id, IFormFile image)
+        {
+            var img = _vxDbc.Images.FirstOrDefault(x => x.Id == id);
+            img.Url = DriveUpdate(image, img.Url, img.Id.ToString()).Result;
+
+            _vxDbc.SaveChanges();
+
+            return _mapper.Map<TOut>(img);
+        }
+
+        public TOut Delete<TOut>(int id)
+        {
+            var img = _vxDbc.Images.FirstOrDefault(x => x.Id == id);
+            DriveDelete(img.Url);
+
+            _vxDbc.Images.Remove(img);
+            
+            return _mapper.Map<TOut>(img);
+        }
+
+        public MemoryStream Get(int id)
+        {
+            var img = _vxDbc.Images.FirstOrDefault(x => x.Id == id);
+
+            return DriveDownloadFile(img.Url);
+        }
+
+        private MemoryStream DriveDownloadFile(string fileId)
         {
             try
             {
@@ -75,7 +128,7 @@ namespace Vaux.Repositories
             return null;
         }
 
-        public async Task<string> DriveUpload(IFormFile formFile, string name)
+        private async Task<string> DriveUpload(IFormFile formFile, string name)
         {
             try
             {
@@ -147,7 +200,7 @@ namespace Vaux.Repositories
         }
 
 
-        public async Task<string> DriveUpdate(IFormFile formFile, string fileId, string name)
+        private async Task<string> DriveUpdate(IFormFile formFile, string fileId, string name)
         {
             try
             {
@@ -217,7 +270,7 @@ namespace Vaux.Repositories
             return null;
         }
 
-        public string DriveDelete(string fileId)
+        private string DriveDelete(string fileId)
         {
             try
             {

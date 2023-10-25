@@ -27,12 +27,8 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/Create")]
         public IActionResult Create([FromForm] SellerApplicationDTO sellerApplication)
         {
-            Image portraitImg = new Image();
-            Image citizenidImg = new Image();
-            portraitImg.Url = _photoRepo.DriveUpload(sellerApplication.RawPortrait, "Vaux-portrait").Result;
-            citizenidImg.Url = _photoRepo.DriveUpload(sellerApplication.RawCitizenIdImage, "Vaux-citizenId").Result;
-            sellerApplication.Portrait = portraitImg;
-            sellerApplication.CitizenIdImage = citizenidImg;
+            sellerApplication.PortraitId = _photoRepo.Create<Image>(sellerApplication.RawPortrait).Id;
+            sellerApplication.CitizenIdImageId = _photoRepo.Create<Image>(sellerApplication.RawCitizenIdImage).Id;
             sellerApplication.UserId = int.Parse(User.Identity.Name);
             var result = _sellerApplicationRepo.Create<SellerApplication, SellerApplicationDTO>(sellerApplication);
             return Ok(result);
@@ -55,7 +51,7 @@ namespace Vaux.Controllers
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Get/Image")]
-        public IActionResult GetImage(string fileId)
+        public IActionResult GetImage(int id)
         {
             MemoryStream image = _photoRepo.Get(id);
             if (image == null)
