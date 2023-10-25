@@ -43,6 +43,11 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/Get")]
         public IActionResult Get(int id)
         {
+            var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == id);
+            if (u == null)
+            {
+                return BadRequest("Application does not exist");
+            }
             var s = _sellerApplicationRepo.Get<SellerApplicationDTO>(e => e.Id == id);
             return Ok(s);
         }
@@ -52,8 +57,12 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/Get/Image")]
         public IActionResult GetImage(string fileId)
         {
-            MemoryStream ms = _photoRepo.DriveDownloadFile(fileId);
-            byte[] bytes = ms.ToArray();
+            MemoryStream image = _photoRepo.Get(id);
+            if (image == null)
+            {
+                return BadRequest("Image does not exist");
+            }
+            byte[] bytes = image.ToArray();
             return File(bytes, "image/jpeg");
         }
     }
