@@ -21,14 +21,14 @@ namespace Vaux.DTO
         public DateTime DoB { get; set; }
         [Display(Name = "Image")]
         [Required(ErrorMessage = "Pick an Image")]
-        [AllowedExtensions(new string[] { ".jpg", ".jpeg"})]
+        [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png"})]
         public IFormFile RawPortrait { get; set; }
 
         [JsonIgnore]
         public int? PortraitId { get; set; }
         [Display(Name = "Image")]
         [Required(ErrorMessage = "Pick an Image")]
-        [AllowedExtensions(new string[] { ".jpg", ".jpeg",})]
+        [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
         public IFormFile RawCitizenIdImage { get; set; }
 
         [JsonIgnore]

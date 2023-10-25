@@ -14,7 +14,7 @@ namespace Vaux.Repositories
     {
         private VxDbc _vxDbc;
         private IMapper _mapper;
-        private const string PathToServiceAccountKeyFile = @"C:\Users\haiph\source\repos\Vaux-Backend\Vaux\vaux-402415-cc9850aaa031.json";
+        private const string PathToServiceAccountKeyFile = @"vaux-402415-cc9850aaa031.json";
         private const string DirectoryId = "1ETKk2RRtvOxB_ERo6drE_2jvLrpTqoVW";
 
         public PhotoRepo(VxDbc vxDbc, IMapper mapper)
