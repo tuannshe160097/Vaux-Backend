@@ -82,7 +82,11 @@ namespace Vaux.Controllers
                 _userRepo.VerifyAccount(u.Id);
             }
 
-            return Ok(_authRepo.GenerateJWT(u.Id));
+            var res = new AuthorizationDTO();
+            res.JWT = _authRepo.GenerateJWT(u.Id);
+            res.User = _userRepo.Map<UserMinimalDTO, User>(u);
+            res.Role = u.Role;
+            return Ok(res);
         }
 
         [HttpGet]

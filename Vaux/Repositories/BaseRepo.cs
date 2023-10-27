@@ -46,37 +46,48 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(res);
         }
 
-        public virtual List<TOut> GetAll<TOut>(int skip = 0, int take = -1)
+        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy)
         {
-            var res = _queryGlobal.Skip(skip);
-            if (take  > 0)
-            {
-                res = res.Take(take);
-            }
-
-            return _mapper.Map<List<TOut>>(res);
+            return GetAll<TOut>(null, orderBy);
         }
 
-        public virtual List<TOut> GetAll<TOut>(
-            Expression<Func<TEntity, bool>> predicate,
+        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, int skip, int take)
+        {
+            return GetAll<TOut>(null, orderBy, skip, take);
+        }
+
+        public virtual ResultListDTO<TOut> GetAll<TOut>(
+            Expression<Func<TEntity, bool>>? predicate = null,
             Expression<Func<TEntity, object>>? orderBy = null,
             int skip = 0,
             int take = -1)
         {
-            var res = _queryGlobal.Where(predicate);
+            var result = new ResultListDTO<TOut>();
+            var query = _queryGlobal;
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
 
             if (orderBy != null)
             {
-                res = res.OrderBy(orderBy);
+                query = query.OrderBy(orderBy);
             }
 
-            res = res.Skip(skip);
+            result.TotalRecords = query.Count();
+
+            query = query.Skip(skip);
             if (take > 0)
             {
-                res = res.Take(take);
+                query = query.Take(take);
             }
 
-            return _mapper.Map<List<TOut>>(res);
+            result.Records = _mapper.Map<List<TOut>>(query);
+            result.RecordsTaken = result.Records.Count;
+            result.RecordsSkipped = skip;
+
+            return result;
         }
 
         public virtual TOut Create<TOut, TIn>(TIn data)
@@ -133,9 +144,9 @@ namespace Vaux.Repositories
             _vxDbc.SaveChanges();
         }
 
-        /*protected virtual TOut Map<TOut>(object data)
+        public virtual TOut Map<TOut, TIn>(TIn data)
         {
             return _mapper.Map<TOut>(data);
-        }*/
+        }
     }
 }
