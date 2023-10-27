@@ -16,11 +16,13 @@ namespace Vaux.Controllers
     {
         private IItemRepo _itemRepo;
         private IPhotoRepo _photoRepo;
+        private IBaseRepo<Notification> _notificationRepo;
 
-        public ItemApplicationExpertController(IItemRepo itemRepo, IPhotoRepo photoRepo)
+        public ItemApplicationExpertController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
         {
             _itemRepo = itemRepo;
             _photoRepo = photoRepo;
+            _notificationRepo = notificationRepo;
         }
 
         [HttpGet]
@@ -56,8 +58,28 @@ namespace Vaux.Controllers
         }
 
         [HttpPut]
+        [Route("{id}/Assign")]
+        public IActionResult Assign(int id)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i == null)
+            {
+                return BadRequest();
+            }
+            i.ExpertId = int.Parse(User.Identity.Name);
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.SellerId,
+                Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được tiếp nhận chuyên gia"
+            });
+
+            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == id, i));
+        }
+
+
+        [HttpPut]
         [Route("{id}")]
-        [Authorize(nameof(RoleId.EXPERT))]
         public IActionResult Edit(int id, ItemPropertiesDTO item)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
@@ -65,6 +87,12 @@ namespace Vaux.Controllers
             {
                 return BadRequest();
             }
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.SellerId,
+                Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi chuyên gia"
+            });
 
             return Ok(_itemRepo.Update<ItemDTO, ItemPropertiesDTO>(e => e.Id == id, item));
         }
@@ -81,6 +109,12 @@ namespace Vaux.Controllers
 
             i.Status = ItemStatus.AUCTION_PENDING;
 
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.SellerId,
+                Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được phê duyệt"
+            });
+
             return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == i.Id, i, reason));
         }
 
@@ -95,6 +129,12 @@ namespace Vaux.Controllers
             }
 
             i.Status = ItemStatus.REJECTED;
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.SellerId,
+                Content = $"Đăng ký sản phẩm \"{i.Name}\" đã bị từ chối"
+            });
 
             return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == i.Id, i, reason));
         }

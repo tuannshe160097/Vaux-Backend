@@ -26,9 +26,9 @@ namespace Vaux.Controllers
         [HttpGet]
         [Route("/api/Mod/Account")]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
+        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null, int? role = null)
         {
-            return Ok(_userRepo.GetAll<User>(e => search.IsNullOrEmpty() ? true : (e.Email != null && e.Email.Contains(search)) || e.Phone.Contains(search) || e.Name.Contains(search), e => e.Id, (pageNum-1) * pageSize, pageSize));
+            return Ok(_userRepo.Search<User>(search, role, (pageNum * pageSize) - 1, pageSize));
         }
 
         [HttpGet]

@@ -17,11 +17,13 @@ namespace Vaux.Controllers
     {
         private IItemRepo _itemRepo;
         private IPhotoRepo _photoRepo;
+        private IBaseRepo<Notification> _notificationRepo;
 
-        public ItemApplicationController(IItemRepo itemRepo, IPhotoRepo photoRepo)
+        public ItemApplicationController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
         {
             _itemRepo = itemRepo;
             _photoRepo = photoRepo;
+            _notificationRepo = notificationRepo;
         }
 
         [HttpGet]
@@ -65,7 +67,7 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("{id}/Images")]
-        public IActionResult AddImages(int id, IFormFileCollection images)
+        public IActionResult AddImages(int id, ImageCollectionDTO images)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
@@ -73,7 +75,7 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            var res = _itemRepo.AddImages<Image>(e => e.Id == id, images);
+            var res = _itemRepo.AddImages<Image>(e => e.Id == id, images.Images);
 
             return Ok(res);
         }
@@ -103,6 +105,15 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
+            if (i.ExpertId != null)
+            {
+                _notificationRepo.Create<Notification, Notification>(new Notification()
+                {
+                    UserId = (int)i.ExpertId,
+                    Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật"
+                });
+            }
+
             return Ok(_itemRepo.Update<ItemDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
 
@@ -114,6 +125,15 @@ namespace Vaux.Controllers
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
             {
                 return BadRequest();
+            }
+
+            if (i.ExpertId != null)
+            {
+                _notificationRepo.Create<Notification, Notification>(new Notification()
+                {
+                    UserId = (int)i.ExpertId,
+                    Content = $"Đăng ký sản phẩm \"{i.Name}\" đã bị xóa"
+                });
             }
 
             return Ok(_itemRepo.Delete<ItemDTO>(e => e.Id == id));

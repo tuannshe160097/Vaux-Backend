@@ -144,6 +144,11 @@ namespace Vaux.Repositories
             _vxDbc.SaveChanges();
         }
 
+        public virtual IQueryable Query()
+        {
+            return _queryGlobal;
+        }
+
         public virtual TOut Map<TOut, TIn>(TIn data)
         {
             return _mapper.Map<TOut>(data);
