@@ -39,6 +39,8 @@ namespace Vaux
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddHttpContextAccessor();
+
             builder.Services.AddDbContext<VxDbc>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("VxConnString")));
 
             builder.Services.AddRepositories();

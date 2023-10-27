@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Security.Claims;
 using Vaux.DbContext;
 using Vaux.DTO;
 using Vaux.Models;
@@ -15,6 +16,8 @@ namespace Vaux.Repositories
         protected DbSet<TEntity> _dbSet;
         protected IMapper _mapper;
         protected IQueryable<TEntity> _queryGlobal;
+        protected readonly IHttpContextAccessor? _httpContextAccessor;
+        protected readonly ClaimsPrincipal? _user;
 
         public BaseRepo(VxDbc vxDbc, IMapper mapper)
         {
@@ -22,6 +25,18 @@ namespace Vaux.Repositories
             _mapper = mapper;
             _dbSet = vxDbc.Set<TEntity>();
             _queryGlobal = _dbSet.AsQueryable();
+            _httpContextAccessor = null;
+            _user = null;
+        }
+
+        public BaseRepo(VxDbc vxDbc, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        {
+            _vxDbc = vxDbc;
+            _mapper = mapper;
+            _dbSet = vxDbc.Set<TEntity>();
+            _queryGlobal = _dbSet.AsQueryable();
+            _httpContextAccessor = httpContextAccessor;
+            _user = _httpContextAccessor.HttpContext?.User;
         }
 
         public virtual TOut? Get<TOut>(Expression<Func<TEntity, bool>> predicate)

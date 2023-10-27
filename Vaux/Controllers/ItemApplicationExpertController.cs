@@ -1,0 +1,102 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Vaux.DTO;
+using Vaux.Models;
+using Vaux.Models.Enums;
+using Vaux.Repositories.Interface;
+
+namespace Vaux.Controllers
+{
+    [Route("api/Expert/ItemApplication")]
+    [ApiController]
+    [Authorize(Roles = $"{nameof(RoleId.EXPERT)}")]
+    public class ItemApplicationExpertController : ControllerBase
+    {
+        private IItemRepo _itemRepo;
+        private IPhotoRepo _photoRepo;
+
+        public ItemApplicationExpertController(IItemRepo itemRepo, IPhotoRepo photoRepo)
+        {
+            _itemRepo = itemRepo;
+            _photoRepo = photoRepo;
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            var i = _itemRepo.Get<ItemDTO>(e => e.Id == id);
+            if (i == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(i);
+        }
+
+        [HttpGet]
+        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
+        {
+            return Ok(_itemRepo.GetAll<ItemDTO>(e => search.IsNullOrEmpty() ? true : (e.Name.Contains(search) || e.Category.Name.Contains(search)), e => e.Id, (pageNum - 1) * pageSize, pageSize));
+        }
+
+        [HttpGet]
+        [Route("{id}/Images/{imageId}")]
+        public IActionResult GetImages(int id, int imageId)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null)
+            {
+                return BadRequest();
+            }
+
+            return File(_photoRepo.Get(id).ToArray(), "image/jpeg");
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        [Authorize(nameof(RoleId.EXPERT))]
+        public IActionResult Edit(int id, ItemPropertiesDTO item)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i == null || i.ExpertId.ToString() != User.Identity.Name) 
+            {
+                return BadRequest();
+            }
+
+            return Ok(_itemRepo.Update<ItemDTO, ItemPropertiesDTO>(e => e.Id == id, item));
+        }
+
+        [HttpPatch]
+        [Route("{id}/Accept")]
+        public IActionResult Accept(int id, [FromBody] string reason)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i == null)
+            {
+                return BadRequest();
+            }
+
+            i.Status = ItemStatus.AUCTION_PENDING;
+
+            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == i.Id, i, reason));
+        }
+
+        [HttpPatch]
+        [Route("{id}/Reject")]
+        public IActionResult Reject(int id, [FromBody] string reason)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i == null)
+            {
+                return BadRequest();
+            }
+
+            i.Status = ItemStatus.REJECTED;
+
+            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == i.Id, i, reason));
+        }
+    }
+}

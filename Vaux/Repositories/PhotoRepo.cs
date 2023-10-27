@@ -52,7 +52,8 @@ namespace Vaux.Repositories
             var img = _vxDbc.Images.FirstOrDefault(x => x.Id == id);
             DriveDelete(img.Url);
 
-            _vxDbc.Images.Remove(img);
+            img.Deleted = DateTime.Now;
+            _vxDbc.SaveChanges();
             
             return _mapper.Map<TOut>(img);
         }

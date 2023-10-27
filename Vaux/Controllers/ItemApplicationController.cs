@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Models.Enums;
+using Vaux.Repositories;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
@@ -15,10 +16,12 @@ namespace Vaux.Controllers
     public class ItemApplicationController : ControllerBase
     {
         private IItemRepo _itemRepo;
+        private IPhotoRepo _photoRepo;
 
-        public ItemApplicationController(IItemRepo itemRepo)
+        public ItemApplicationController(IItemRepo itemRepo, IPhotoRepo photoRepo)
         {
             _itemRepo = itemRepo;
+            _photoRepo = photoRepo;
         }
 
         [HttpGet]
@@ -44,6 +47,49 @@ namespace Vaux.Controllers
         public IActionResult Create(ItemApplicationDTO item)
         {
             var res = _itemRepo.Create<ItemDTO, ItemApplicationDTO>(item, int.Parse(User.Identity.Name));
+            return Ok(res);
+        }
+
+        [HttpGet]
+        [Route("{id}/Images/{imageId}")]
+        public IActionResult GetImages(int id, int imageId)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i?.SellerId.ToString() != User.Identity.Name || i?.Images?.FirstOrDefault(e => e.Id == imageId) == null)
+            {
+                return BadRequest();
+            }
+
+            return File(_photoRepo.Get(id).ToArray(), "image/jpeg");
+        }
+
+        [HttpPost]
+        [Route("{id}/Images")]
+        public IActionResult AddImages(int id, IFormFileCollection images)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            {
+                return BadRequest();
+            }
+
+            var res = _itemRepo.AddImages<Image>(e => e.Id == id, images);
+
+            return Ok(res);
+        }
+
+        [HttpDelete]
+        [Route("{id}/Images")]
+        public IActionResult RemoveImages(int id, int[] imageIds)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            {
+                return BadRequest();
+            }
+
+            var res = _itemRepo.RemoveImages<ItemDTO>(e => e.Id == id, imageIds);
+
             return Ok(res);
         }
 

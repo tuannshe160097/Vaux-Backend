@@ -122,5 +122,19 @@ namespace Vaux.Controllers
 
             return Ok(res);
         }
+
+        [HttpPost]
+        [Route("/api/Mod/Account/CreateExpert")]
+        public IActionResult CreateExpert(UserStrictDTO superUser)
+        {
+            if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
+            {
+                return BadRequest("User already exists");
+            }
+
+            var res = _userRepo.Create<User>(superUser, RoleId.MODERATOR);
+
+            return Ok(res);
+        }
     }
 }

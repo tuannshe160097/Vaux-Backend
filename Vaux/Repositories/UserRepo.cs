@@ -60,5 +60,22 @@ namespace Vaux.Repositories
 
             return _mapper.Map<TOut>(u);
         }
+
+        protected override User Create<TIn>(TIn data)
+        {
+            var newUser = _mapper.Map<User>(data);
+            var user = _dbSet.FirstOrDefault(e => e.Phone == newUser.Phone);
+            if (user != null)
+            {
+                _mapper.Map(newUser, user);
+            }
+            else
+            {
+                _dbSet.Add(newUser);
+                user = newUser;
+            }
+
+            return user;
+        }
     }
 }
