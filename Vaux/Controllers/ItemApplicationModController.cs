@@ -16,22 +16,30 @@ namespace Vaux.Controllers
     {
         private IItemRepo _itemRepo;
         private IPhotoRepo _photoRepo;
+        private IBaseRepo<Notification> _notificationRepo;
 
-        public ItemApplicationModController(IItemRepo itemRepo, IPhotoRepo photoRepo)
+        public ItemApplicationModController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
         {
             _itemRepo = itemRepo;
             _photoRepo = photoRepo;
+            _notificationRepo = notificationRepo;
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult ModEdit(int id, ItemApplicationDTO item)
+        public IActionResult Edit(int id, ItemApplicationDTO item)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null)
             {
                 return BadRequest();
             }
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.SellerId,
+                Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi chuyên gia"
+            });
 
             return Ok(_itemRepo.Update<ItemDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
@@ -79,6 +87,27 @@ namespace Vaux.Controllers
             var res = _itemRepo.RemoveImages<ItemDTO>(e => e.Id == id, imageIds);
 
             return Ok(res);
+        }
+
+
+        [HttpPut]
+        [Route("{id}/Unassign")]
+        public IActionResult Unassign(int id)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i == null)
+            {
+                return BadRequest();
+            }
+            i.ExpertId = int.Parse(User.Identity.Name);
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.SellerId,
+                Content = $"Đăng ký sản phẩm \"{i.Name}\" đang chờ xử lý"
+            });
+
+            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == id, i));
         }
     }
 }

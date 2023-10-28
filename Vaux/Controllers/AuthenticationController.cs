@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
@@ -94,7 +95,13 @@ namespace Vaux.Controllers
         [Route("RefreshToken")]
         public IActionResult RefreshToken()
         {
-            return Ok(_authRepo.GenerateJWT(int.Parse(User.Identity.Name)));
+            var u = _userRepo.Get<User>(e => e.Id == int.Parse(User.Identity.Name));
+
+            var res = new AuthorizationDTO();
+            res.JWT = _authRepo.GenerateJWT(u.Id);
+            res.User = _userRepo.Map<UserMinimalDTO, User>(u);
+            res.Role = u.Role;
+            return Ok(res);
         }
     }
 }

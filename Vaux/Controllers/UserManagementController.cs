@@ -132,7 +132,7 @@ namespace Vaux.Controllers
                 return BadRequest("User already exists");
             }
 
-            var res = _userRepo.Create<User>(superUser, RoleId.MODERATOR);
+            var res = _userRepo.Create<User>(superUser, RoleId.EXPERT);
 
             return Ok(res);
         }

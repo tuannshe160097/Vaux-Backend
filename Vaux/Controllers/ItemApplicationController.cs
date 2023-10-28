@@ -42,7 +42,7 @@ namespace Vaux.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_itemRepo.Get<ItemDTO>(e => e.Id.ToString() == User.Identity.Name));
+            return Ok(_itemRepo.GetAll<ItemDTO>(e => e.SellerId.ToString() == User.Identity.Name));
         }
 
         [HttpPost]
@@ -73,6 +73,15 @@ namespace Vaux.Controllers
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
             {
                 return BadRequest();
+            }
+
+            if (i.ExpertId != null)
+            {
+                _notificationRepo.Create<Notification, Notification>(new Notification()
+                {
+                    UserId = (int)i.ExpertId,
+                    Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh"
+                });
             }
 
             var res = _itemRepo.AddImages<Image>(e => e.Id == id, images.Images);

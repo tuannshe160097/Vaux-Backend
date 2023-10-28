@@ -43,7 +43,7 @@ namespace Vaux.Repositories
                 query = query.Take(take);
             }
 
-            result.Records = _mapper.Map<List<TOut>>(query);
+            result.Records = _mapper.Map<List<TOut>>(query.ToList());
             result.RecordsTaken = result.Records.Count;
             result.RecordsSkipped = skip;
 

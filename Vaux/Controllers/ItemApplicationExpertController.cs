@@ -27,6 +27,7 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult Get(int id)
         {
             var i = _itemRepo.Get<ItemDTO>(e => e.Id == id);
@@ -39,6 +40,7 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
             return Ok(_itemRepo.GetAll<ItemDTO>(e => search.IsNullOrEmpty() ? true : (e.Name.Contains(search) || e.Category.Name.Contains(search)), e => e.Id, (pageNum - 1) * pageSize, pageSize));
@@ -46,6 +48,7 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Route("{id}/Images/{imageId}")]
+        [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult GetImages(int id, int imageId)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
@@ -59,10 +62,11 @@ namespace Vaux.Controllers
 
         [HttpPut]
         [Route("{id}/Assign")]
+        [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult Assign(int id)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null)
+            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId != null)
             {
                 return BadRequest();
             }
@@ -71,19 +75,38 @@ namespace Vaux.Controllers
             _notificationRepo.Create<Notification, Notification>(new Notification()
             {
                 UserId = i.SellerId,
-                Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được tiếp nhận chuyên gia"
+                Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được tiếp nhận bởi chuyên gia"
             });
 
             return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == id, i));
         }
 
+        [HttpPut]
+        [Route("{id}/Unassign")]
+        public IActionResult Unassign(int id)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity.Name)
+            {
+                return BadRequest();
+            }
+            i.ExpertId = null;
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.SellerId,
+                Content = $"Đăng ký sản phẩm \"{i.Name}\" đang chờ xử lý"
+            });
+
+            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == id, i));
+        }
 
         [HttpPut]
         [Route("{id}")]
         public IActionResult Edit(int id, ItemPropertiesDTO item)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.ExpertId.ToString() != User.Identity.Name) 
+            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity.Name) 
             {
                 return BadRequest();
             }
@@ -102,7 +125,7 @@ namespace Vaux.Controllers
         public IActionResult Accept(int id, [FromBody] string reason)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null)
+            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity.Name)
             {
                 return BadRequest();
             }
@@ -123,7 +146,7 @@ namespace Vaux.Controllers
         public IActionResult Reject(int id, [FromBody] string reason)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null)
+            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity.Name)
             {
                 return BadRequest();
             }

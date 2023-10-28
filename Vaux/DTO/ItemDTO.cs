@@ -17,6 +17,9 @@ namespace Vaux.DTO
         public int SellerId { get; set; }
         public UserMinimalDTO Seller { get; set; }
 
+        public int? ExpertId { get; set; }
+        public UserMinimalDTO? Expert { get; set; }
+
         public string Description { get; set; }
 
         public List<ItemPropertyDTO>? ItemProperties { get; set; }
