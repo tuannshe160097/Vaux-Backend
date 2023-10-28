@@ -16,6 +16,11 @@ namespace Vaux.Models
         public int SellerId { get; set; }
         public virtual User Seller { get; set; }
 
+
+        [ForeignKey(nameof(Expert))]
+        public int? ExpertId { get; set; }
+        public virtual User? Expert { get; set; }
+
         public string Description { get; set; }
 
         public virtual ICollection<ItemProperty>? ItemProperties { get; set; }

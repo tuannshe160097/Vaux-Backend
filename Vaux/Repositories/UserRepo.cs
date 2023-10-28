@@ -18,6 +18,38 @@ namespace Vaux.Repositories
             _queryGlobal = _queryGlobal.IgnoreQueryFilters();
         }
 
+        public ResultListDTO<TOut> Search<TOut>(string search, int? role, int skip = 0, int take = -1)
+        {
+            var result = new ResultListDTO<TOut>();
+            var query = _queryGlobal;
+
+            if (search != null)
+            {
+                query.Where(e => (e.Email != null && e.Email.Contains(search)) || e.Phone.Contains(search) || e.Name.Contains(search));
+            }
+
+            if (role != null)
+            {
+                query.Where(e => e.RoleId == role);
+            }
+            
+            query = query.OrderBy(e => e.Id);
+
+            result.TotalRecords = query.Count();
+
+            query.Skip(skip);
+            if (take > 0)
+            {
+                query = query.Take(take);
+            }
+
+            result.Records = _mapper.Map<List<TOut>>(query.ToList());
+            result.RecordsTaken = result.Records.Count;
+            result.RecordsSkipped = skip;
+
+            return result;
+        }
+
         public void VerifyAccount(int id)
         {
             var u = _dbSet.FirstOrDefault(x => x.Id == id);
@@ -59,6 +91,23 @@ namespace Vaux.Repositories
             Save();
 
             return _mapper.Map<TOut>(u);
+        }
+
+        protected override User Create<TIn>(TIn data)
+        {
+            var newUser = _mapper.Map<User>(data);
+            var user = _dbSet.FirstOrDefault(e => e.Phone == newUser.Phone);
+            if (user != null)
+            {
+                _mapper.Map(newUser, user);
+            }
+            else
+            {
+                _dbSet.Add(newUser);
+                user = newUser;
+            }
+
+            return user;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
@@ -24,13 +25,14 @@ namespace Vaux.Controllers
         [Route("Register")]
         public IActionResult Register(UserMinimalNonOptionalDTO user)
         {
-            if (_userRepo.Get<User>(e => e.Phone == user.Phone) != null)
+            var u = _userRepo.Get<User>(e => e.Phone == user.Phone);
+            if (u != null && u.IsVerified)
             {
                 return BadRequest("User already exists");
             }
 
-            User u = _userRepo.Create<User, UserMinimalNonOptionalDTO>(user);
-            _authRepo.GenerateAndSendOtp(u.Id);
+            User res = _userRepo.Create<User, UserMinimalNonOptionalDTO>(user);
+            _authRepo.GenerateAndSendOtp(res.Id);
 
             return Ok();
         }
@@ -81,7 +83,25 @@ namespace Vaux.Controllers
                 _userRepo.VerifyAccount(u.Id);
             }
 
-            return Ok(_authRepo.GenerateJWT(u.Id));
+            var res = new AuthorizationDTO();
+            res.JWT = _authRepo.GenerateJWT(u.Id);
+            res.User = _userRepo.Map<UserMinimalDTO, User>(u);
+            res.Role = u.Role;
+            return Ok(res);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("RefreshToken")]
+        public IActionResult RefreshToken()
+        {
+            var u = _userRepo.Get<User>(e => e.Id == int.Parse(User.Identity.Name));
+
+            var res = new AuthorizationDTO();
+            res.JWT = _authRepo.GenerateJWT(u.Id);
+            res.User = _userRepo.Map<UserMinimalDTO, User>(u);
+            res.Role = u.Role;
+            return Ok(res);
         }
     }
 }
