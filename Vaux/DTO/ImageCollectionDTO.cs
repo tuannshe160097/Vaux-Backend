@@ -2,6 +2,6 @@
 {
     public class ImageCollectionDTO
     {
-        public IFormFileCollection Images { get; set; }
+        public List<IFormFile> Images { get; set; }
     }
 }

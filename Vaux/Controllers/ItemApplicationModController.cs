@@ -61,7 +61,7 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("{id}/Images")]
-        public IActionResult AddImages(int id, IFormFileCollection images)
+        public IActionResult AddImages(int id, [FromForm] ImageCollectionDTO images)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null)
@@ -69,7 +69,7 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            var res = _itemRepo.AddImages<Image>(e => e.Id == id, images);
+            var res = _itemRepo.AddImages<Image>(e => e.Id == id, images.Images);
 
             return Ok(res);
         }
