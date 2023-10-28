@@ -67,7 +67,7 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("{id}/Images")]
-        public IActionResult AddImages(int id, ImageCollectionDTO images)
+        public IActionResult AddImages(int id, [FromForm] ImageCollectionDTO images)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
@@ -84,7 +84,7 @@ namespace Vaux.Controllers
                 });
             }
 
-            var res = _itemRepo.AddImages<Image>(e => e.Id == id, images.Images);
+            var res = _itemRepo.AddImages<ItemDTO>(e => e.Id == id, images.Images);
 
             return Ok(res);
         }

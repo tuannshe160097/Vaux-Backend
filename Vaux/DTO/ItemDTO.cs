@@ -23,5 +23,7 @@ namespace Vaux.DTO
         public string Description { get; set; }
 
         public List<ItemPropertyDTO>? ItemProperties { get; set; }
+
+        public List<int>? Images { get; set; }
     }
 }

@@ -12,9 +12,9 @@ namespace Vaux.Repositories
     {
         private IPhotoRepo _photoRepo;
 
-        public ItemRepo(VxDbc vxDbc, IMapper mapper, IHttpContextAccessor httpContextAccessor, IPhotoRepo photoRepo) : base(vxDbc, mapper, httpContextAccessor)
+        public ItemRepo(VxDbc vxDbc, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(vxDbc, mapper, httpContextAccessor)
         {
-            _photoRepo = photoRepo;
+            _photoRepo = new PhotoRepo(vxDbc, mapper);
         }
 
         public TOut Create<TOut, TIn>(TIn item, int seller)
@@ -74,7 +74,7 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(item);
         }
 
-        public TOut AddImages<TOut>(Expression<Func<Item, bool>> predicate, IFormFileCollection images)
+        public TOut AddImages<TOut>(Expression<Func<Item, bool>> predicate, List<IFormFile> images)
         {
             var i = Get<Item>(predicate);
 
