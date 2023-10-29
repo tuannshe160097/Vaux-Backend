@@ -22,6 +22,7 @@ namespace Vaux.DTO
         [Display(Name = "Image")]
         [Required(ErrorMessage = "Pick an Image")]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png"})]
+        [AllowedImageSize(10)]
         public IFormFile RawPortrait { get; set; }
 
         [JsonIgnore]
@@ -29,6 +30,7 @@ namespace Vaux.DTO
         [Display(Name = "Image")]
         [Required(ErrorMessage = "Pick an Image")]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
+        [AllowedImageSize(10)]
         public IFormFile RawCitizenIdImage { get; set; }
 
         [JsonIgnore]
