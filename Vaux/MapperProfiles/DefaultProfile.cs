@@ -30,11 +30,18 @@ namespace Vaux.MapperProfiles
 
             CreateMap<ItemApplicationDTO, Item>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<ItemPropertiesDTO, Item>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
             CreateMap<ItemPropertyDTO, ItemProperty>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
 
+            CreateMap<ItemProperty, ItemPropertyDTO>();
+
             CreateMap<Item, ItemDTO>()
-                .ForMember(dest => dest.StatusString, opt => opt.MapFrom(src => nameof(src.Status)));
+                .ForMember(dest => dest.StatusString, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images != null ? src.Images.Select(e => e.Id) : null));
 
             CreateMap<Category, CategoryDTO>();
 

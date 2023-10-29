@@ -22,13 +22,13 @@ namespace Vaux.Controllers
         {
             _userRepo = userRepo;
         }
-
+         
         [HttpGet]
         [Route("/api/Mod/Account")]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
+        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null, int? role = null)
         {
-            return Ok(_userRepo.GetAll<User>(e => search.IsNullOrEmpty() ? true : e.Email == search || e.Phone == search || e.Name == search, e => e.Id, (pageNum-1) * pageSize, pageSize));
+            return Ok(_userRepo.Search<User>(search, role, (pageNum * pageSize) - 1, pageSize));
         }
 
         [HttpGet]
@@ -119,6 +119,20 @@ namespace Vaux.Controllers
             }
 
             var res = _userRepo.Create<User>(superUser, RoleId.MODERATOR);
+
+            return Ok(res);
+        }
+
+        [HttpPost]
+        [Route("/api/Mod/Account/CreateExpert")]
+        public IActionResult CreateExpert(UserStrictDTO superUser)
+        {
+            if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
+            {
+                return BadRequest("User already exists");
+            }
+
+            var res = _userRepo.Create<User>(superUser, RoleId.EXPERT);
 
             return Ok(res);
         }
