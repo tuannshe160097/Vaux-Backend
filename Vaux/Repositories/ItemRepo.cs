@@ -19,7 +19,7 @@ namespace Vaux.Repositories
 
         public TOut Create<TOut, TIn>(TIn item, int seller)
         {
-            var i = base.Create(item);
+            var i = Create(item);
             i.SellerId = seller;
             i.Status = ItemStatus.EXAMINATION_PENDING;
 
@@ -31,7 +31,7 @@ namespace Vaux.Repositories
         public override TOut Update<TOut, TIn>(Expression<Func<Item, bool>> predicate, TIn data)
         {
             var oldItem = Get<Item>(predicate);
-            var newItem = base.Update(predicate, data);
+            var newItem = Update(predicate, data);
 
             if (oldItem.Status != newItem.Status && _user != null)
             {
@@ -49,7 +49,7 @@ namespace Vaux.Repositories
         public TOut Update<TOut, TIn>(Expression<Func<Item, bool>> predicate, TIn data, string changeReason)
         {
             var oldItem = Get<Item>(predicate);
-            var newItem = base.Update(predicate, data);
+            var newItem = Update(predicate, data);
 
             if (oldItem.Status != newItem.Status && _user != null)
             {
@@ -64,14 +64,12 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(newItem);
         }
 
-        public override TOut Delete<TOut>(Expression<Func<Item, bool>> predicate)
+        protected override Item Delete(Expression<Func<Item, bool>> predicate)
         {
             var item = base.Delete(predicate);
             item.Status = ItemStatus.REMOVED;
 
-            Save();
-
-            return _mapper.Map<TOut>(item);
+            return item;
         }
 
         public TOut AddImages<TOut>(Expression<Func<Item, bool>> predicate, List<IFormFile> images)

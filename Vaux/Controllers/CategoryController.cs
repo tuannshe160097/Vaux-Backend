@@ -9,7 +9,7 @@ using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
 {
-    [Route("api/Category")]
+    [Route("api/Mod/Category")]
     [ApiController]
     [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
     public class CategoryController : ControllerBase
@@ -23,6 +23,7 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("/api/Category")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
             return Ok(_categoryRepo.GetAll<CategoryDTO>(e => search.IsNullOrEmpty() ? true : e.Name.Contains(search), e => e.Id, (pageNum-1) * pageSize, pageSize));
@@ -30,21 +31,20 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("{id}")]
+        [Route("/api/Category/{id}")]
         public IActionResult Get(int id)
         {
             return Ok(_categoryRepo.Get<CategoryDTO>(e => e.Id == id));
         }
 
         [HttpPost]
-        [Route("/api/Mod/Category")]
         public IActionResult Create([FromBody] CategoryDTO categoryDTO)
         {
             return Ok(_categoryRepo.Create<CategoryDTO, CategoryDTO>(categoryDTO));
         }
 
         [HttpPut]
-        [Route("/api/Mod/Category/{id}")]
+        [Route("{id}")]
         public IActionResult Update(int id, [FromBody] CategoryDTO categoryDTO)
         {
             var c = _categoryRepo.Get<Category>(e => e.Id == id);
@@ -54,6 +54,19 @@ namespace Vaux.Controllers
             }
 
             return Ok(_categoryRepo.Update<CategoryDTO, CategoryDTO>(e => e.Id == id, categoryDTO));
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var c = _categoryRepo.Get<Category>(e => e.Id == id);
+            if (c == null)
+            {
+                return BadRequest("Category doesn't exist");
+            }
+
+            return Ok(_categoryRepo.Delete<CategoryDTO>(e => e.Id == id));
         }
     }
 }
