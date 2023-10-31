@@ -36,6 +36,7 @@ namespace Vaux.Models
 
         public virtual ICollection<Comment>? Comments { get; set; }
 
+        public virtual ICollection<AuctionSessionItem>? AuctionSessionItems { get; set; }
         public virtual ICollection<AuctionSession>? AuctionSessions { get; set; }
 
         public int? OrderId { get; set; }

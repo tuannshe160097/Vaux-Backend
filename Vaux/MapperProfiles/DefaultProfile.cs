@@ -28,6 +28,8 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Items, opt => opt.Ignore());
 
+            CreateMap<Category, CategoryDTO>();
+
             CreateMap<ItemApplicationDTO, Item>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
 
@@ -43,13 +45,20 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.StatusString, opt => opt.MapFrom(src => src.Status.ToString()))
                 .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images != null ? src.Images.Select(e => e.Id) : null));
 
-            CreateMap<Category, CategoryDTO>();
-
             CreateMap<SellerApplicationDTO, SellerApplication>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
             CreateMap<SellerApplication, SellerApplicationDTO>();
+
             CreateMap<SellerApplication, User>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<AuctionSessionUploadDTO, AuctionSession>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<AuctionSession, AuctionSessionIFullDTO>();
+
+            CreateMap<AuctionSession, AuctionSessionMinimalDTO>();
         }
     }
 }
