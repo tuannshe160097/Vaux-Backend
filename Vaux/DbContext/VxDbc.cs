@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Microsoft.EntityFrameworkCore.Migrations;
     using Microsoft.EntityFrameworkCore.Query;
+    using Microsoft.Extensions.Hosting;
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Runtime.CompilerServices;
@@ -71,6 +72,12 @@
             modelBuilder.Entity<Order>()
                 .Property(e => e.TotalCost)
                 .HasDefaultValue(0);
+
+            modelBuilder.Entity<Item>()
+                .HasMany(e => e.AuctionSessions)
+                .WithMany(e => e.Items)
+                .UsingEntity<AuctionSessionItem>();
+
 
             modelBuilder.Entity<Role>().HasData(
                 new Role()

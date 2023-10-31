@@ -10,7 +10,7 @@ namespace Vaux.Controllers
 {
     [Route("api/Mod/Auction")]
     [ApiController]
-    [Authorize($"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+    [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
     public class AuctionSessionController : ControllerBase
     {
         private IAuctionSessionRepo _auctionRepo;
