@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Numerics;
-using Twilio.TwiML.Voice;
 using Vaux.DbContext;
 using Vaux.DTO;
 using Vaux.Models;
@@ -18,26 +16,26 @@ namespace Vaux.Repositories
             _queryGlobal = _queryGlobal.IgnoreQueryFilters();
         }
 
-        public ResultListDTO<TOut> Search<TOut>(string search, int? role, int skip = 0, int take = -1)
+        public ResultListDTO<TOut> Search<TOut>(string? search, int? role, int skip = 0, int take = -1)
         {
             var result = new ResultListDTO<TOut>();
             var query = _queryGlobal;
 
-            if (search != null)
+            if (search != null && search != string.Empty)
             {
-                query.Where(e => (e.Email != null && e.Email.Contains(search)) || e.Phone.Contains(search) || e.Name.Contains(search));
+                query = query.Where(e => (e.Email != null && e.Email.Contains(search)) || e.Phone.Contains(search) || e.Name.Contains(search));
             }
 
             if (role != null)
             {
-                query.Where(e => e.RoleId == role);
+                query = query.Where(e => e.RoleId == role);
             }
             
             query = query.OrderBy(e => e.Id);
 
             result.TotalRecords = query.Count();
 
-            query.Skip(skip);
+            query = query.Skip(skip);
             if (take > 0)
             {
                 query = query.Take(take);
