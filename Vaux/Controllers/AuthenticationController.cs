@@ -31,7 +31,12 @@ namespace Vaux.Controllers
                 return BadRequest("User already exists");
             }
 
-            User res = _userRepo.Create<User, UserMinimalNonOptionalDTO>(user);
+            if (u != null)
+            {
+                _userRepo.Delete<User>(e => e.Id == u.Id);
+            }
+
+            var res = _userRepo.Create<User, UserMinimalNonOptionalDTO>(user);
             _authRepo.GenerateAndSendOtp(res.Id);
 
             return Ok();
