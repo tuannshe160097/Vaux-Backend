@@ -17,7 +17,7 @@ namespace Vaux.Repositories
 
         public override TOut Create<TOut, TIn>(TIn data)
         {
-            var a = base.Create(data);
+            var a = Create(data);
             a.Status = SellerApplicationStatus.PENDING;
             Save();          
             return _mapper.Map<TOut>(a);

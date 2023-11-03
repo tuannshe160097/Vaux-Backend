@@ -25,10 +25,16 @@ namespace Vaux.Controllers
          
         [HttpGet]
         [Route("/api/Mod/Account")]
-        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null, int? role = null)
+        //[Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [AllowAnonymous]
+        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, [FromQuery] string[]? filterEntities = null, [FromQuery] string[]? filterValues = null, string orderBy = "Id")
         {
-            return Ok(_userRepo.Search<User>(search, role, (pageNum * pageSize) - 1, pageSize));
+            if (filterValues?.Length != filterEntities?.Length)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_userRepo.Search<User>(filterEntities, filterValues, orderBy, (pageNum-1) * pageSize, pageSize));
         }
 
         [HttpGet]

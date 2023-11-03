@@ -90,6 +90,45 @@ namespace Vaux.Repositories
             return result;
         }
 
+        public ResultListDTO<TOut> Search<TOut>(string[]? filterEntities, string[]? filterValues, string orderBy = "Id", int skip = 0, int take = -1)
+        {
+            filterEntities = filterEntities ?? new string[0];
+            filterValues = filterValues ?? new string[0];
+            var result = new ResultListDTO<TOut>();
+            var query = _queryGlobal;
+
+            for (int i = 0; i < filterEntities.Length; i++)
+            {
+                var colName = filterEntities[i];
+                var colValue = filterValues[i];
+                if (typeof(TEntity).GetProperty(colName) == null) continue;
+                query = query.Where(e => colValue.Contains(EF.Property<object>(e, colName)!.ToString()!));
+            }
+
+            if (typeof(TEntity).GetProperty(orderBy) != null)
+            {
+                query = query.OrderBy(e => EF.Property<object>(e, orderBy)).ThenBy(e => e.Id);
+            }
+            else
+            {
+                query = query.OrderBy(e => e.Id);
+            }
+
+            result.TotalRecords = query.Count();
+
+            query = query.Skip(skip);
+            if (take > 0)
+            {
+                query = query.Take(take);
+            }
+
+            result.Records = _mapper.Map<List<TOut>>(query.ToList());
+            result.RecordsTaken = result.Records.Count;
+            result.RecordsSkipped = skip;
+
+            return result;
+        }
+
         public virtual TOut Create<TOut, TIn>(TIn data)
         {
             var e = Create(data);

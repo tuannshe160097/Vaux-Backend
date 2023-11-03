@@ -15,6 +15,7 @@ namespace Vaux.Repositories.Interface
             Expression<Func<TEntity, object>>? orderBy = null,
             int skip = 0,
             int take = -1);
+        public ResultListDTO<TOut> Search<TOut>(string[]? filterEntities, string[]? filterValues, string orderBy = "Id", int skip = 0, int take = -1);
         public TOut Create<TOut, TIn>(TIn data);
         public TOut Update<TOut, TIn>(Expression<Func<TEntity, bool>> predicate, TIn data);
         public TOut Delete<TOut>(Expression<Func<TEntity, bool>> predicate);
