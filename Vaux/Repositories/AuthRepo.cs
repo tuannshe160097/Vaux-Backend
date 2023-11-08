@@ -27,6 +27,11 @@ namespace Vaux.Repositories
         {
             var u = _vxDbc.Users.FirstOrDefault(u => u.Id == id);
 
+            if (u == null || u.OtpHash == null)
+            {
+                return false;
+            }
+
             var res = BCrypt.Net.BCrypt.Verify(otp, u.OtpHash);
 
             if (res)
