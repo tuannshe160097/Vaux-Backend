@@ -25,7 +25,7 @@ namespace Vaux.Controllers
          
         [HttpGet]
         [Route("/api/Mod/Account")]
-        //[Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [AllowAnonymous]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, [FromQuery] string[]? filterEntities = null, [FromQuery] string[]? filterValues = null, string orderBy = "Id")
         {

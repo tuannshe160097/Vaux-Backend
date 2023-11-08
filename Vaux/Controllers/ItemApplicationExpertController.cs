@@ -49,7 +49,7 @@ namespace Vaux.Controllers
         [HttpGet]
         [Route("{id}/Images/{imageId}")]
         [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult GetImages(int id, int imageId)
+        public IActionResult GetImage(int id, int imageId)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null)

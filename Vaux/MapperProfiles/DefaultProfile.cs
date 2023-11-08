@@ -59,6 +59,10 @@ namespace Vaux.MapperProfiles
             CreateMap<AuctionSession, AuctionSessionIFullDTO>();
 
             CreateMap<AuctionSession, AuctionSessionMinimalDTO>();
+
+            CreateMap<Comment, CommentOutDTO>();
+
+            CreateMap<Bid, BidDTO>();
         }
     }
 }
