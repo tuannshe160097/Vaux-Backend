@@ -19,6 +19,7 @@ namespace Vaux.Repositories.Interface
         public TOut Create<TOut, TIn>(TIn data);
         public TOut Update<TOut, TIn>(Expression<Func<TEntity, bool>> predicate, TIn data);
         public TOut Delete<TOut>(Expression<Func<TEntity, bool>> predicate);
+        public TOut DeletePerma<TOut>(Expression<Func<TEntity, bool>> predicate);
         public TOut Map<TOut, TIn>(TIn data);
     }
 }
