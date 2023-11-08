@@ -65,7 +65,7 @@ namespace Vaux.Controllers
         }
 
         [HttpPatch]
-        //[Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Approve")]
         public IActionResult ApproveApplication(int applicationId)
         {
@@ -81,7 +81,7 @@ namespace Vaux.Controllers
         }
 
         [HttpPatch]
-        //[Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Deny")]
         public IActionResult DenyApplication(int applicationId)
         {
