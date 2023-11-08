@@ -33,7 +33,7 @@ namespace Vaux.Controllers
 
             if (u != null)
             {
-                _userRepo.Delete<User>(e => e.Id == u.Id);
+                _userRepo.DeletePerma<User>(e => e.Id == u.Id);
             }
 
             var res = _userRepo.Create<User, UserMinimalNonOptionalDTO>(user);
