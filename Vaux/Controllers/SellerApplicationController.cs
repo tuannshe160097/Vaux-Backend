@@ -46,7 +46,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Application does not exist");
             }
-            var s = _sellerApplicationRepo.Get<SellerApplicationDTO>(e => e.Id == id);
+            var s = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.Id == id);
             return Ok(s);
         }
 
