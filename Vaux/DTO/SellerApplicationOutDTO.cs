@@ -19,5 +19,6 @@ namespace Vaux.DTO
         public DateTime DoB { get; set; }
         public int? PortraitId { get; set; }
         public int? CitizenIdImageId { get; set; }
+        public UserMinimalDTO User { get; set; }
     }
 }
