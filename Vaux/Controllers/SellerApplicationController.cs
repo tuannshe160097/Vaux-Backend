@@ -52,7 +52,7 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        [Route("/api/Seller/Application/Get/Image")]
+        [Route("/api/Seller/Application/Get/Image/{id}")]
         public IActionResult GetImage(int id)
         {
             MemoryStream image = _photoRepo.Get(id);
