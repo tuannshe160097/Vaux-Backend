@@ -77,7 +77,9 @@
                 .HasMany(e => e.AuctionSessions)
                 .WithMany(e => e.Items)
                 .UsingEntity<AuctionSessionItem>();
-
+            modelBuilder.Entity<ChatMessage>()
+                .Property(e => e.Content)
+                .HasDefaultValue(String.Empty);
 
             modelBuilder.Entity<Role>().HasData(
                 new Role()
@@ -111,7 +113,7 @@
             {
                 Id = 1,
                 RoleId = (int)RoleId.ADMIN,
-                Name = "Admin",
+                Name = "Doxx him John",
                 Phone = "0855068490",
                 Email = "tuannshe160097@fpt.edu.vn"
             });
@@ -146,5 +148,6 @@
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<SellerPayment> SellerPayments { get; set;}
         public DbSet<StatusChange> StatusChanges { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
     }
 }

@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Vaux.DbContext;
 using Vaux.Repositories;
 using Vaux.Repositories.Interface;
+using Vaux.Hubs;
 using Vaux.ServiceConfiguration;
 
 namespace Vaux
@@ -20,12 +22,20 @@ namespace Vaux
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: allowClientOrigin,
-                    policy =>
-                    {
-                        policy.WithOrigins(builder.Configuration["JWT:Audience"])
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
+                /*                    builder =>
+                                {
+                                    builder.AllowAnyOrigin() AllowCredentials() ;
+                                });*/
+                policy =>
+                {
+                    policy.WithOrigins(builder.Configuration["JWT:Audience"])
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                    policy.WithOrigins("http://127.0.0.1:5500/")
+                    .WithMethods("GET", "POST")
+                    .AllowCredentials();
+                });
             });
 
             // Add services to the container.
@@ -66,7 +76,7 @@ namespace Vaux
                     ClockSkew = TimeSpan.Zero
                 };
             });
-
+            builder.Services.AddSignalR();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -84,7 +94,7 @@ namespace Vaux
             app.UseAuthorization();
 
             app.MapControllers();
-
+            app.MapHub<VauxChatHub>("/vauxchathub");
             app.Run();
         }
     }

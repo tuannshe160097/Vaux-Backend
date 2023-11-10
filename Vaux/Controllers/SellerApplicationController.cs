@@ -52,6 +52,15 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Route("/api/Seller/Application/GetAll")]
+        public IActionResult GetAll()
+        {
+            var s = _sellerApplicationRepo.GetAll<SellerApplicationDTO>(e => e.Status);
+            return Ok(s);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Get/Image")]
         public IActionResult GetImage(int id)
         {
@@ -65,7 +74,7 @@ namespace Vaux.Controllers
         }
 
         [HttpPatch]
-        //[Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Approve")]
         public IActionResult ApproveApplication(int applicationId)
         {
@@ -81,7 +90,7 @@ namespace Vaux.Controllers
         }
 
         [HttpPatch]
-        //[Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Deny")]
         public IActionResult DenyApplication(int applicationId)
         {
