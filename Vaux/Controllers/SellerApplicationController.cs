@@ -29,6 +29,11 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/Create")]
         public IActionResult Create([FromForm] SellerApplicationDTO sellerApplication)
         {
+            var sa = _sellerApplicationRepo.Get<SellerApplication>(e => e.UserId == int.Parse(User.Identity.Name));
+            if (sa != null)
+            {
+                return BadRequest("Application already existed");
+            }
             sellerApplication.PortraitId = _photoRepo.Create<Image>(sellerApplication.RawPortrait).Id;
             sellerApplication.CitizenIdImageId = _photoRepo.Create<Image>(sellerApplication.RawCitizenIdImage).Id;
             sellerApplication.UserId = int.Parse(User.Identity.Name);
