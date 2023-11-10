@@ -30,7 +30,7 @@ namespace Vaux.Controllers
         public IActionResult Create([FromForm] SellerApplicationDTO sellerApplication)
         {
             var sa = _sellerApplicationRepo.Get<SellerApplication>(e => e.UserId == int.Parse(User.Identity.Name));
-            if (sa != null)
+            if (sa != null && sa.Status == SellerApplicationStatus.PENDING)
             {
                 return BadRequest("Application already existed");
             }
