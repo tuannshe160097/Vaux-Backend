@@ -70,7 +70,7 @@ namespace Vaux.Controllers
         public IActionResult ApproveApplication(int applicationId)
         {
             var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
-            if (u == null)
+            if (u == null || u.Status != SellerApplicationStatus.PENDING)
             {
                 return BadRequest("Application does not exist");
             }
@@ -86,7 +86,7 @@ namespace Vaux.Controllers
         public IActionResult DenyApplication(int applicationId)
         {
             var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
-            if (u == null)
+            if (u == null || u.Status != SellerApplicationStatus.PENDING)
             {
                 return BadRequest("Application does not exist");
             }
