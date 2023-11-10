@@ -51,11 +51,34 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        [Route("/api/Seller/Application/Get/Image/{id}")]
-        public IActionResult GetImage(int id)
+        [Authorize(Roles = $"{nameof(RoleId.SELLER)}")]
+        [Route("/api/Seller/Application/Get/{id}/Image/{imageId}")]
+        public IActionResult GetImage(int id, int imageId)
         {
-            MemoryStream image = _photoRepo.Get(id);
+            var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == id);
+            if (i?.UserId.ToString() != User.Identity.Name)
+            {
+                return BadRequest("Unauthorized");
+            }
+            if(i.PortraitId != imageId && i.CitizenIdImageId != imageId)
+            {
+                return BadRequest("Unauthorized");
+            }
+            MemoryStream image = _photoRepo.Get(imageId);
+            if (image == null)
+            {
+                return BadRequest("Image does not exist");
+            }
+            byte[] bytes = image.ToArray();
+            return File(bytes, "image/jpeg");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Route("/api/Seller/Application/Get/Image/{imageId}")]
+        public IActionResult GetImage(int imageId)
+        {
+            MemoryStream image = _photoRepo.Get(imageId);
             if (image == null)
             {
                 return BadRequest("Image does not exist");
