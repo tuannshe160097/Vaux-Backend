@@ -59,6 +59,12 @@ namespace Vaux.MapperProfiles
             CreateMap<AuctionSession, AuctionSessionIFullDTO>();
 
             CreateMap<AuctionSession, AuctionSessionMinimalDTO>();
+
+            CreateMap<ChatMessageDTO, ChatMessage>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<ChatMessage, ChatMessageDTO>()
+                .ForMember(dest => dest.RawImage, opt => opt.Ignore());
+
         }
     }
 }

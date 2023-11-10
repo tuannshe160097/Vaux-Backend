@@ -14,14 +14,15 @@ namespace Vaux.ValidationAttributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var file = value as IFormFile;
-            var extension = Path.GetExtension(file.FileName);
-            if (file != null)
+            if(file == null)
             {
+                return ValidationResult.Success;
+            }
+            var extension = Path.GetExtension(file.FileName);
                 if (!_extensions.Contains(extension.ToLower()))
                 {
                     return new ValidationResult(GetErrorMessage());
                 }
-            }
             return ValidationResult.Success;
         }
 
