@@ -5,28 +5,38 @@ using System.Linq.Expressions;
 using Vaux.Repositories.Interface;
 using Vaux.DTO;
 using Vaux.DbContext;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Vaux.Hubs
 {
     public class VauxChatHub : Hub
     {
         private VxDbc _context;
-        public VauxChatHub (VxDbc VxDbc)
+        protected readonly IHttpContextAccessor? _httpContextAccessor;
+        protected readonly ClaimsPrincipal? _user;
+        public VauxChatHub (VxDbc VxDbc, IHttpContextAccessor httpContextAccessor)
         {
             _context = VxDbc;
+            _httpContextAccessor = httpContextAccessor;
+            _user = _httpContextAccessor.HttpContext?.User;
         }
         public override Task OnConnectedAsync()
         {
             Console.WriteLine("SignalR Connected");
             return Task.CompletedTask;
         }
+        [Authorize]
         public void JoinRoom(string roomName, int itemId)
         {
             var item = _context.Items.FirstOrDefault(e => e.Id == itemId);
-            //var accessToken = Context.GetHttpContext().Request.Query["access_token"];
-            Groups.AddToGroupAsync(Context.ConnectionId, roomName);
-            Console.WriteLine("Joined group: " + roomName + "\n"
-                              +"Item name: " + item.Name + "\n");
+            if(_user.Identity.Name == item.SellerId.ToString() || _user.Identity.Name == item.ExpertId.ToString())
+            {
+                Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+                Console.WriteLine("Joined group: " + roomName + "\n"
+                                  +"Item name: " + item.Name + "\n");
+            }
+            return;
         }
 
         public Task LeaveRoom(string roomName)
