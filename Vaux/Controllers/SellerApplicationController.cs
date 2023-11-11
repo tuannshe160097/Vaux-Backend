@@ -57,7 +57,7 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        [Route("/api/Seller/Application/Get")]
+        [Route("/api/Seller/Application/GetAll")]
         public IActionResult GetAll(int id)
         {
             var s = _sellerApplicationRepo.GetAll<SellerApplicationOutDTO>(e => e.Status);
