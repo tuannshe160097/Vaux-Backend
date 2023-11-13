@@ -67,7 +67,7 @@ namespace Vaux.Controllers
 
         [HttpPatch]
         [Route("{id}/Thumbnail")]
-        public IActionResult Thumbnail(int id, [FromForm] IFormFile thumbnail)
+        public IActionResult Thumbnail(int id, [FromForm] ImageDTO thumbnail)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
@@ -84,7 +84,7 @@ namespace Vaux.Controllers
                 });
             }
 
-            return Ok(_itemRepo.EditThumbnail<ItemDTO>(e => e.Id == id, thumbnail));
+            return Ok(_itemRepo.EditThumbnail<ItemDTO>(e => e.Id == id, thumbnail.Image));
         }
 
 
