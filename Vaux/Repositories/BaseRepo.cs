@@ -154,6 +154,15 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(e);
         }
 
+        public virtual TOut DeletePerma<TOut>(Expression<Func<TEntity, bool>> predicate)
+        {
+            var e = DeletePerma(predicate);
+
+            Save();
+
+            return _mapper.Map<TOut>(e);
+        }
+
         protected virtual TEntity Create<TIn>(TIn data)
         {
             var e = _mapper.Map<TEntity>(data);
@@ -174,6 +183,14 @@ namespace Vaux.Repositories
         {
             var e = _queryGlobal.FirstOrDefault(predicate);
             e.Deleted = DateTime.Now;
+
+            return e;
+        }
+
+        protected virtual TEntity DeletePerma(Expression<Func<TEntity, bool>> predicate)
+        {
+            var e = _queryGlobal.FirstOrDefault(predicate);
+            _dbSet.Remove(e);
 
             return e;
         }

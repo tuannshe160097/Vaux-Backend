@@ -21,7 +21,7 @@ namespace Vaux.Controllers
         {
             _userRepo = userRepo;
         }
-         
+
         [HttpGet]
         [Route("/api/Mod/Account")]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
@@ -33,7 +33,7 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            return Ok(_userRepo.Search<User>(filterEntities, filterValues, orderBy, (pageNum-1) * pageSize, pageSize));
+            return Ok(_userRepo.Search<User>(filterEntities, filterValues, orderBy, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]
