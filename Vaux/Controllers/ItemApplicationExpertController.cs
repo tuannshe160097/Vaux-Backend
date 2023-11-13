@@ -52,7 +52,7 @@ namespace Vaux.Controllers
         public IActionResult GetImages(int id, int imageId)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null)
+            if (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null && i?.ThumbnailId != imageId)
             {
                 return BadRequest();
             }

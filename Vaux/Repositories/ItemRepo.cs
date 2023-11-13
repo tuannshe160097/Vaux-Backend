@@ -74,6 +74,17 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(item);
         }
 
+        public TOut EditThumbnail<TOut>(Expression<Func<Item, bool>> predicate, IFormFile image)
+        {
+            var i = Get<Item>(predicate);
+
+            i.Thumbnail = _photoRepo.Create<Image>(image);
+
+            Save();
+
+            return _mapper.Map<TOut>(i);
+        }
+
         public TOut AddImages<TOut>(Expression<Func<Item, bool>> predicate, List<IFormFile> images)
         {
             var i = Get<Item>(predicate);
