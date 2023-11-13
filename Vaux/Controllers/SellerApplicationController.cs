@@ -67,7 +67,7 @@ namespace Vaux.Controllers
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Get/Image")]
-        public IActionResult GetImage(int id)
+        public IActionResult GetImage()
         {
             var s = _sellerApplicationRepo.GetAll<SellerApplicationOutDTO>(e => e.Status);
             return Ok(s);
