@@ -7,6 +7,7 @@ using Vaux.DTO;
 using Vaux.DbContext;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Vaux.Hubs
 {
@@ -26,11 +27,12 @@ namespace Vaux.Hubs
             Console.WriteLine("SignalR Connected");
             return Task.CompletedTask;
         }
-        [Authorize]
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public void JoinRoom(string roomName, int itemId)
         {
             var item = _context.Items.FirstOrDefault(e => e.Id == itemId);
-            if(_user.Identity.Name == item.SellerId.ToString() || _user.Identity.Name == item.ExpertId.ToString())
+            if(_user.Identity.Name == item?.SellerId.ToString() || _user.Identity.Name == item?.ExpertId.ToString())
             {
                 Groups.AddToGroupAsync(Context.ConnectionId, roomName);
                 Console.WriteLine("Joined group: " + roomName + "\n"
