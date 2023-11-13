@@ -205,9 +205,24 @@ namespace Vaux.Repositories
             return _queryGlobal;
         }
 
-        public virtual TOut Map<TOut, TIn>(TIn data)
+        public TOut Map<TOut, TIn>(TIn data)
         {
             return _mapper.Map<TOut>(data);
+        }
+
+        public TOut Map<TOut>(TEntity data)
+        {
+            return _mapper.Map<TOut>(data);
+        }
+
+        public TEntity Map<TIn>(TIn data)
+        {
+            return _mapper.Map<TEntity>(data);
+        }
+
+        public void Reload(TEntity entity)
+        {
+            _dbSet.Entry(entity).Reload();
         }
     }
 }

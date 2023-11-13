@@ -11,7 +11,6 @@ namespace Vaux.Controllers
 {
     [Route("api/Expert/ItemApplication")]
     [ApiController]
-    [Authorize(Roles = $"{nameof(RoleId.EXPERT)}")]
     public class ItemApplicationExpertController : ControllerBase
     {
         private IItemRepo _itemRepo;
@@ -49,7 +48,7 @@ namespace Vaux.Controllers
         [HttpGet]
         [Route("{id}/Images/{imageId}")]
         [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult GetImages(int id, int imageId)
+        public IActionResult GetImage(int id, int imageId)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null)
@@ -83,6 +82,7 @@ namespace Vaux.Controllers
 
         [HttpPut]
         [Route("{id}/Unassign")]
+        [Authorize(Roles = $"{nameof(RoleId.EXPERT)}")]
         public IActionResult Unassign(int id)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
@@ -103,6 +103,7 @@ namespace Vaux.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = $"{nameof(RoleId.EXPERT)}")]
         public IActionResult Edit(int id, ItemPropertiesDTO item)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
@@ -122,6 +123,7 @@ namespace Vaux.Controllers
 
         [HttpPatch]
         [Route("{id}/Accept")]
+        [Authorize(Roles = $"{nameof(RoleId.EXPERT)}")]
         public IActionResult Accept(int id, [FromBody] string reason)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
@@ -143,6 +145,7 @@ namespace Vaux.Controllers
 
         [HttpPatch]
         [Route("{id}/Reject")]
+        [Authorize(Roles = $"{nameof(RoleId.EXPERT)}")]
         public IActionResult Reject(int id, [FromBody] string reason)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);

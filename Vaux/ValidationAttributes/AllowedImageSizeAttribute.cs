@@ -14,14 +14,15 @@ namespace Vaux.ValidationAttributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var file = value as IFormFile;
-            var size = file.Length;
-            if (file != null)
+            if(file == null)
             {
+                return ValidationResult.Success;
+            }
+            var size = file.Length;
                 if (size > _size * 1024 * 1024)
                 {
                     return new ValidationResult(GetErrorMessage());
                 }
-            }
             return ValidationResult.Success;
         }
 

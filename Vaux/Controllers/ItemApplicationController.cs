@@ -54,7 +54,7 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Route("{id}/Images/{imageId}")]
-        public IActionResult GetImages(int id, int imageId)
+        public IActionResult GetImage(int id, int imageId)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i?.SellerId.ToString() != User.Identity.Name || i?.Images?.FirstOrDefault(e => e.Id == imageId) == null)

@@ -11,7 +11,7 @@ namespace Vaux.Controllers
 {
     [Route("api/Mod/ItemApplication")]
     [ApiController]
-    [Authorize($"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+    [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
     public class ItemApplicationModController : ControllerBase
     {
         private IItemRepo _itemRepo;
@@ -61,7 +61,7 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("{id}/Images")]
-        public IActionResult AddImages(int id, [FromForm] ImageCollectionDTO images)
+        public IActionResult AddImage(int id, [FromForm] ImageCollectionDTO images)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null)
