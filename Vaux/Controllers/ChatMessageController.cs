@@ -28,9 +28,9 @@ namespace Vaux.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = nameof(RoleId.EXPERT))]
+        [Authorize]
         [Route("/api/Chat/Send")]
-        public async Task <IActionResult> Create([FromForm] ChatMessageDTO chatMessage)
+        public async Task <IActionResult> Send([FromForm] ChatMessageDTO chatMessage)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == chatMessage.ItemId);
             if(i == null)

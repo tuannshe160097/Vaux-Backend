@@ -7,10 +7,6 @@ namespace Vaux.Models
         public int? SenderId { get; set; }
         public virtual User? Sender { get; set; }
 
-        [ForeignKey(nameof(Receiver))]
-        public int? ReceiverId { get; set; }
-        public virtual User? Receiver { get; set; }
-
         [ForeignKey(nameof(Item))]
         public int ItemId { get; set; }
         public virtual Item Item { get; set; }
