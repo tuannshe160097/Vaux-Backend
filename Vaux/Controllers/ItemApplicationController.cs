@@ -57,13 +57,36 @@ namespace Vaux.Controllers
         public IActionResult GetImage(int id, int imageId)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i?.SellerId.ToString() != User.Identity.Name || i?.Images?.FirstOrDefault(e => e.Id == imageId) == null)
+            if (i?.SellerId.ToString() != User.Identity.Name || (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null && i?.ThumbnailId != imageId))
             {
                 return BadRequest();
             }
 
             return File(_photoRepo.Get(id).ToArray(), "image/jpeg");
         }
+
+        [HttpPatch]
+        [Route("{id}/Thumbnail")]
+        public IActionResult Thumbnail(int id, [FromForm] ImageDTO thumbnail)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            {
+                return BadRequest();
+            }
+
+            if (i.ExpertId != null)
+            {
+                _notificationRepo.Create<Notification, Notification>(new Notification()
+                {
+                    UserId = (int)i.ExpertId,
+                    Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh"
+                });
+            }
+
+            return Ok(_itemRepo.EditThumbnail<ItemDTO>(e => e.Id == id, thumbnail.Image));
+        }
+
 
         [HttpPost]
         [Route("{id}/Images")]

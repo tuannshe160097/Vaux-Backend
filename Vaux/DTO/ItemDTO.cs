@@ -25,5 +25,7 @@ namespace Vaux.DTO
         public List<ItemPropertyDTO>? ItemProperties { get; set; }
 
         public List<int>? Images { get; set; }
+
+        public int? ThumbnailId { get; set; }
     }
 }
