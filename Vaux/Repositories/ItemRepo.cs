@@ -43,6 +43,8 @@ namespace Vaux.Repositories
                 sc.StatusChangeReason = $"Changed status from {nameof(oldItem.Status)} to {nameof(newItem.Status)}";
             }
 
+            Save();
+
             return _mapper.Map<TOut>(newItem);
         }
 
@@ -60,6 +62,8 @@ namespace Vaux.Repositories
                 sc.StatusChangedById = int.Parse(_user.Identity.Name);
                 sc.StatusChangeReason = changeReason;
             }
+
+            Save();
 
             return _mapper.Map<TOut>(newItem);
         }

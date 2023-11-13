@@ -77,9 +77,12 @@
                 .HasMany(e => e.AuctionSessions)
                 .WithMany(e => e.Items)
                 .UsingEntity<AuctionSessionItem>();
+
             modelBuilder.Entity<ChatMessage>()
                 .Property(e => e.Content)
                 .HasDefaultValue(String.Empty);
+
+            modelBuilder.Entity<Bid>().ToTable(tb => tb.HasTrigger("BIDS_PREVENT_LOWER"));
 
             modelBuilder.Entity<Role>().HasData(
                 new Role()

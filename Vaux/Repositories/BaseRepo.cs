@@ -202,5 +202,10 @@ namespace Vaux.Repositories
         {
             return _mapper.Map<TEntity>(data);
         }
+
+        public void Reload(TEntity entity)
+        {
+            _dbSet.Entry(entity).Reload();
+        }
     }
 }

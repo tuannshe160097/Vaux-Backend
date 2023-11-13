@@ -12,7 +12,6 @@ using Vaux.Repositories.Interface;
 namespace Vaux.Controllers
 {
     [Route("api/Admin/Account")]
-    [Authorize(Roles = nameof(RoleId.ADMIN))]
     [ApiController]
     public class UserManagementController : ControllerBase
     {
@@ -47,6 +46,7 @@ namespace Vaux.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = nameof(RoleId.ADMIN))]
         public IActionResult Update(int id, [FromBody] UserStrictDTO profile)
         {
             var u = _userRepo.Get<User>(e => e.Id == id);
@@ -69,6 +69,7 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("{id}/CitizenIdImage")]
+        [Authorize(Roles = nameof(RoleId.ADMIN))]
         public IActionResult UpdateCitizenIdImage(int id)
         {
             return Ok();
@@ -76,6 +77,7 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("{id}/FaceImage")]
+        [Authorize(Roles = nameof(RoleId.ADMIN))]
         public IActionResult UpdateFaceImage(int id)
         {
             return Ok();
@@ -103,6 +105,7 @@ namespace Vaux.Controllers
 
         [HttpPatch]
         [Route("ChangeAccess/{id}")]
+        [Authorize(Roles = nameof(RoleId.ADMIN))]
         public IActionResult AdminChangeAccess(int id)
         {
             var u = _userRepo.Get<User>(e => e.Id == id);
@@ -117,6 +120,7 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("CreateModerator")]
+        [Authorize(Roles = nameof(RoleId.ADMIN))]
         public IActionResult CreateMod(UserStrictDTO superUser)
         {
             if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
@@ -131,6 +135,7 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("/api/Mod/Account/CreateExpert")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult CreateExpert(UserStrictDTO superUser)
         {
             if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)

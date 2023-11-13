@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Vaux.DTO;
+using Vaux.Hubs;
 using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
@@ -13,19 +15,28 @@ namespace Vaux.Controllers
     {
         //Values are empty objects used to lock up bidding execution block
         //Do not access value directly
-        private static Dictionary<int, object> _bidLockLookup = new();
+        //private static readonly ConcurrentDictionary<int, object> _bidLockPool = new();
+        private const int BID_LOCK_POOL_SIZE = 64;
+        private static readonly List<object> _bidLockPool = Enumerable.Repeat(new object(), BID_LOCK_POOL_SIZE).ToList();
+
+        private object GetBidLocker(int index)
+        {
+            return _bidLockPool[index % BID_LOCK_POOL_SIZE];
+        }
 
         private IItemRepo _itemRepo;
         private IPhotoRepo _photoRepo;
         private IBaseRepo<Comment> _commentRepo;
         private IBaseRepo<Bid> _bidRepo;
+        private IHubContext<BidHub> _bidHub;
 
-        public ItemController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Comment> commentRepo, IBaseRepo<Bid> bidRepo)
+        public ItemController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Comment> commentRepo, IBaseRepo<Bid> bidRepo, IHubContext<BidHub> hubContext)
         {
             _itemRepo = itemRepo;
             _photoRepo = photoRepo;
             _commentRepo = commentRepo;
             _bidRepo = bidRepo;
+            _bidHub = hubContext;
         }
 
         [HttpGet]
@@ -94,6 +105,43 @@ namespace Vaux.Controllers
             return Ok(_bidRepo.GetAll<BidDTO>(e => e.ItemId == id));
         }
 
-        
+        [HttpPost]
+        [Authorize]
+        [Route("{id}/Bid")]
+        public IActionResult Bid(int id, BidInDto bid)
+        {
+            Console.WriteLine($"Request from user {User.Identity.Name} at {DateTime.Now.ToString("HH:mm:ss.ffffff")} for item {id} with {bid.Amount}");
+            var item = _itemRepo.Get<Item>(e => e.Id == id);
+            if (item == null)
+            {
+                return BadRequest();
+            }
+
+            //object bidLocker = new object();
+            //lock (_bidLockPool.GetOrAdd(item.Id, bidLocker))
+            var locker = GetBidLocker(item.Id);
+            lock(locker)
+            {
+                _itemRepo.Reload(item);
+
+                if (bid.Amount <= item.Bids?.Last().Amount + 10000)
+                {
+                    Console.WriteLine($"Response for user {User.Identity.Name} at {DateTime.Now.ToString("HH:mm:ss.ffffff")} for item {id} with {bid.Amount}/too low");
+                    return BadRequest("Bid must be 10k higher than curreent bid");
+                }
+
+                var b = new Bid();
+                b.ItemId = item.Id;
+                b.Amount = bid.Amount;
+                b.UserId = int.Parse(User.Identity.Name);
+                var res = _bidRepo.Create<Bid, Bid>(b);
+
+                string group = string.Format(BidHub.BID_ROOM_FORMAT, item.Id);
+                _bidHub.Clients.Group(group).SendAsync(group, User.Identity.Name, bid.Amount);
+
+                Console.WriteLine($"Response for user {User.Identity.Name} at {DateTime.Now.ToString("HH:mm:ss.ffffff")} for item {id} with {bid.Amount}/ok");
+                return Ok(res);
+            }
+        }
     }
 }
