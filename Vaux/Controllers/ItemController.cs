@@ -131,7 +131,7 @@ namespace Vaux.Controllers
             {
                 _itemRepo.Reload(item);
 
-                if (bid.Amount <= item.Bids?.Last().Amount + 10000)
+                if (bid.Amount <= item.Bids?.LastOrDefault()?.Amount + 10000)
                 {
                     Console.WriteLine($"Response for user {User.Identity.Name} at {DateTime.Now.ToString("HH:mm:ss.ffffff")} for item {id} with {bid.Amount}/too low");
                     return BadRequest("Bid must be 10k higher than curreent bid");

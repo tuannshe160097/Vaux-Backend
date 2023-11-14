@@ -5,8 +5,6 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vaux", "Vaux\Vaux.csproj", "{F4E8478D-09C6-4766-BFFA-80B9D648901F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VauxChatServer", "VauxChatServer\VauxChatServer.csproj", "{8A7B87C4-8112-4042-88FC-535D09E200AD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{F4E8478D-09C6-4766-BFFA-80B9D648901F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4E8478D-09C6-4766-BFFA-80B9D648901F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4E8478D-09C6-4766-BFFA-80B9D648901F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A7B87C4-8112-4042-88FC-535D09E200AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A7B87C4-8112-4042-88FC-535D09E200AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A7B87C4-8112-4042-88FC-535D09E200AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A7B87C4-8112-4042-88FC-535D09E200AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
