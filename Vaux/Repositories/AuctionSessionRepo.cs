@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using Twilio.TwiML.Voice;
 using Vaux.DbContext;
 using Vaux.Models;
+using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Repositories
@@ -17,7 +18,7 @@ namespace Vaux.Repositories
         {
             var auc = Create(data);
 
-            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == Models.Enums.ItemStatus.AUCTION_PENDING).ToList();
+            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED)).ToList();
 
             Save();
             return _mapper.Map<TOut>(auc);
@@ -29,7 +30,7 @@ namespace Vaux.Repositories
 
             auc.AuctionSessionItems?.Clear();
 
-            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == Models.Enums.ItemStatus.AUCTION_PENDING).ToList();
+            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED)).ToList();
 
             Save();
 

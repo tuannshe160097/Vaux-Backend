@@ -61,7 +61,7 @@ namespace Vaux.Controllers
         [Route("Approved")]
         public IActionResult GetApproved()
         {
-            return Ok(_itemRepo.Get<ItemDTO>(e => e.Status == ItemStatus.AUCTION_PENDING));
+            return Ok(_itemRepo.Get<ItemDTO>(e => e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED)));
         }
 
         [HttpGet]
