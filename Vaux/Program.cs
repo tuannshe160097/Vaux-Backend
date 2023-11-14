@@ -9,6 +9,9 @@ using Vaux.Repositories;
 using Vaux.Repositories.Interface;
 using Vaux.Hubs;
 using Vaux.ServiceConfiguration;
+using Quartz;
+using Quartz.AspNetCore;
+using Vaux.CronJobs;
 
 namespace Vaux
 {
@@ -93,7 +96,11 @@ namespace Vaux
                     }
                 };
             });
+
             builder.Services.AddSignalR();
+
+            builder.Services.AddCronServices();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

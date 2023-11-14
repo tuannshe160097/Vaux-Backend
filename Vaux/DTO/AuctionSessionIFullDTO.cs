@@ -1,4 +1,5 @@
 ﻿using Vaux.Models;
+using Vaux.Models.Enums;
 
 namespace Vaux.DTO
 {
@@ -6,6 +7,7 @@ namespace Vaux.DTO
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
+        public AuctionSessionStatus Status { get; set; }
         public DateTime EndDate { get; set; }
 
         public virtual ICollection<ItemDTO>? Items { get; set; }
