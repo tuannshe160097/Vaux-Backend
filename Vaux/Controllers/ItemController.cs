@@ -102,7 +102,7 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            return File(_photoRepo.Get(id).ToArray(), "image/jpeg");
+            return File(_photoRepo.Get(imageId).ToArray(), "image/jpeg");
         }
 
         [HttpGet]
