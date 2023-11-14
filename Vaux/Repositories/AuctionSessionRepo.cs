@@ -17,7 +17,7 @@ namespace Vaux.Repositories
         {
             var auc = Create(data);
 
-            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id)).ToList();
+            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == Models.Enums.ItemStatus.AUCTION_PENDING).ToList();
 
             Save();
             return _mapper.Map<TOut>(auc);
@@ -27,9 +27,9 @@ namespace Vaux.Repositories
         {
             var auc = Update(predicate, data);
 
-            auc.AuctionSessionItems.Clear();
+            auc.AuctionSessionItems?.Clear();
 
-            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id)).ToList();
+            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == Models.Enums.ItemStatus.AUCTION_PENDING).ToList();
 
             Save();
 
