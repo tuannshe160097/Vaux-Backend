@@ -60,7 +60,7 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/GetAll")]
         public IActionResult GetAll()
         {
-            var s = _sellerApplicationRepo.GetAll<SellerApplicationDTO>(e => e.Status);
+            var s = _sellerApplicationRepo.GetAll<SellerApplicationOutDTO>(e => e.Status);
             return Ok(s);
         }
 
