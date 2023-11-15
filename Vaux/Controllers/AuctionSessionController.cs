@@ -34,9 +34,18 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int pageNum = 1, int pageSize = -1, DateTime? from = null, DateTime? to = null)
         {
-            return Ok(_auctionRepo.GetAll<AuctionSessionMinimalDTO>());
+            var query = _auctionRepo.Query();
+            if (from != null)
+            {
+                query = query.Where(e => e.StartDate > from || e.EndDate > from);
+            }
+            if (to != null)
+            {
+                query = query.Where(e => e.StartDate < to || e.EndDate < to);
+            }
+            return Ok(_auctionRepo.WrapListResult<AuctionSessionMinimalDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpPost]

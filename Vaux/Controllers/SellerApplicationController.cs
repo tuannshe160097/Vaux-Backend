@@ -58,10 +58,19 @@ namespace Vaux.Controllers
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/GetAll")]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? status = null)
         {
-            var s = _sellerApplicationRepo.GetAll<SellerApplicationOutDTO>(e => e.Status);
-            return Ok(s);
+            var query = _sellerApplicationRepo.Query();
+            if (search != null)
+            {
+                query = query.Where(e => e.User.Email.Contains(search) || e.User.Name.Contains(search) || e.User.Phone.Contains(search));
+            }
+            if (status != null)
+            {
+                query = query.Where(e => (int)e.Status == status);
+            }
+            query = query.OrderBy(e => e.Status);
+            return Ok(_sellerApplicationRepo.WrapListResult<SellerApplicationOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]
