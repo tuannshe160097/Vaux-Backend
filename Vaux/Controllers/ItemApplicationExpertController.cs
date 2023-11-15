@@ -40,9 +40,19 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null)
         {
-            return Ok(_itemRepo.GetAll<ItemDTO>(e => search.IsNullOrEmpty() ? true : (e.Name.Contains(search) || e.Category.Name.Contains(search)), e => e.Id, (pageNum - 1) * pageSize, pageSize));
+            var query = _itemRepo.Query();
+            query = query.OrderByDescending(e => e.ExpertId != null);
+            if (search != null)
+            {
+                query = query.Where(e => e.Name.Contains(search));
+            }
+            if (category != null)
+            {
+                query = query.Where(e => e.CategoryId == category);
+            }
+            return Ok(_itemRepo.WrapListResult<ItemDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]

@@ -10,7 +10,7 @@ namespace Vaux.DTO
         public string Name { get; set; }
         public ItemStatus Status { get; set; }
         public string StatusString { get; set; }
-        public int ReservePrice { get; set; }
+        public long ReservePrice { get; set; }
         public int CategoryId { get; set; }
         public CategoryDTO Category { get; set; }
 

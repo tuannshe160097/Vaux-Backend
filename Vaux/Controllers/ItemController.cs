@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System.Drawing.Printing;
 using Vaux.DTO;
 using Vaux.Hubs;
 using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
+using static Twilio.Rest.Insights.V1.ConferenceResource;
 
 namespace Vaux.Controllers
 {
@@ -59,9 +61,19 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Route("Approved")]
-        public IActionResult GetApproved()
+        public IActionResult GetApproved(string? search = null, int? category = null)
         {
-            return Ok(_itemRepo.GetAll<ItemDTO>(e => e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED)));
+            var query = _itemRepo.Query();
+            query = query.Where(e => e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED));
+            if (search != null)
+            {
+                query = query.Where(e => e.Name.Contains(search));
+            }
+            if (category != null)
+            {
+                query = query.Where(e => e.CategoryId == category);
+            }
+            return Ok(_itemRepo.WrapListResult<ItemDTO>(query));
         }
 
         [HttpGet]
