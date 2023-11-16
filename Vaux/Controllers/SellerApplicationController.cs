@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Models.Enums;
@@ -35,6 +36,11 @@ namespace Vaux.Controllers
             if (sa != null && sa.Status == SellerApplicationStatus.PENDING)
             {
                 return BadRequest("Application already existed");
+            }
+            var sam = _userRepo.Get<SellerApplication>(e => e.Email == sellerApplication.Email);
+            if(sam != null)
+            {
+                return BadRequest("Email already existed");
             }
             sellerApplication.PortraitId = _photoRepo.Create<Image>(sellerApplication.RawPortrait).Id;
             sellerApplication.CitizenIdImageId = _photoRepo.Create<Image>(sellerApplication.RawCitizenIdImage).Id;
@@ -72,10 +78,9 @@ namespace Vaux.Controllers
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/GetAll")]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
-            var s = _sellerApplicationRepo.GetAll<SellerApplicationOutDTO>(e => e.Status);
-            return Ok(s);
+            return Ok(_sellerApplicationRepo.GetAll<SellerApplicationDTO>(e => search.IsNullOrEmpty() ? true : (e.User.Name.Contains(search) || e.Email.Contains(search)), e => e.Id, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]
@@ -134,7 +139,11 @@ namespace Vaux.Controllers
             {
                 return BadRequest("No such pending item");
             }
-
+            var sam = _userRepo.Get<SellerApplication>(e => e.Email == i.Email);
+            if (sam != null)
+            {
+                return BadRequest("Email already existed");
+            }
             i.Status = SellerApplicationStatus.APPROVED;
 
             _notificationRepo.Create<Notification, Notification>(new Notification()
