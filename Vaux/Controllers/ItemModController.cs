@@ -26,7 +26,6 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, int? status = null)
         {
             var query = _itemRepo.Query();
@@ -44,6 +43,19 @@ namespace Vaux.Controllers
                 query = query.Where(e => e.CategoryId == category);
             }
             return Ok(_itemRepo.WrapListResult<ItemDTO>(query, (pageNum - 1) * pageSize, pageSize));
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            var i = _itemRepo.Get<ItemDTO>(e => e.Id == id);
+            if (i == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(i);
         }
 
         [HttpPut]
