@@ -16,12 +16,14 @@ namespace Vaux.Controllers
         private ISellerApplicationRepo _sellerApplicationRepo;
         private IPhotoRepo _photoRepo;
         private IUserRepo _userRepo;
+        private IBaseRepo<Notification> _notificationRepo;
 
-        public SellerApplicationController(ISellerApplicationRepo sellerApplicationRepo, IPhotoRepo photoRepo, IUserRepo userRepo)
+        public SellerApplicationController(ISellerApplicationRepo sellerApplicationRepo, IPhotoRepo photoRepo, IUserRepo userRepo, IBaseRepo<Notification> notificationRepo)
         {
             _sellerApplicationRepo = sellerApplicationRepo;
             _photoRepo = photoRepo;
             _userRepo = userRepo;
+            _notificationRepo = notificationRepo;
         }
 
         [HttpPost]
@@ -43,16 +45,28 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        [Route("/api/Seller/Application/Get")]
+        [Route("/api/Seller/Application/Get/{id}")]
         public IActionResult Get(int id)
         {
-            var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == id);
+            var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.Id == id);
             if (u == null)
             {
                 return BadRequest("Application does not exist");
             }
-            var s = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.Id == id);
-            return Ok(s);
+            return Ok(u);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Route("/api/Seller/Application/GetByUserId/{id}")]
+        public IActionResult GetByUserId(int id)
+        {
+            var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.UserId == id);
+            if (u == null)
+            {
+                return BadRequest("Application does not exist");
+            }
+            return Ok(u);
         }
 
         [HttpGet]
@@ -122,32 +136,45 @@ namespace Vaux.Controllers
         [HttpPatch]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Approve")]
-        public IActionResult ApproveApplication(int applicationId)
+        public IActionResult ApproveApplication(int applicationId, [FromBody] string reason)
         {
-            var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
-            if (u == null || u.Status != SellerApplicationStatus.PENDING)
+            var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
+            if (i == null || i.Status != SellerApplicationStatus.PENDING)
             {
-                return BadRequest("Application does not exist");
+                return BadRequest("No such pending item");
             }
-            u.Status = SellerApplicationStatus.APPROVED;
-            _sellerApplicationRepo.Update<SellerApplication, SellerApplication>(e => e.Id == u.Id, u);
-            var result = _userRepo.Update<User, SellerApplication>(e => e.Id == u.UserId, u, RoleId.SELLER);
-            return Ok(result);
+
+            i.Status = SellerApplicationStatus.APPROVED;
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.UserId,
+                Content = $"Đăng ký tài khoản người bán cho \"{i.User.Name}\" đã được phê duyệt"
+            });
+
+            return Ok(_sellerApplicationRepo.Update<SellerApplicationOutDTO, SellerApplication>(e => e.Id == i.Id, i, reason));
         }
 
         [HttpPatch]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Deny")]
-        public IActionResult DenyApplication(int applicationId)
+        public IActionResult DenyApplication(int applicationId, [FromBody] string reason)
         {
-            var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
-            if (u == null || u.Status != SellerApplicationStatus.PENDING)
+            var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
+            if (i == null || i.Status != SellerApplicationStatus.PENDING)
             {
-                return BadRequest("Application does not exist");
+                return BadRequest("No such pending item");
             }
-            u.Status = SellerApplicationStatus.DENIED;
-            var result =_sellerApplicationRepo.Update<SellerApplication, SellerApplication>(e => e.Id == u.Id, u);
-            return Ok(result);
+
+            i.Status = SellerApplicationStatus.DENIED;
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.UserId,
+                Content = $"Đăng ký tài khoản người bán cho \"{i.User.Name}\" đã bị từ chối"
+            });
+
+            return Ok(_sellerApplicationRepo.Update<SellerApplicationOutDTO, SellerApplication>(e => e.Id == i.Id, i, reason));
         }
     }
 }

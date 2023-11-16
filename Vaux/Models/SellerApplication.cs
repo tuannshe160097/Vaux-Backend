@@ -13,6 +13,7 @@ namespace Vaux.Models
         public string Street { get; set; }
         public string HouseNumber { get; set; }
         public string Gender { get; set; }
+        public string Email { get; set; }
         public DateTime DoB { get; set; }
 
         public int UserId { get; set; }
