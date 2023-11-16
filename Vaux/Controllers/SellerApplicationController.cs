@@ -147,7 +147,7 @@ namespace Vaux.Controllers
             var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
             if (i == null || i.Status != SellerApplicationStatus.PENDING)
             {
-                return BadRequest("No such pending item");
+                return BadRequest("No such pending application");
             }
             var sam = _userRepo.Get<SellerApplication>(e => e.Email == i.Email);
             if (sam != null)
@@ -161,7 +161,7 @@ namespace Vaux.Controllers
                 UserId = i.UserId,
                 Content = $"Đăng ký tài khoản người bán cho \"{i.User.Name}\" đã được phê duyệt"
             });
-
+            _userRepo.Update<User, SellerApplication>(e => e.Id == i.UserId, i, RoleId.SELLER);
             return Ok(_sellerApplicationRepo.Update<SellerApplicationOutDTO, SellerApplication>(e => e.Id == i.Id, i, reason));
         }
 
@@ -173,7 +173,7 @@ namespace Vaux.Controllers
             var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
             if (i == null || i.Status != SellerApplicationStatus.PENDING)
             {
-                return BadRequest("No such pending item");
+                return BadRequest("No such pending application");
             }
 
             i.Status = SellerApplicationStatus.DENIED;
