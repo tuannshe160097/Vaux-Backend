@@ -48,13 +48,12 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/Get/{id}")]
         public IActionResult Get(int id)
         {
-            var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == id);
+            var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.Id == id);
             if (u == null)
             {
                 return BadRequest("Application does not exist");
             }
-            var s = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.Id == id);
-            return Ok(s);
+            return Ok(u);
         }
 
         [HttpGet]
@@ -62,13 +61,12 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/GetByUserId/{id}")]
         public IActionResult GetByUserId(int id)
         {
-            var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.UserId == id);
+            var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.UserId == id);
             if (u == null)
             {
                 return BadRequest("Application does not exist");
             }
-            var s = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.Id == id);
-            return Ok(s);
+            return Ok(u);
         }
 
         [HttpGet]
