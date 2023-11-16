@@ -9,20 +9,41 @@ using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
 {
-    [Route("api/Mod/ItemApplication")]
+    [Route("api/Mod/Item")]
     [ApiController]
     [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-    public class ItemApplicationModController : ControllerBase
+    public class ItemModController : ControllerBase
     {
         private IItemRepo _itemRepo;
         private IPhotoRepo _photoRepo;
         private IBaseRepo<Notification> _notificationRepo;
 
-        public ItemApplicationModController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
+        public ItemModController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
         {
             _itemRepo = itemRepo;
             _photoRepo = photoRepo;
             _notificationRepo = notificationRepo;
+        }
+
+        [HttpGet]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, int? status = null)
+        {
+            var query = _itemRepo.Query();
+            query = query.OrderByDescending(e => e.ExpertId != null);
+            if (search != null)
+            {
+                query = query.Where(e => e.Name.Contains(search));
+            }
+            if (status != null)
+            {
+                query = query.Where(e => (int)e.Status == status);
+            }
+            if (category != null)
+            {
+                query = query.Where(e => e.CategoryId == category);
+            }
+            return Ok(_itemRepo.WrapListResult<ItemDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpPut]

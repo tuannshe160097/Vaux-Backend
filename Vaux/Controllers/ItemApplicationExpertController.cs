@@ -42,7 +42,7 @@ namespace Vaux.Controllers
         [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null)
         {
-            var query = _itemRepo.Query();
+            var query = _itemRepo.Query().Where(e => e.Status == ItemStatus.EXAMINATION_PENDING);
             query = query.OrderByDescending(e => e.ExpertId != null);
             if (search != null)
             {
