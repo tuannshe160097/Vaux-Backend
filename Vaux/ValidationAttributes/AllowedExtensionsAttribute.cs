@@ -19,10 +19,10 @@ namespace Vaux.ValidationAttributes
                 return ValidationResult.Success;
             }
             var extension = Path.GetExtension(file.FileName);
-                if (!_extensions.Contains(extension.ToLower()))
-                {
-                    return new ValidationResult(GetErrorMessage());
-                }
+            if (!_extensions.Contains(extension.ToLower()))
+            {
+                return new ValidationResult(GetErrorMessage());
+            }
             return ValidationResult.Success;
         }
 
