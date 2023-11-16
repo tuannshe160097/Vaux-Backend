@@ -10,6 +10,6 @@ namespace Vaux.DTO
         public AuctionSessionStatus Status { get; set; }
         public DateTime EndDate { get; set; }
 
-        public virtual ICollection<ItemDTO>? Items { get; set; }
+        public virtual ICollection<ItemOutDTO>? Items { get; set; }
     }
 }

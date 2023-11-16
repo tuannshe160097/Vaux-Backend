@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System.Drawing.Printing;
 using Vaux.DTO;
 using Vaux.Hubs;
 using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
+using static Twilio.Rest.Insights.V1.ConferenceResource;
 
 namespace Vaux.Controllers
 {
@@ -43,7 +45,7 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(_itemRepo.Get<ItemDTO>(e => e.Id == id && e.Status == ItemStatus.AUCTION_IN_PROGRESS));
+            return Ok(_itemRepo.Get<ItemOutDTO>(e => e.Id == id && e.Status == ItemStatus.AUCTION_IN_PROGRESS));
         }
 
         [HttpGet]
@@ -53,15 +55,25 @@ namespace Vaux.Controllers
             filterValues = filterValues ?? new string[1];
             filterEntities[filterEntities.Length - 1] = "Status";
             filterValues[filterValues.Length - 1] = $"{ItemStatus.AUCTION_IN_PROGRESS}";
-            var res = _itemRepo.Search<ItemDTO>(filterEntities, filterValues, orderBy, (pageNum - 1) * pageSize, pageSize);
+            var res = _itemRepo.Search<ItemOutDTO>(filterEntities, filterValues, orderBy, (pageNum - 1) * pageSize, pageSize);
             return Ok(res);
         }
 
         [HttpGet]
         [Route("Approved")]
-        public IActionResult GetApproved()
+        public IActionResult GetApproved(string? search = null, int? category = null)
         {
-            return Ok(_itemRepo.Get<ItemDTO>(e => e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED)));
+            var query = _itemRepo.Query();
+            query = query.Where(e => e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED));
+            if (search != null)
+            {
+                query = query.Where(e => e.Name.Contains(search));
+            }
+            if (category != null)
+            {
+                query = query.Where(e => e.CategoryId == category);
+            }
+            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query));
         }
 
         [HttpGet]
@@ -102,7 +114,7 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            return File(_photoRepo.Get(id).ToArray(), "image/jpeg");
+            return File(_photoRepo.Get(imageId).ToArray(), "image/jpeg");
         }
 
         [HttpGet]

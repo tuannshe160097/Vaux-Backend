@@ -20,6 +20,8 @@ namespace Vaux.Repositories.Interface
         public TOut Update<TOut, TIn>(Expression<Func<TEntity, bool>> predicate, TIn data);
         public TOut Delete<TOut>(Expression<Func<TEntity, bool>> predicate);
         public TOut DeletePerma<TOut>(Expression<Func<TEntity, bool>> predicate);
+        public IQueryable<TEntity> Query();
+        public ResultListDTO<TOut> WrapListResult<TOut>(IQueryable<TEntity> query, int skip = 0, int take = -1);
         public TOut Map<TOut, TIn>(TIn data);
         public TOut Map<TOut>(TEntity data);
         public TEntity Map<TIn>(TIn data);

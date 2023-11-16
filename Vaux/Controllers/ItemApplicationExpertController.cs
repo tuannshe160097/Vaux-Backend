@@ -29,7 +29,7 @@ namespace Vaux.Controllers
         [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult Get(int id)
         {
-            var i = _itemRepo.Get<ItemDTO>(e => e.Id == id);
+            var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null)
             {
                 return BadRequest();
@@ -40,9 +40,19 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null)
         {
-            return Ok(_itemRepo.GetAll<ItemDTO>(e => search.IsNullOrEmpty() ? true : (e.Name.Contains(search) || e.Category.Name.Contains(search)), e => e.Id, (pageNum - 1) * pageSize, pageSize));
+            var query = _itemRepo.Query().Where(e => e.Status == ItemStatus.EXAMINATION_PENDING);
+            query = query.OrderByDescending(e => e.ExpertId != null);
+            if (search != null)
+            {
+                query = query.Where(e => e.Name.Contains(search));
+            }
+            if (category != null)
+            {
+                query = query.Where(e => e.CategoryId == category);
+            }
+            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]
@@ -56,7 +66,7 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            return File(_photoRepo.Get(id).ToArray(), "image/jpeg");
+            return File(_photoRepo.Get(imageId).ToArray(), "image/jpeg");
         }
 
         [HttpPut]
@@ -77,7 +87,7 @@ namespace Vaux.Controllers
                 Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được tiếp nhận bởi chuyên gia"
             });
 
-            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == id, i));
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == id, i));
         }
 
         [HttpPut]
@@ -98,7 +108,7 @@ namespace Vaux.Controllers
                 Content = $"Đăng ký sản phẩm \"{i.Name}\" đang chờ xử lý"
             });
 
-            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == id, i));
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == id, i));
         }
 
         [HttpPut]
@@ -118,7 +128,7 @@ namespace Vaux.Controllers
                 Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi chuyên gia"
             });
 
-            return Ok(_itemRepo.Update<ItemDTO, ItemPropertiesDTO>(e => e.Id == id, item));
+            return Ok(_itemRepo.Update<ItemOutDTO, ItemPropertiesDTO>(e => e.Id == id, item));
         }
 
         [HttpPatch]
@@ -140,7 +150,7 @@ namespace Vaux.Controllers
                 Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được phê duyệt"
             });
 
-            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == i.Id, i, reason));
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == i.Id, i, reason));
         }
 
         [HttpPatch]
@@ -162,7 +172,7 @@ namespace Vaux.Controllers
                 Content = $"Đăng ký sản phẩm \"{i.Name}\" đã bị từ chối"
             });
 
-            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == i.Id, i, reason));
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == i.Id, i, reason));
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vaux.DbContext;
 
@@ -11,9 +12,11 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    partial class VxDbcModelSnapshot : ModelSnapshot
+    [Migration("20231115092254_changeReservePrice")]
+    partial class changeReservePrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -601,10 +604,6 @@ namespace Vaux.Migrations
 
                     b.Property<DateTime>("DoB")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
                         .IsRequired()

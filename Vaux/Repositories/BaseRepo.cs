@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using Twilio.TwiML.Voice;
 using Vaux.DbContext;
 using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Vaux.Repositories
 {
@@ -62,7 +64,6 @@ namespace Vaux.Repositories
             int skip = 0,
             int take = -1)
         {
-            var result = new ResultListDTO<TOut>();
             var query = _queryGlobal;
 
             if (predicate != null)
@@ -75,26 +76,13 @@ namespace Vaux.Repositories
                 query = query.OrderBy(orderBy);
             }
 
-            result.TotalRecords = query.Count();
-
-            query = query.Skip(skip);
-            if (take > 0)
-            {
-                query = query.Take(take);
-            }
-
-            result.Records = _mapper.Map<List<TOut>>(query.ToList());
-            result.RecordsTaken = result.Records.Count;
-            result.RecordsSkipped = skip;
-
-            return result;
+            return WrapListResult<TOut>(query, skip, take);
         }
 
         public ResultListDTO<TOut> Search<TOut>(string[]? filterEntities, string[]? filterValues, string orderBy = "Id", int skip = 0, int take = -1)
         {
             filterEntities = filterEntities ?? new string[0];
             filterValues = filterValues ?? new string[0];
-            var result = new ResultListDTO<TOut>();
             var query = _queryGlobal;
 
             for (int i = 0; i < filterEntities.Length; i++)
@@ -114,19 +102,7 @@ namespace Vaux.Repositories
                 query = query.OrderBy(e => e.Id);
             }
 
-            result.TotalRecords = query.Count();
-
-            query = query.Skip(skip);
-            if (take > 0)
-            {
-                query = query.Take(take);
-            }
-
-            result.Records = _mapper.Map<List<TOut>>(query.ToList());
-            result.RecordsTaken = result.Records.Count;
-            result.RecordsSkipped = skip;
-
-            return result;
+            return WrapListResult<TOut>(query, skip, take);
         }
 
         public virtual TOut Create<TOut, TIn>(TIn data)
@@ -200,7 +176,28 @@ namespace Vaux.Repositories
             _vxDbc.SaveChanges();
         }
 
-        public virtual IQueryable Query()
+        public ResultListDTO<TOut> WrapListResult<TOut>(IQueryable<TEntity> query, int skip = 0, int take = -1)
+        {
+            var result = new ResultListDTO<TOut>();
+
+            result.TotalRecords = query.Count();
+
+            query = query.OrderBy(e => e.Id);
+
+            query = query.Skip(skip < 0 ? 0 : skip);
+            if (take > 0)
+            {
+                query = query.Take(take);
+            }
+
+            result.Records = _mapper.Map<List<TOut>>(query.ToList());
+            result.RecordsTaken = result.Records.Count;
+            result.RecordsSkipped = skip;
+
+            return result;
+        }
+
+        public virtual IQueryable<TEntity> Query()
         {
             return _queryGlobal;
         }

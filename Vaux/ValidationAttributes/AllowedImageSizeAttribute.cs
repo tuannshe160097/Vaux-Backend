@@ -19,10 +19,10 @@ namespace Vaux.ValidationAttributes
                 return ValidationResult.Success;
             }
             var size = file.Length;
-                if (size > _size * 1024 * 1024)
-                {
-                    return new ValidationResult(GetErrorMessage());
-                }
+            if (size > _size * 1024 * 1024)
+            {
+                return new ValidationResult(GetErrorMessage());
+            }
             return ValidationResult.Success;
         }
 

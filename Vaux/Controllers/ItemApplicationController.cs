@@ -30,7 +30,7 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var i = _itemRepo.Get<ItemDTO>(e => e.Id == id);
+            var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
             {
                 return BadRequest();
@@ -42,13 +42,13 @@ namespace Vaux.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_itemRepo.GetAll<ItemDTO>(e => e.SellerId.ToString() == User.Identity.Name));
+            return Ok(_itemRepo.GetAll<ItemOutDTO>(e => e.SellerId.ToString() == User.Identity.Name));
         }
 
         [HttpPost]
         public IActionResult Create(ItemApplicationDTO item)
         {
-            var res = _itemRepo.Create<ItemDTO, ItemApplicationDTO>(item, int.Parse(User.Identity.Name));
+            var res = _itemRepo.Create<ItemOutDTO, ItemApplicationDTO>(item, int.Parse(User.Identity.Name));
             return Ok(res);
         }
 
@@ -62,14 +62,14 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            return File(_photoRepo.Get(id).ToArray(), "image/jpeg");
+            return File(_photoRepo.Get(imageId).ToArray(), "image/jpeg");
         }
 
         [HttpPatch]
         [Route("{id}/Thumbnail")]
         public IActionResult Thumbnail(int id, [FromForm] ImageDTO thumbnail)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
             {
                 return BadRequest();
@@ -84,7 +84,7 @@ namespace Vaux.Controllers
                 });
             }
 
-            return Ok(_itemRepo.EditThumbnail<ItemDTO>(e => e.Id == id, thumbnail.Image));
+            return Ok(_itemRepo.EditThumbnail<ItemOutDTO>(e => e.Id == id, thumbnail.Image));
         }
 
 
@@ -92,7 +92,7 @@ namespace Vaux.Controllers
         [Route("{id}/Images")]
         public IActionResult AddImages(int id, [FromForm] ImageCollectionDTO images)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
             {
                 return BadRequest();
@@ -107,7 +107,7 @@ namespace Vaux.Controllers
                 });
             }
 
-            var res = _itemRepo.AddImages<ItemDTO>(e => e.Id == id, images.Images);
+            var res = _itemRepo.AddImages<ItemOutDTO>(e => e.Id == id, images.Images);
 
             return Ok(res);
         }
@@ -116,13 +116,13 @@ namespace Vaux.Controllers
         [Route("{id}/Images")]
         public IActionResult RemoveImages(int id, int[] imageIds)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
             {
                 return BadRequest();
             }
 
-            var res = _itemRepo.RemoveImages<ItemDTO>(e => e.Id == id, imageIds);
+            var res = _itemRepo.RemoveImages<ItemOutDTO>(e => e.Id == id, imageIds);
 
             return Ok(res);
         }
@@ -131,7 +131,7 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Edit(int id, ItemApplicationDTO item)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
             {
                 return BadRequest();
@@ -146,14 +146,14 @@ namespace Vaux.Controllers
                 });
             }
 
-            return Ok(_itemRepo.Update<ItemDTO, ItemApplicationDTO>(e => e.Id == id, item));
+            return Ok(_itemRepo.Update<ItemOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
 
         [HttpDelete]
         [Route("{id}")]
         public IActionResult Delete(int id)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity.Name)
             {
                 return BadRequest();
@@ -168,7 +168,7 @@ namespace Vaux.Controllers
                 });
             }
 
-            return Ok(_itemRepo.Delete<ItemDTO>(e => e.Id == id));
+            return Ok(_itemRepo.Delete<ItemOutDTO>(e => e.Id == id));
         }
     }
 }
