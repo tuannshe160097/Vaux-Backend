@@ -45,7 +45,7 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(_itemRepo.Get<ItemDTO>(e => e.Id == id && e.Status == ItemStatus.AUCTION_IN_PROGRESS));
+            return Ok(_itemRepo.Get<ItemOutDTO>(e => e.Id == id && e.Status == ItemStatus.AUCTION_IN_PROGRESS));
         }
 
         [HttpGet]
@@ -55,7 +55,7 @@ namespace Vaux.Controllers
             filterValues = filterValues ?? new string[1];
             filterEntities[filterEntities.Length - 1] = "Status";
             filterValues[filterValues.Length - 1] = $"{ItemStatus.AUCTION_IN_PROGRESS}";
-            var res = _itemRepo.Search<ItemDTO>(filterEntities, filterValues, orderBy, (pageNum - 1) * pageSize, pageSize);
+            var res = _itemRepo.Search<ItemOutDTO>(filterEntities, filterValues, orderBy, (pageNum - 1) * pageSize, pageSize);
             return Ok(res);
         }
 
@@ -73,7 +73,7 @@ namespace Vaux.Controllers
             {
                 query = query.Where(e => e.CategoryId == category);
             }
-            return Ok(_itemRepo.WrapListResult<ItemDTO>(query));
+            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query));
         }
 
         [HttpGet]
