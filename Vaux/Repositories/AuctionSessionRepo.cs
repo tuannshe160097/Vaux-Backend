@@ -28,9 +28,9 @@ namespace Vaux.Repositories
         {
             var auc = Update(predicate, data);
 
-            auc.AuctionSessionItems?.Clear();
+            auc.Items?.Clear();
 
-            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED)).ToList();
+            auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(a => a.Status == AuctionSessionStatus.FINISHED || a.Id == auc.Id)).ToList();
 
             Save();
 

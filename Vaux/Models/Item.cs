@@ -8,7 +8,7 @@ namespace Vaux.Models
     {
         public string Name { get; set; }
         public ItemStatus Status { get; set; }
-        public int ReservePrice { get; set; }
+        public long ReservePrice { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
