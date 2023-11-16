@@ -42,14 +42,14 @@ namespace Vaux.Controllers
             {
                 query = query.Where(e => e.CategoryId == category);
             }
-            return Ok(_itemRepo.WrapListResult<ItemDTO>(query, (pageNum - 1) * pageSize, pageSize));
+            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var i = _itemRepo.Get<ItemDTO>(e => e.Id == id);
+            var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
             if (i == null)
             {
                 return BadRequest();
@@ -74,7 +74,7 @@ namespace Vaux.Controllers
                 Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi chuyên gia"
             });
 
-            return Ok(_itemRepo.Update<ItemDTO, ItemApplicationDTO>(e => e.Id == id, item));
+            return Ok(_itemRepo.Update<ItemOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
 
         [HttpPatch]
@@ -89,7 +89,7 @@ namespace Vaux.Controllers
 
             i.Status = statusChange.Status;
 
-            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == i.Id, i));
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == i.Id, i));
         }
 
         [HttpPost]
@@ -117,7 +117,7 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            var res = _itemRepo.RemoveImages<ItemDTO>(e => e.Id == id, imageIds);
+            var res = _itemRepo.RemoveImages<ItemOutDTO>(e => e.Id == id, imageIds);
 
             return Ok(res);
         }
@@ -140,7 +140,7 @@ namespace Vaux.Controllers
                 Content = $"Đăng ký sản phẩm \"{i.Name}\" đang chờ xử lý"
             });
 
-            return Ok(_itemRepo.Update<ItemDTO, Item>(e => e.Id == id, i));
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == id, i));
         }
     }
 }

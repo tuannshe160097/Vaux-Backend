@@ -42,7 +42,7 @@ namespace Vaux.MapperProfiles
 
             CreateMap<ItemProperty, ItemPropertyDTO>();
 
-            CreateMap<Item, ItemDTO>()
+            CreateMap<Item, ItemOutDTO>()
                 .ForMember(dest => dest.StatusString, opt => opt.MapFrom(src => src.Status.ToString()))
                 .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images != null ? src.Images.Select(e => e.Id) : null));
 
