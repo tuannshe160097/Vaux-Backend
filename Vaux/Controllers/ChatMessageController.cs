@@ -52,7 +52,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Item does not exist");
             }
-            if (User.Identity.Name != i.ExpertId.ToString() && User.Identity.Name != i.SellerId.ToString())
+            if (User!.Identity!.Name != i.ExpertId.ToString() && User.Identity.Name != i.SellerId.ToString())
             {
                 return Unauthorized("Blud got rejected 💀");
             }
@@ -64,6 +64,7 @@ namespace Vaux.Controllers
             {
                 chatMessage.ImageId = _photoRepo.Create<Image>(chatMessage.RawImage).Id;
             }
+            chatMessage.SenderId = int.Parse(User!.Identity!.Name!);
             var message = _chatRepo.Create<ChatMessageOutDTO, ChatMessageDTO>(chatMessage);
             var u = _userRepo.Get<User>(e => e.Id == chatMessage.SenderId);
             await _hubContext.Clients.Groups("ItemApplication_id" + chatMessage.ItemId).SendAsync("VauxItemMessage", u!.Name, message);
