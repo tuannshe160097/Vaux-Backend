@@ -70,7 +70,7 @@ namespace Vaux.Controllers
             var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.UserId == id);
             if (u == null || u.Status != SellerApplicationStatus.PENDING)
             {
-                return BadRequest("Application does not exist");
+                return null;
             }
             return Ok(u);
         }
