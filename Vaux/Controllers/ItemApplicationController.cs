@@ -40,9 +40,23 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, ItemStatus? status = null)
         {
-            return Ok(_itemRepo.GetAll<ItemOutDTO>(e => e.SellerId.ToString() == User.Identity.Name));
+            var query = _itemRepo.Query().Where(e => e.SellerId.ToString() == User.Identity.Name);
+            query = query.OrderByDescending(e => e.Created);
+            if (search != null)
+            {
+                query = query.Where(e => e.Name.Contains(search));
+            }
+            if (category != null)
+            {
+                query = query.Where(e => e.CategoryId == category);
+            }
+            if (status != null)
+            {
+                query = query.Where(e => e.Status == status);
+            }
+            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpPost]
