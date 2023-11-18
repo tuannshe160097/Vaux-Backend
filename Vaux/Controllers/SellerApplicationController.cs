@@ -67,11 +67,7 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/GetByUserId/{id}")]
         public IActionResult GetByUserId(int id)
         {
-            var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.UserId == id);
-            if (u == null || u.Status != SellerApplicationStatus.PENDING)
-            {
-                return null;
-            }
+            var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.UserId == id && e.Status == SellerApplicationStatus.PENDING);
             return Ok(u);
         }
 
