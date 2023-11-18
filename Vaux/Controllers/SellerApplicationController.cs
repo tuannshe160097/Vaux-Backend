@@ -63,12 +63,12 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Authorize]
         [Route("/api/Seller/Application/GetByUserId/{id}")]
         public IActionResult GetByUserId(int id)
         {
             var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.UserId == id);
-            if (u == null)
+            if (u == null || u.Status != SellerApplicationStatus.PENDING)
             {
                 return BadRequest("Application does not exist");
             }
