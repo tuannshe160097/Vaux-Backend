@@ -89,7 +89,7 @@ namespace Vaux.Controllers
 
             i.Status = statusChange.Status;
 
-            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == i.Id, i));
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == i.Id, i, statusChange.StatusChangeReason));
         }
 
         [HttpPost]
