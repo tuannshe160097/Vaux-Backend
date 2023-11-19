@@ -48,19 +48,20 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(res);
         }
 
-        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy)
+        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, bool ascending = true)
         {
-            return GetAll<TOut>(null, orderBy);
+            return GetAll<TOut>(null, orderBy, ascending);
         }
 
-        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, int skip, int take)
+        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, bool ascending, int skip, int take)
         {
-            return GetAll<TOut>(null, orderBy, skip, take);
+            return GetAll<TOut>(null, orderBy,  ascending, skip, take);
         }
 
         public virtual ResultListDTO<TOut> GetAll<TOut>(
             Expression<Func<TEntity, bool>>? predicate = null,
-            Expression<Func<TEntity, object>>? orderBy = null,
+            Expression<Func<TEntity, object>>? orderBy = null, 
+            bool ascending = true,
             int skip = 0,
             int take = -1)
         {
@@ -73,7 +74,7 @@ namespace Vaux.Repositories
 
             if (orderBy != null)
             {
-                query = query.OrderBy(orderBy);
+                query = ascending ? query.OrderBy(orderBy) : query.OrderByDescending(orderBy);
             }
 
             return WrapListResult<TOut>(query, skip, take);

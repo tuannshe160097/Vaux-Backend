@@ -40,7 +40,7 @@ namespace Vaux.Controllers
             {
                 return Unauthorized("Blud got rejected 💀");
             }
-            return Ok(_chatRepo.GetAll<ChatMessageOutDTO>(e => e.ItemId == id));
+            return Ok(_chatRepo.GetAll<ChatMessageOutDTO>(e => e.ItemId == id,  false));
         }
         [HttpPost]
         [Authorize]

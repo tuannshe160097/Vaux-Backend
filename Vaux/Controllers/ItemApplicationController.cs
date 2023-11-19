@@ -43,7 +43,7 @@ namespace Vaux.Controllers
         public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, ItemStatus? status = null)
         {
             var query = _itemRepo.Query().Where(e => e.SellerId.ToString() == User.Identity.Name);
-            query = query.OrderByDescending(e => e.Created);
+            query = query.OrderByDescending(e => e.Id);
             if (search != null)
             {
                 query = query.Where(e => e.Name.Contains(search));
@@ -64,19 +64,6 @@ namespace Vaux.Controllers
         {
             var res = _itemRepo.Create<ItemOutDTO, ItemApplicationDTO>(item, int.Parse(User.Identity.Name));
             return Ok(res);
-        }
-
-        [HttpGet]
-        [Route("{id}/Images/{imageId}")]
-        public IActionResult GetImage(int id, int imageId)
-        {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i?.SellerId.ToString() != User.Identity.Name || (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null && i?.ThumbnailId != imageId))
-            {
-                return BadRequest();
-            }
-
-            return File(_photoRepo.Get(imageId).ToArray(), "image/jpeg");
         }
 
         [HttpPatch]

@@ -80,7 +80,7 @@ namespace Vaux.Controllers
         [Route("{id}/Comments")]
         public IActionResult GetComments(int id, int pageNum = 1, int pageSize = 30)
         {
-            return Ok(_commentRepo.GetAll<CommentOutDTO>(e => e.ItemId == id, e => e.Id, (pageNum-1) * pageSize, pageSize));
+            return Ok(_commentRepo.GetAll<CommentOutDTO>(e => e.ItemId == id, e => e.Id, false, (pageNum-1) * pageSize, pageSize));
         }
 
         [HttpPost]
@@ -111,7 +111,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
             return File(_photoRepo.Get(imageId).ToArray(), "image/jpeg");

@@ -8,11 +8,12 @@ namespace Vaux.Repositories.Interface
     public interface IBaseRepo<TEntity> where TEntity : ModelBase
     {
         public TOut? Get<TOut>(Expression<Func<TEntity, bool>> predicate);
-        public ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy);
-        public ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, int skip, int take);
+        public ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, bool ascending = true);
+        public ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, bool ascending, int skip, int take);
         public ResultListDTO<TOut> GetAll<TOut>(
             Expression<Func<TEntity, bool>>? predicate = null,
             Expression<Func<TEntity, object>>? orderBy = null,
+            bool ascending = true,
             int skip = 0,
             int take = -1);
         public ResultListDTO<TOut> Search<TOut>(string[]? filterEntities, string[]? filterValues, string orderBy = "Id", int skip = 0, int take = -1);

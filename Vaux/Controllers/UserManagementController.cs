@@ -29,7 +29,7 @@ namespace Vaux.Controllers
         public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? role = null, bool? banned = null)
         {
             var query = _userRepo.Query();
-            query.OrderBy(e => e.Id);
+            query.OrderByDescending(e => e.Id);
             if (search != null)
             {
                 query = query.Where(e => e.Email.Contains(search) || e.Name.Contains(search) || e.Phone.Contains(search));
