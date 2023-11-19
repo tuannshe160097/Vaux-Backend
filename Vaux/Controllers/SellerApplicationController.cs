@@ -85,7 +85,7 @@ namespace Vaux.Controllers
             {
                 query = query.Where(e => (int)e.Status == status);
             }
-            query = query.OrderBy(e => e.Status);
+            query = query.OrderBy(e => e.Status).ThenByDescending(e => e.Id);
             return Ok(_sellerApplicationRepo.WrapListResult<SellerApplicationOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 

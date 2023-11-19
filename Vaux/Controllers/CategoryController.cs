@@ -26,7 +26,7 @@ namespace Vaux.Controllers
         [Route("/api/Category")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
-            return Ok(_categoryRepo.GetAll<CategoryDTO>(e => search.IsNullOrEmpty() ? true : e.Name.Contains(search), e => e.Id, (pageNum-1) * pageSize, pageSize));
+            return Ok(_categoryRepo.GetAll<CategoryDTO>(e => search.IsNullOrEmpty() ? true : e.Name.Contains(search), e => e.Id, false, (pageNum-1) * pageSize, pageSize));
         }
 
         [HttpGet]

@@ -29,7 +29,7 @@ namespace Vaux.Controllers
         public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, int? status = null)
         {
             var query = _itemRepo.Query();
-            query = query.OrderByDescending(e => e.ExpertId != null);
+            query = query.OrderByDescending(e => e.Id);
             if (search != null)
             {
                 query = query.Where(e => e.Name.Contains(search));
