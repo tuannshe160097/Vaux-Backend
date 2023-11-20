@@ -12,8 +12,8 @@ namespace Vaux.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private IAuthRepo _authRepo;
-        private IUserRepo _userRepo;
+        private readonly IAuthRepo _authRepo;
+        private readonly IUserRepo _userRepo;
 
         public AuthenticationController(IAuthRepo authRepo, IUserRepo userRepo)
         {
@@ -88,10 +88,12 @@ namespace Vaux.Controllers
                 _userRepo.VerifyAccount(u.Id);
             }
 
-            var res = new AuthorizationDTO();
-            res.JWT = _authRepo.GenerateJWT(u.Id);
-            res.User = _userRepo.Map<UserMinimalDTO, User>(u);
-            res.Role = u.Role;
+            var res = new AuthorizationDTO
+            {
+                JWT = _authRepo.GenerateJWT(u.Id),
+                User = _userRepo.Map<UserMinimalDTO, User>(u),
+                Role = u.Role
+            };
             return Ok(res);
         }
 
@@ -100,12 +102,14 @@ namespace Vaux.Controllers
         [Route("RefreshToken")]
         public IActionResult RefreshToken()
         {
-            var u = _userRepo.Get<User>(e => e.Id == int.Parse(User.Identity.Name));
+            var u = _userRepo.Get<User>(e => e.Id == int.Parse(User.Identity!.Name!));
 
-            var res = new AuthorizationDTO();
-            res.JWT = _authRepo.GenerateJWT(u.Id);
-            res.User = _userRepo.Map<UserMinimalDTO, User>(u);
-            res.Role = u.Role;
+            var res = new AuthorizationDTO
+            {
+                JWT = _authRepo.GenerateJWT(u!.Id),
+                User = _userRepo.Map<UserMinimalDTO, User>(u),
+                Role = u.Role
+            };
             return Ok(res);
         }
     }

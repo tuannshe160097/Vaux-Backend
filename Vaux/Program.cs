@@ -31,7 +31,7 @@ namespace Vaux
                                 });*/
                 policy =>
                 {
-                    policy.WithOrigins(builder.Configuration["JWT:Audience"])
+                    policy.WithOrigins(builder.Configuration["JWT:Audience"]!)
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
@@ -75,7 +75,7 @@ namespace Vaux
                     ValidateLifetime = true,
                     ValidAudience = builder.Configuration["JWT:Audience"],
                     ValidIssuer = builder.Configuration["JWT:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!)),
                     ClockSkew = TimeSpan.Zero
                 };
                 opt.Events = new JwtBearerEvents

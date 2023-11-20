@@ -82,8 +82,8 @@ namespace Vaux.Repositories
 
         public ResultListDTO<TOut> Search<TOut>(string[]? filterEntities, string[]? filterValues, string orderBy = "Id", int skip = 0, int take = -1)
         {
-            filterEntities = filterEntities ?? new string[0];
-            filterValues = filterValues ?? new string[0];
+            filterEntities ??= Array.Empty<string>();
+            filterValues ??= Array.Empty<string>();
             var query = _queryGlobal;
 
             for (int i = 0; i < filterEntities.Length; i++)
@@ -179,9 +179,10 @@ namespace Vaux.Repositories
 
         public ResultListDTO<TOut> WrapListResult<TOut>(IQueryable<TEntity> query, int skip = 0, int take = -1)
         {
-            var result = new ResultListDTO<TOut>();
-
-            result.TotalRecords = query.Count();
+            var result = new ResultListDTO<TOut>
+            {
+                TotalRecords = query.Count()
+            };
 
             query = query.OrderBy(e => e.Id);
 

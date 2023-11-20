@@ -13,14 +13,12 @@ namespace Vaux.Controllers
     [ApiController]
     public class ItemApplicationExpertController : ControllerBase
     {
-        private IItemRepo _itemRepo;
-        private IPhotoRepo _photoRepo;
-        private IBaseRepo<Notification> _notificationRepo;
+        private readonly IItemRepo _itemRepo;
+        private readonly IBaseRepo<Notification> _notificationRepo;
 
-        public ItemApplicationExpertController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
+        public ItemApplicationExpertController(IItemRepo itemRepo, IBaseRepo<Notification> notificationRepo)
         {
             _itemRepo = itemRepo;
-            _photoRepo = photoRepo;
             _notificationRepo = notificationRepo;
         }
 
@@ -65,7 +63,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest();
             }
-            i.ExpertId = int.Parse(User.Identity.Name);
+            i.ExpertId = int.Parse(User.Identity!.Name!);
 
             _notificationRepo.Create<Notification, Notification>(new Notification()
             {
@@ -82,7 +80,7 @@ namespace Vaux.Controllers
         public IActionResult Unassign(int id)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity.Name)
+            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -103,7 +101,7 @@ namespace Vaux.Controllers
         public IActionResult Edit(int id, ItemPropertiesDTO item)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity.Name) 
+            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity!.Name) 
             {
                 return BadRequest();
             }
@@ -123,7 +121,7 @@ namespace Vaux.Controllers
         public IActionResult Accept(int id, [FromBody] string reason)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity.Name)
+            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -145,7 +143,7 @@ namespace Vaux.Controllers
         public IActionResult Reject(int id, [FromBody] string reason)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity.Name)
+            if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }

@@ -14,8 +14,8 @@ namespace Vaux.Repositories
 {
     public class AuthRepo : IAuthRepo
     {
-        private VxDbc _vxDbc;
-        private IConfiguration _config;
+        private readonly VxDbc _vxDbc;
+        private readonly IConfiguration _config;
 
         public AuthRepo(VxDbc dbc, IConfiguration config) 
         {
@@ -65,7 +65,7 @@ namespace Vaux.Repositories
         {
             var u = _vxDbc.Users.FirstOrDefault(u => u.Id == id);
 
-            Random rng = new Random();
+            Random rng = new();
             string otp = rng.Next(0, 1000000).ToString("D6");
 
             string accountSid = "ACdb5cb630bc0d972abcc437d4c3d5c161";
@@ -84,7 +84,7 @@ namespace Vaux.Repositories
 
             string number = u.Phone;
             string apiUrl = $"http://api.abenla.com/api2/SendSms?loginName=ABRR1HE&sign=610534c66912f752088903afe34ff18b&serviceTypeId=535&phoneNumber={number}&message={otp}&brandName=Verify3&callBack=false&smsGuid=1";
-            Uri address = new Uri(apiUrl);
+            Uri address = new(apiUrl);
 
             // Create the web request
             HttpWebRequest request = WebRequest.Create(address) as HttpWebRequest;
@@ -96,7 +96,7 @@ namespace Vaux.Repositories
             using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
             {
                 // Get the response stream
-                StreamReader reader = new StreamReader(response.GetResponseStream());
+                StreamReader reader = new(response.GetResponseStream());
 
                 // Console application output
                 Console.WriteLine(otp);
@@ -114,13 +114,13 @@ namespace Vaux.Repositories
         {
             var authClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, id),
-                new Claim(ClaimTypes.Name, id),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, role),
+                new(ClaimTypes.NameIdentifier, id),
+                new(ClaimTypes.Name, id),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new(ClaimTypes.Role, role),
             };
 
-            var key = Encoding.UTF8.GetBytes(_config["JWT:Secret"]);
+            var key = Encoding.UTF8.GetBytes(_config["JWT:Secret"]!);
 
             var token = new JwtSecurityToken(
                 issuer: _config["JWT:Issuer"],

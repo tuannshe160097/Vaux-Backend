@@ -10,7 +10,7 @@ namespace Vaux.CronJobs
     [DisallowConcurrentExecution]
     public class StartAuctionJob : IJob
     {
-        private VxDbc _vxDbc;
+        private readonly VxDbc _vxDbc;
         private readonly ILogger<StartAuctionJob> _logger;
 
         public StartAuctionJob(VxDbc vxDbc, ILogger<StartAuctionJob> logger)
@@ -26,10 +26,10 @@ namespace Vaux.CronJobs
             {
                 auc.Status = AuctionSessionStatus.ONGOING;
                 
-                foreach (var item in auc.Items)
+                foreach (var item in auc.Items!)
                 {
                     item.Status = ItemStatus.AUCTION_IN_PROGRESS;
-                    item.StatusChanges.Add(new StatusChange()
+                    item.StatusChanges!.Add(new StatusChange()
                     {
                         StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),
                         StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
@@ -37,7 +37,7 @@ namespace Vaux.CronJobs
                         StatusChangeReason = "Start auction"
                     });
 
-                    item.Seller.Notifications.Add(new Notification()
+                    item.Seller.Notifications!.Add(new Notification()
                     {
                         Content = $"Sản phẩm {item.Name} đã bắt đầu được đấu giá",
                         UserId = item.SellerId
