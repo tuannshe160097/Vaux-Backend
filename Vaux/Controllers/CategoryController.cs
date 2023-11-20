@@ -14,7 +14,7 @@ namespace Vaux.Controllers
     [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
     public class CategoryController : ControllerBase
     {
-        private IBaseRepo<Category> _categoryRepo;
+        private readonly IBaseRepo<Category> _categoryRepo;
 
         public CategoryController(IBaseRepo<Category> categoryRepo)
         {
@@ -26,7 +26,7 @@ namespace Vaux.Controllers
         [Route("/api/Category")]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, string? search = null)
         {
-            return Ok(_categoryRepo.GetAll<CategoryDTO>(e => search.IsNullOrEmpty() ? true : e.Name.Contains(search), e => e.Id, false, (pageNum-1) * pageSize, pageSize));
+            return Ok(_categoryRepo.GetAll<CategoryDTO>(e => search.IsNullOrEmpty() || e.Name.Contains(search!), e => e.Id, false, (pageNum-1) * pageSize, pageSize));
         }
 
         [HttpGet]

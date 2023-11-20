@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using Vaux.DbContext;
 using Vaux.DTO;
@@ -10,7 +11,7 @@ namespace Vaux.Repositories
 {
     public class ItemRepo : BaseRepo<Item>, IItemRepo
     {
-        private IPhotoRepo _photoRepo;
+        private readonly IPhotoRepo _photoRepo;
 
         public ItemRepo(VxDbc vxDbc, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(vxDbc, mapper, httpContextAccessor)
         {
@@ -35,12 +36,14 @@ namespace Vaux.Repositories
 
             if (oldItem.Status != newItem.Status && _user != null)
             {
-                StatusChange sc = new StatusChange();
-                sc.StatusFrom = nameof(oldItem.Status);
-                sc.StatusFrom = nameof(newItem.Status);
+                newItem.StatusChanges!.Add(new StatusChange
+                {
+                    StatusFrom = nameof(oldItem.Status),
+                    StatusTo = nameof(newItem.Status),
 
-                sc.StatusChangedById = int.Parse(_user.Identity.Name);
-                sc.StatusChangeReason = $"Changed status from {nameof(oldItem.Status)} to {nameof(newItem.Status)}";
+                    StatusChangedById = int.Parse(_user.Identity.Name),
+                    StatusChangeReason = $"Changed status from {nameof(oldItem.Status)} to {nameof(newItem.Status)}"
+                });
             }
 
             Save();
@@ -55,12 +58,14 @@ namespace Vaux.Repositories
 
             if (oldItem.Status != newItem.Status && _user != null)
             {
-                StatusChange sc = new StatusChange();
-                sc.StatusFrom = nameof(oldItem.Status);
-                sc.StatusFrom = nameof(newItem.Status);
+                newItem.StatusChanges!.Add(new StatusChange
+                {
+                    StatusFrom = nameof(oldItem.Status),
+                    StatusTo = nameof(newItem.Status),
 
-                sc.StatusChangedById = int.Parse(_user.Identity.Name);
-                sc.StatusChangeReason = changeReason;
+                    StatusChangedById = int.Parse(_user.Identity.Name),
+                    StatusChangeReason = changeReason
+                });
             }
 
             Save();
@@ -105,7 +110,7 @@ namespace Vaux.Repositories
         {
             var i = Get<Item>(predicate);
 
-            foreach (var image in i.Images)
+            foreach (var image in i.Images!)
             {
                 if (imageIds.Contains(image.Id))
                 {

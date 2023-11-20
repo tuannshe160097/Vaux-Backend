@@ -14,10 +14,10 @@ namespace Vaux.Controllers
     [ApiController]
     public class SellerApplicationController : ControllerBase
     {
-        private ISellerApplicationRepo _sellerApplicationRepo;
-        private IPhotoRepo _photoRepo;
-        private IUserRepo _userRepo;
-        private IBaseRepo<Notification> _notificationRepo;
+        private readonly ISellerApplicationRepo _sellerApplicationRepo;
+        private readonly IPhotoRepo _photoRepo;
+        private readonly IUserRepo _userRepo;
+        private readonly IBaseRepo<Notification> _notificationRepo;
 
         public SellerApplicationController(ISellerApplicationRepo sellerApplicationRepo, IPhotoRepo photoRepo, IUserRepo userRepo, IBaseRepo<Notification> notificationRepo)
         {
@@ -32,7 +32,7 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/Create")]
         public IActionResult Create([FromForm] SellerApplicationDTO sellerApplication)
         {
-            var sa = _sellerApplicationRepo.Get<SellerApplication>(e => e.UserId == int.Parse(User.Identity.Name));
+            var sa = _sellerApplicationRepo.Get<SellerApplication>(e => e.UserId == int.Parse(User.Identity!.Name!));
             if (sa != null && sa.Status == SellerApplicationStatus.PENDING)
             {
                 return BadRequest("Application already existed");
@@ -44,7 +44,7 @@ namespace Vaux.Controllers
             }
             sellerApplication.PortraitId = _photoRepo.Create<Image>(sellerApplication.RawPortrait).Id;
             sellerApplication.CitizenIdImageId = _photoRepo.Create<Image>(sellerApplication.RawCitizenIdImage).Id;
-            sellerApplication.UserId = int.Parse(User.Identity.Name);
+            sellerApplication.UserId = int.Parse(User.Identity!.Name!);
             var result = _sellerApplicationRepo.Create<SellerApplication, SellerApplicationDTO>(sellerApplication);
             return Ok(result);
         }
@@ -112,7 +112,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Unauthorized");
             }
-            MemoryStream image = _photoRepo.Get(imageId);
+            MemoryStream? image = _photoRepo.Get(imageId);
             if (image == null)
             {
                 return BadRequest("Image does not exist");
@@ -126,7 +126,7 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/Get/Image/{imageId}")]
         public IActionResult GetImage(int imageId)
         {
-            MemoryStream image = _photoRepo.Get(imageId);
+            MemoryStream? image = _photoRepo.Get(imageId);
             if (image == null)
             {
                 return BadRequest("Image does not exist");

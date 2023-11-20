@@ -8,13 +8,11 @@ namespace Vaux.ValidationAttributes
         {
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
-            var files = value as ICollection<IFormFile>;
-
-            if (files == null)
+            if (value is not ICollection<IFormFile> files)
             {
-                return ValidationResult.Success;
+                return ValidationResult.Success!;
             }
 
             foreach (var e in files)
@@ -26,7 +24,7 @@ namespace Vaux.ValidationAttributes
                 }
             }
 
-            return ValidationResult.Success;
+            return ValidationResult.Success!;
         }
     }
 }

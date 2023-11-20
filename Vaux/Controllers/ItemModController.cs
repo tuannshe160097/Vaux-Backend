@@ -14,14 +14,12 @@ namespace Vaux.Controllers
     [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
     public class ItemModController : ControllerBase
     {
-        private IItemRepo _itemRepo;
-        private IPhotoRepo _photoRepo;
-        private IBaseRepo<Notification> _notificationRepo;
+        private readonly IItemRepo _itemRepo;
+        private readonly IBaseRepo<Notification> _notificationRepo;
 
-        public ItemModController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
+        public ItemModController(IItemRepo itemRepo, IBaseRepo<Notification> notificationRepo)
         {
             _itemRepo = itemRepo;
-            _photoRepo = photoRepo;
             _notificationRepo = notificationRepo;
         }
 
@@ -132,7 +130,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest();
             }
-            i.ExpertId = int.Parse(User.Identity.Name);
+            i.ExpertId = int.Parse(User.Identity!.Name!);
 
             _notificationRepo.Create<Notification, Notification>(new Notification()
             {

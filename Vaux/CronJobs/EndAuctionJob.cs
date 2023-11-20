@@ -10,7 +10,7 @@ namespace Vaux.CronJobs
     [DisallowConcurrentExecution]
     public class EndAuctionJob : IJob
     {
-        private VxDbc _vxDbc;
+        private readonly VxDbc _vxDbc;
         private readonly ILogger<EndAuctionJob> _logger;
 
         public EndAuctionJob(VxDbc vxDbc, ILogger<EndAuctionJob> logger)
@@ -26,13 +26,13 @@ namespace Vaux.CronJobs
             {
                 auc.Status = AuctionSessionStatus.FINISHED;
 
-                foreach (var item in auc.Items)
+                foreach (var item in auc.Items!)
                 {
                     var highestBid = item.Bids?.LastOrDefault();
                     if (highestBid?.Amount >= item.ReservePrice)
                     {
                         item.Status = ItemStatus.PAYMENT_IN_PROGRESS;
-                        item.StatusChanges.Add(new StatusChange()
+                        item.StatusChanges!.Add(new StatusChange()
                         {
                             StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
                             StatusTo = ItemStatus.PAYMENT_IN_PROGRESS.ToString(),
@@ -40,13 +40,13 @@ namespace Vaux.CronJobs
                             StatusChangeReason = $"Item won by user {highestBid.UserId}"
                         });
 
-                        item.Seller.Notifications.Add(new Notification()
+                        item.Seller.Notifications!.Add(new Notification()
                         {
                             Content = $"Sản phẩm {item.Name} đã được đấu giá thành công",
                             UserId = item.SellerId
                         });
 
-                        highestBid.User.Notifications.Add(new Notification()
+                        highestBid.User.Notifications!.Add(new Notification()
                         {
                             Content = $"Bạn đã thắng được sản phẩm {item.Name}",
                             UserId = highestBid.UserId
@@ -55,7 +55,7 @@ namespace Vaux.CronJobs
                     else
                     {
                         item.Status = ItemStatus.RE_AUCTION_PENDING;
-                        item.StatusChanges.Add(new StatusChange()
+                        item.StatusChanges!.Add(new StatusChange()
                         {
                             StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
                             StatusTo = ItemStatus.RE_AUCTION_PENDING.ToString(),
@@ -63,7 +63,7 @@ namespace Vaux.CronJobs
                             StatusChangeReason = $"Item auction failed"
                         });
 
-                        item.Seller.Notifications.Add(new Notification()
+                        item.Seller.Notifications!.Add(new Notification()
                         {
                             Content = $"Sản phẩm {item.Name} đã không được đấu giá thành công",
                             UserId = item.SellerId

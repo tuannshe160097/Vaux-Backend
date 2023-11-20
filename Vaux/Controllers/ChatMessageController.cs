@@ -13,10 +13,10 @@ namespace Vaux.Controllers
     [ApiController]
     public class ChatMessageController : ControllerBase
     {
-        private IPhotoRepo _photoRepo;
-        private IUserRepo _userRepo;
-        private IItemRepo _itemRepo;
-        private IChatRepo _chatRepo;
+        private readonly IPhotoRepo _photoRepo;
+        private readonly IUserRepo _userRepo;
+        private readonly IItemRepo _itemRepo;
+        private readonly IChatRepo _chatRepo;
         private readonly IHubContext<VauxChatHub> _hubContext;
         public ChatMessageController(IItemRepo itemRepo, IPhotoRepo photoRepo, IUserRepo userRepo, IChatRepo chatRepo, IHubContext<VauxChatHub> hubContext)
         {
@@ -36,7 +36,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Item does not exist");
             }
-            if (User.Identity.Name != c.ExpertId.ToString() && User.Identity.Name != c.SellerId.ToString())
+            if (User.Identity!.Name != c.ExpertId.ToString() && User.Identity.Name != c.SellerId.ToString())
             {
                 return Unauthorized("Blud got rejected 💀");
             }
@@ -85,7 +85,7 @@ namespace Vaux.Controllers
             {
                 return Unauthorized("Blud got rejected 💀");
             }
-            MemoryStream image = _photoRepo.Get(imageId);
+            MemoryStream? image = _photoRepo.Get(imageId);
             if (image == null)
             {
                 return BadRequest("Image does not exist");

@@ -15,14 +15,12 @@ namespace Vaux.Controllers
     [Authorize(Roles = $"{nameof(RoleId.SELLER)}")]
     public class ItemApplicationController : ControllerBase
     {
-        private IItemRepo _itemRepo;
-        private IPhotoRepo _photoRepo;
-        private IBaseRepo<Notification> _notificationRepo;
+        private readonly IItemRepo _itemRepo;
+        private readonly IBaseRepo<Notification> _notificationRepo;
 
-        public ItemApplicationController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
+        public ItemApplicationController(IItemRepo itemRepo, IBaseRepo<Notification> notificationRepo)
         {
             _itemRepo = itemRepo;
-            _photoRepo = photoRepo;
             _notificationRepo = notificationRepo;
         }
 
@@ -31,7 +29,7 @@ namespace Vaux.Controllers
         public IActionResult Get(int id)
         {
             var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -42,7 +40,7 @@ namespace Vaux.Controllers
         [HttpGet]
         public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, ItemStatus? status = null)
         {
-            var query = _itemRepo.Query().Where(e => e.SellerId.ToString() == User.Identity.Name);
+            var query = _itemRepo.Query().Where(e => e.SellerId.ToString() == User.Identity!.Name);
             query = query.OrderByDescending(e => e.Id);
             if (search != null)
             {
@@ -62,7 +60,7 @@ namespace Vaux.Controllers
         [HttpPost]
         public IActionResult Create(ItemApplicationDTO item)
         {
-            var res = _itemRepo.Create<ItemOutDTO, ItemApplicationDTO>(item, int.Parse(User.Identity.Name));
+            var res = _itemRepo.Create<ItemOutDTO, ItemApplicationDTO>(item, int.Parse(User.Identity!.Name!));
             return Ok(res);
         }
 
@@ -71,7 +69,7 @@ namespace Vaux.Controllers
         public IActionResult Thumbnail(int id, [FromForm] ImageDTO thumbnail)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -94,7 +92,7 @@ namespace Vaux.Controllers
         public IActionResult AddImages(int id, [FromForm] ImageCollectionDTO images)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -118,7 +116,7 @@ namespace Vaux.Controllers
         public IActionResult RemoveImages(int id, int[] imageIds)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -133,7 +131,7 @@ namespace Vaux.Controllers
         public IActionResult Edit(int id, ItemApplicationDTO item)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -155,7 +153,7 @@ namespace Vaux.Controllers
         public IActionResult Delete(int id)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }

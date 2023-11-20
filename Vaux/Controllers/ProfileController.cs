@@ -14,7 +14,7 @@ namespace Vaux.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        private IUserRepo _userRepo;
+        private readonly IUserRepo _userRepo;
 
         public ProfileController(IUserRepo userRepo)
         {
@@ -25,7 +25,7 @@ namespace Vaux.Controllers
         public IActionResult ViewProfile()
         {
             //User u = _userRepo.Get(int.Parse(User.Identity.Name));
-            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity.Name);
+            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity!.Name);
 
             if (u == null)
             {
@@ -39,7 +39,7 @@ namespace Vaux.Controllers
         [Authorize(Roles = $"{nameof(RoleId.BUYER)},{nameof(RoleId.SELLER)}")]
         public IActionResult UpdateProfile(UserMinimalDTO profile)
         {
-            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity.Name);
+            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity!.Name);
             if (u == null)
             {
                 return BadRequest("User does not exist");
@@ -62,7 +62,7 @@ namespace Vaux.Controllers
         [Route("/api/Mod/Profile")]
         public IActionResult UpdateProfile(UserStrictDTO profile)
         {
-            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity.Name);
+            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity!.Name);
             if (u == null)
             {
                 return BadRequest("User does not exist");
