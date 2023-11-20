@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Vaux.Models;
+using Vaux.Models.Enums;
 using Vaux.ValidationAttributes;
 
 namespace Vaux.DTO
 {
     public class SellerApplicationOutDTO
     {
+        public int Id { get; set; }
         public int? UserId { get; set; }
         public string CitizenId { get; set; }
         public string Content { get; set; }
@@ -20,5 +22,9 @@ namespace Vaux.DTO
         public int? PortraitId { get; set; }
         public int? CitizenIdImageId { get; set; }
         public UserMinimalDTO User { get; set; }
+        public SellerApplicationStatus Status { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+        public DateTime? Deleted { get; set; }
     }
 }

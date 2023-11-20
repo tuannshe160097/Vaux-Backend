@@ -67,7 +67,7 @@ namespace Vaux.Repositories
         {
             var u = _vxDbc.Users.FirstOrDefault(u => u.Id == id);
 
-            Random rng = new Random();
+            Random rng = new();
             string otp = rng.Next(0, 1000000).ToString("D6");
 
             _smsRepo.SendSms(u.Phone, otp);
@@ -82,13 +82,13 @@ namespace Vaux.Repositories
         {
             var authClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, id),
-                new Claim(ClaimTypes.Name, id),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, role),
+                new(ClaimTypes.NameIdentifier, id),
+                new(ClaimTypes.Name, id),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new(ClaimTypes.Role, role),
             };
 
-            var key = Encoding.UTF8.GetBytes(_config["JWT:Secret"]);
+            var key = Encoding.UTF8.GetBytes(_config["JWT:Secret"]!);
 
             var token = new JwtSecurityToken(
                 issuer: _config["JWT:Issuer"],

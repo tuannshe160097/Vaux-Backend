@@ -23,5 +23,26 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(a);
         }
 
+        public TOut Update<TOut, TIn>(Expression<Func<SellerApplication, bool>> predicate, TIn data, string changeReason)
+        {
+            var oldAppli = Get<SellerApplication>(predicate);
+            var newAppli = Update(predicate, data);
+
+            if (oldAppli.Status != newAppli.Status && _user != null)
+            {
+                newAppli.StatusChanges.Add(new StatusChange
+                {
+                    StatusFrom = nameof(oldAppli.Status),
+                    StatusTo = nameof(newAppli.Status),
+
+                    StatusChangedById = int.Parse(_user.Identity!.Name!),
+                    StatusChangeReason = changeReason
+                });
+            }
+
+            Save();
+
+            return _mapper.Map<TOut>(newAppli);
+        }
     }
 }

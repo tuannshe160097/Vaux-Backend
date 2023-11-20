@@ -15,7 +15,7 @@ namespace Vaux.Controllers
     [ApiController]
     public class UserManagementController : ControllerBase
     {
-        private IUserRepo _userRepo;
+        private readonly IUserRepo _userRepo;
 
         public UserManagementController(IUserRepo userRepo)
         {
@@ -26,14 +26,30 @@ namespace Vaux.Controllers
         [Route("/api/Mod/Account")]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [AllowAnonymous]
-        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, [FromQuery] string[]? filterEntities = null, [FromQuery] string[]? filterValues = null, string orderBy = "Id")
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? role = null, bool? banned = null)
         {
-            if (filterValues?.Length != filterEntities?.Length)
+            var query = _userRepo.Query();
+            query.OrderByDescending(e => e.Id);
+            if (search != null)
             {
-                return BadRequest();
+                query = query.Where(e => e.Email!.Contains(search) || e.Name.Contains(search) || e.Phone.Contains(search));
             }
-
-            return Ok(_userRepo.Search<User>(filterEntities, filterValues, orderBy, (pageNum - 1) * pageSize, pageSize));
+            if (role != null)
+            {
+                query = query.Where(e => e.RoleId == role);
+            }
+            if (banned != null)
+            {
+                if (banned == true)
+                {
+                    query = query.Where(e => e.Deleted != null);
+                }
+                else
+                {
+                    query = query.Where(e => e.Deleted == null);
+                }
+            }
+            return Ok(_userRepo.WrapListResult<UserOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]
@@ -67,28 +83,13 @@ namespace Vaux.Controllers
             return Ok(res);
         }
 
-        [HttpPost]
-        [Route("{id}/CitizenIdImage")]
-        [Authorize(Roles = nameof(RoleId.ADMIN))]
-        public IActionResult UpdateCitizenIdImage(int id)
-        {
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("{id}/FaceImage")]
-        [Authorize(Roles = nameof(RoleId.ADMIN))]
-        public IActionResult UpdateFaceImage(int id)
-        {
-            return Ok();
-        }
-
         [HttpPatch]
         [Route("/api/Mod/Account/ChangeAccess/{id}")]
         [Authorize($"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult ChangeAccess(int id)
         {
             var u = _userRepo.Get<User>(e => e.Id == id);
+            var user = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity!.Name);
             if (u == null)
             {
                 return BadRequest("User not found");

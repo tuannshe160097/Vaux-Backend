@@ -15,14 +15,12 @@ namespace Vaux.Controllers
     [Authorize(Roles = $"{nameof(RoleId.SELLER)}")]
     public class ItemApplicationController : ControllerBase
     {
-        private IItemRepo _itemRepo;
-        private IPhotoRepo _photoRepo;
-        private IBaseRepo<Notification> _notificationRepo;
+        private readonly IItemRepo _itemRepo;
+        private readonly IBaseRepo<Notification> _notificationRepo;
 
-        public ItemApplicationController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
+        public ItemApplicationController(IItemRepo itemRepo, IBaseRepo<Notification> notificationRepo)
         {
             _itemRepo = itemRepo;
-            _photoRepo = photoRepo;
             _notificationRepo = notificationRepo;
         }
 
@@ -30,8 +28,8 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var i = _itemRepo.Get<ItemDTO>(e => e.Id == id);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -40,37 +38,38 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, ItemStatus? status = null)
         {
-            return Ok(_itemRepo.GetAll<ItemDTO>(e => e.SellerId.ToString() == User.Identity.Name));
+            var query = _itemRepo.Query().Where(e => e.SellerId.ToString() == User.Identity!.Name);
+            query = query.OrderByDescending(e => e.Id);
+            if (search != null)
+            {
+                query = query.Where(e => e.Name.Contains(search));
+            }
+            if (category != null)
+            {
+                query = query.Where(e => e.CategoryId == category);
+            }
+            if (status != null)
+            {
+                query = query.Where(e => e.Status == status);
+            }
+            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpPost]
         public IActionResult Create(ItemApplicationDTO item)
         {
-            var res = _itemRepo.Create<ItemDTO, ItemApplicationDTO>(item, int.Parse(User.Identity.Name));
+            var res = _itemRepo.Create<ItemOutDTO, ItemApplicationDTO>(item, int.Parse(User.Identity!.Name!));
             return Ok(res);
-        }
-
-        [HttpGet]
-        [Route("{id}/Images/{imageId}")]
-        public IActionResult GetImage(int id, int imageId)
-        {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i?.SellerId.ToString() != User.Identity.Name || (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null && i?.ThumbnailId != imageId))
-            {
-                return BadRequest();
-            }
-
-            return File(_photoRepo.Get(imageId).ToArray(), "image/jpeg");
         }
 
         [HttpPatch]
         [Route("{id}/Thumbnail")]
         public IActionResult Thumbnail(int id, [FromForm] ImageDTO thumbnail)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -84,7 +83,7 @@ namespace Vaux.Controllers
                 });
             }
 
-            return Ok(_itemRepo.EditThumbnail<ItemDTO>(e => e.Id == id, thumbnail.Image));
+            return Ok(_itemRepo.EditThumbnail<ItemOutDTO>(e => e.Id == id, thumbnail.Image));
         }
 
 
@@ -92,8 +91,8 @@ namespace Vaux.Controllers
         [Route("{id}/Images")]
         public IActionResult AddImages(int id, [FromForm] ImageCollectionDTO images)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -107,7 +106,7 @@ namespace Vaux.Controllers
                 });
             }
 
-            var res = _itemRepo.AddImages<ItemDTO>(e => e.Id == id, images.Images);
+            var res = _itemRepo.AddImages<ItemOutDTO>(e => e.Id == id, images.Images);
 
             return Ok(res);
         }
@@ -116,13 +115,13 @@ namespace Vaux.Controllers
         [Route("{id}/Images")]
         public IActionResult RemoveImages(int id, int[] imageIds)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
 
-            var res = _itemRepo.RemoveImages<ItemDTO>(e => e.Id == id, imageIds);
+            var res = _itemRepo.RemoveImages<ItemOutDTO>(e => e.Id == id, imageIds);
 
             return Ok(res);
         }
@@ -131,8 +130,8 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Edit(int id, ItemApplicationDTO item)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -146,15 +145,15 @@ namespace Vaux.Controllers
                 });
             }
 
-            return Ok(_itemRepo.Update<ItemDTO, ItemApplicationDTO>(e => e.Id == id, item));
+            return Ok(_itemRepo.Update<ItemOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
 
         [HttpDelete]
         [Route("{id}")]
         public IActionResult Delete(int id)
         {
-            var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null || i.SellerId.ToString() != User.Identity.Name)
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest();
             }
@@ -168,7 +167,7 @@ namespace Vaux.Controllers
                 });
             }
 
-            return Ok(_itemRepo.Delete<ItemDTO>(e => e.Id == id));
+            return Ok(_itemRepo.Delete<ItemOutDTO>(e => e.Id == id));
         }
     }
 }

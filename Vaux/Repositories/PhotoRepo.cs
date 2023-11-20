@@ -12,8 +12,8 @@ namespace Vaux.Repositories
 {
     public class PhotoRepo : IPhotoRepo
     {
-        private VxDbc _vxDbc;
-        private IMapper _mapper;
+        private readonly VxDbc _vxDbc;
+        private readonly IMapper _mapper;
         private const string PathToServiceAccountKeyFile = @"vaux-402415-cc9850aaa031.json";
         private const string DirectoryId = "1ETKk2RRtvOxB_ERo6drE_2jvLrpTqoVW";
 
@@ -25,8 +25,10 @@ namespace Vaux.Repositories
 
         public TOut Create<TOut>(IFormFile image)
         {
-            var img = new Image();
-            img.Url = "tmp";
+            var img = new Image
+            {
+                Url = "tmp"
+            };
 
             _vxDbc.Images.Add(img);
             _vxDbc.SaveChanges();
@@ -58,14 +60,14 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(img);
         }
 
-        public MemoryStream Get(int id)
+        public MemoryStream? Get(int id)
         {
             var img = _vxDbc.Images.FirstOrDefault(x => x.Id == id);
 
             return DriveDownloadFile(img.Url);
         }
 
-        private MemoryStream DriveDownloadFile(string fileId)
+        private static MemoryStream? DriveDownloadFile(string fileId)
         {
             try
             {
@@ -129,7 +131,7 @@ namespace Vaux.Repositories
             return null;
         }
 
-        private async Task<string> DriveUpload(IFormFile formFile, string name)
+        private static async Task<string?> DriveUpload(IFormFile formFile, string name)
         {
             try
             {
@@ -139,7 +141,7 @@ namespace Vaux.Repositories
                 using var filestream = formFile.OpenReadStream();
                 byte[] bytes = new byte[length];
                 filestream.Read(bytes, 0, (int)length);
-                MemoryStream image = new MemoryStream(bytes);
+                MemoryStream image = new(bytes);
                 // Load the Service account credentials and define the scope of its access.
                 var credential = GoogleCredential.FromFile(PathToServiceAccountKeyFile)
                                 .CreateScoped(DriveService.ScopeConstants.Drive);
@@ -156,7 +158,7 @@ namespace Vaux.Repositories
                     Name = $"{name}.jpg",
                     Parents = new List<string>() { DirectoryId }
                 };
-                string uploadedFileId;
+                string? uploadedFileId;
                 await using (var msSource = image)
                 {
                     // Create a new file, with metadata and stream.
@@ -201,7 +203,7 @@ namespace Vaux.Repositories
         }
 
 
-        private async Task<string> DriveUpdate(IFormFile formFile, string fileId, string name)
+        private static async Task<string?> DriveUpdate(IFormFile formFile, string fileId, string name)
         {
             try
             {
@@ -211,7 +213,7 @@ namespace Vaux.Repositories
                 using var filestream = formFile.OpenReadStream();
                 byte[] bytes = new byte[length];
                 filestream.Read(bytes, 0, (int)length);
-                MemoryStream image = new MemoryStream(bytes);
+                MemoryStream image = new(bytes);
                 // Load the Service account credentials and define the scope of its access.
                 var credential = GoogleCredential.FromFile(PathToServiceAccountKeyFile)
                                 .CreateScoped(DriveService.ScopeConstants.Drive);
@@ -227,7 +229,7 @@ namespace Vaux.Repositories
                 {
                     Name = $"{name}.jpg",
                 };
-                string uploadedFileId;
+                string? uploadedFileId;
                 await using (var msSource = image)
                 {
                     // Create a new file, with metadata and stream.
@@ -271,7 +273,7 @@ namespace Vaux.Repositories
             return null;
         }
 
-        private string DriveDelete(string fileId)
+        private static string? DriveDelete(string fileId)
         {
             try
             {

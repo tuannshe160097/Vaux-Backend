@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System.Drawing.Printing;
 using Vaux.DTO;
 using Vaux.Hubs;
 using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
+using static Twilio.Rest.Insights.V1.ConferenceResource;
 
 namespace Vaux.Controllers
 {
@@ -19,16 +21,16 @@ namespace Vaux.Controllers
         private const int BID_LOCK_POOL_SIZE = 64;
         private static readonly List<object> _bidLockPool = Enumerable.Repeat(new object(), BID_LOCK_POOL_SIZE).ToList();
 
-        private object GetBidLocker(int index)
+        private static object GetBidLocker(int index)
         {
             return _bidLockPool[index % BID_LOCK_POOL_SIZE];
         }
 
-        private IItemRepo _itemRepo;
-        private IPhotoRepo _photoRepo;
-        private IBaseRepo<Comment> _commentRepo;
-        private IBaseRepo<Bid> _bidRepo;
-        private IHubContext<BidHub> _bidHub;
+        private readonly IItemRepo _itemRepo;
+        private readonly IPhotoRepo _photoRepo;
+        private readonly IBaseRepo<Comment> _commentRepo;
+        private readonly IBaseRepo<Bid> _bidRepo;
+        private readonly IHubContext<BidHub> _bidHub;
 
         public ItemController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Comment> commentRepo, IBaseRepo<Bid> bidRepo, IHubContext<BidHub> hubContext)
         {
@@ -43,32 +45,42 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(_itemRepo.Get<ItemDTO>(e => e.Id == id && e.Status == ItemStatus.AUCTION_IN_PROGRESS));
+            return Ok(_itemRepo.Get<ItemOutDTO>(e => e.Id == id && e.Status == ItemStatus.AUCTION_IN_PROGRESS));
         }
 
         [HttpGet]
         public IActionResult GetAll(int pageNum = 1, int pageSize = 30, [FromQuery] string[]? filterEntities = null, [FromQuery] string[]? filterValues = null, string orderBy = "Id")
         {
-            filterEntities = filterEntities ?? new string[1];
-            filterValues = filterValues ?? new string[1];
-            filterEntities[filterEntities.Length - 1] = "Status";
-            filterValues[filterValues.Length - 1] = $"{ItemStatus.AUCTION_IN_PROGRESS}";
-            var res = _itemRepo.Search<ItemDTO>(filterEntities, filterValues, orderBy, (pageNum - 1) * pageSize, pageSize);
+            filterEntities ??= new string[1];
+            filterValues ??= new string[1];
+            filterEntities[^1] = "Status";
+            filterValues[^1] = $"{ItemStatus.AUCTION_IN_PROGRESS}";
+            var res = _itemRepo.Search<ItemOutDTO>(filterEntities, filterValues, orderBy, (pageNum - 1) * pageSize, pageSize);
             return Ok(res);
         }
 
         [HttpGet]
         [Route("Approved")]
-        public IActionResult GetApproved()
+        public IActionResult GetApproved(string? search = null, int? category = null)
         {
-            return Ok(_itemRepo.GetAll<ItemDTO>(e => e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED)));
+            var query = _itemRepo.Query();
+            query = query.Where(e => e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED));
+            if (search != null)
+            {
+                query = query.Where(e => e.Name.Contains(search));
+            }
+            if (category != null)
+            {
+                query = query.Where(e => e.CategoryId == category);
+            }
+            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query));
         }
 
         [HttpGet]
         [Route("{id}/Comments")]
         public IActionResult GetComments(int id, int pageNum = 1, int pageSize = 30)
         {
-            return Ok(_commentRepo.GetAll<CommentOutDTO>(e => e.ItemId == id, e => e.Id, (pageNum-1) * pageSize, pageSize));
+            return Ok(_commentRepo.GetAll<CommentOutDTO>(e => e.ItemId == id, e => e.Id, false, (pageNum-1) * pageSize, pageSize));
         }
 
         [HttpPost]
@@ -82,11 +94,13 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            Comment c = new();
-            c.Content = comment.Content;
-            c.UserId = int.Parse(User.Identity.Name);
-            c.ItemId = id;
-            
+            Comment c = new()
+            {
+                Content = comment.Content,
+                UserId = int.Parse(User.Identity!.Name!),
+                ItemId = id
+            };
+
             var res = _commentRepo.Create<CommentOutDTO, Comment>(c);
 
             return Ok(res);
@@ -97,12 +111,18 @@ namespace Vaux.Controllers
         public IActionResult GetImage(int id, int imageId)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null)
+            if (i == null) return NotFound();
+            if (i.Images!.FirstOrDefault(e => e.Id == imageId) == null && i.ThumbnailId != imageId)
+            {
+                return NotFound();
+            }
+            var res = _photoRepo.Get(imageId)?.ToArray();
+            if (res == null)
             {
                 return BadRequest();
             }
 
-            return File(_photoRepo.Get(imageId).ToArray(), "image/jpeg");
+            return File(res, "image/jpeg");
         }
 
         [HttpGet]
@@ -117,15 +137,13 @@ namespace Vaux.Controllers
         [Route("{id}/Bid")]
         public IActionResult Bid(int id, BidInDto bid)
         {
-            Console.WriteLine($"Request from user {User.Identity.Name} at {DateTime.Now.ToString("HH:mm:ss.ffffff")} for item {id} with {bid.Amount}");
+            Console.WriteLine($"Request from user {User.Identity!.Name!} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}");
             var item = _itemRepo.Get<Item>(e => e.Id == id);
             if (item == null)
             {
                 return BadRequest();
             }
 
-            //object bidLocker = new object();
-            //lock (_bidLockPool.GetOrAdd(item.Id, bidLocker))
             var locker = GetBidLocker(item.Id);
             lock(locker)
             {
@@ -133,20 +151,22 @@ namespace Vaux.Controllers
 
                 if (bid.Amount <= item.Bids?.LastOrDefault()?.Amount + 10000)
                 {
-                    Console.WriteLine($"Response for user {User.Identity.Name} at {DateTime.Now.ToString("HH:mm:ss.ffffff")} for item {id} with {bid.Amount}/too low");
+                    Console.WriteLine($"Response for user {User.Identity.Name} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}/too low");
                     return BadRequest("Bid must be 10k higher than curreent bid");
                 }
 
-                var b = new Bid();
-                b.ItemId = item.Id;
-                b.Amount = bid.Amount;
-                b.UserId = int.Parse(User.Identity.Name);
+                var b = new Bid
+                {
+                    ItemId = item.Id,
+                    Amount = bid.Amount,
+                    UserId = int.Parse(User.Identity!.Name!)
+                };
                 var res = _bidRepo.Create<Bid, Bid>(b);
 
                 string group = string.Format(BidHub.BID_ROOM_FORMAT, item.Id);
                 _bidHub.Clients.Group(group).SendAsync(group, User.Identity.Name, bid.Amount);
 
-                Console.WriteLine($"Response for user {User.Identity.Name} at {DateTime.Now.ToString("HH:mm:ss.ffffff")} for item {id} with {bid.Amount}/ok");
+                Console.WriteLine($"Response for user {User.Identity.Name} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}/ok");
                 return Ok(res);
             }
         }

@@ -19,6 +19,7 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());
 
             CreateMap<User, UserMinimalDTO>();
+            CreateMap<User, UserOutDTO>();
 
             CreateMap<UserStrictDTO, User>()
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
@@ -41,7 +42,7 @@ namespace Vaux.MapperProfiles
 
             CreateMap<ItemProperty, ItemPropertyDTO>();
 
-            CreateMap<Item, ItemDTO>()
+            CreateMap<Item, ItemOutDTO>()
                 .ForMember(dest => dest.StatusString, opt => opt.MapFrom(src => src.Status.ToString()))
                 .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images != null ? src.Images.Select(e => e.Id) : null));
 
@@ -69,6 +70,8 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<ChatMessage, ChatMessageDTO>()
                 .ForMember(dest => dest.RawImage, opt => opt.Ignore());
+            CreateMap<ChatMessage, ChatMessageOutDTO>()
+                .ForMember(dest => dest.Sender, src => src.MapFrom(c => c.Sender!.Name));
 
         }
     }

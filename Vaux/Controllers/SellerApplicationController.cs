@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Models.Enums;
@@ -13,15 +14,17 @@ namespace Vaux.Controllers
     [ApiController]
     public class SellerApplicationController : ControllerBase
     {
-        private ISellerApplicationRepo _sellerApplicationRepo;
-        private IPhotoRepo _photoRepo;
-        private IUserRepo _userRepo;
+        private readonly ISellerApplicationRepo _sellerApplicationRepo;
+        private readonly IPhotoRepo _photoRepo;
+        private readonly IUserRepo _userRepo;
+        private readonly IBaseRepo<Notification> _notificationRepo;
 
-        public SellerApplicationController(ISellerApplicationRepo sellerApplicationRepo, IPhotoRepo photoRepo, IUserRepo userRepo)
+        public SellerApplicationController(ISellerApplicationRepo sellerApplicationRepo, IPhotoRepo photoRepo, IUserRepo userRepo, IBaseRepo<Notification> notificationRepo)
         {
             _sellerApplicationRepo = sellerApplicationRepo;
             _photoRepo = photoRepo;
             _userRepo = userRepo;
+            _notificationRepo = notificationRepo;
         }
 
         [HttpPost]
@@ -29,39 +32,61 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/Create")]
         public IActionResult Create([FromForm] SellerApplicationDTO sellerApplication)
         {
-            var sa = _sellerApplicationRepo.Get<SellerApplication>(e => e.UserId == int.Parse(User.Identity.Name));
+            var sa = _sellerApplicationRepo.Get<SellerApplication>(e => e.UserId == int.Parse(User.Identity!.Name!));
             if (sa != null && sa.Status == SellerApplicationStatus.PENDING)
             {
                 return BadRequest("Application already existed");
             }
+            var sam = _userRepo.Get<SellerApplication>(e => e.Email == sellerApplication.Email);
+            if(sam != null)
+            {
+                return BadRequest("Email already existed");
+            }
             sellerApplication.PortraitId = _photoRepo.Create<Image>(sellerApplication.RawPortrait).Id;
             sellerApplication.CitizenIdImageId = _photoRepo.Create<Image>(sellerApplication.RawCitizenIdImage).Id;
-            sellerApplication.UserId = int.Parse(User.Identity.Name);
+            sellerApplication.UserId = int.Parse(User.Identity!.Name!);
             var result = _sellerApplicationRepo.Create<SellerApplication, SellerApplicationDTO>(sellerApplication);
             return Ok(result);
         }
 
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        [Route("/api/Seller/Application/Get")]
+        [Route("/api/Seller/Application/Get/{id}")]
         public IActionResult Get(int id)
         {
-            var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == id);
+            var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.Id == id);
             if (u == null)
             {
                 return BadRequest("Application does not exist");
             }
-            var s = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.Id == id);
-            return Ok(s);
+            return Ok(u);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("/api/Seller/Application/GetByUserId/{id}")]
+        public IActionResult GetByUserId(int id)
+        {
+            var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.UserId == id && e.Status == SellerApplicationStatus.PENDING);
+            return Ok(u);
         }
 
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/GetAll")]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? status = null)
         {
-            var s = _sellerApplicationRepo.GetAll<SellerApplicationOutDTO>(e => e.Status);
-            return Ok(s);
+            var query = _sellerApplicationRepo.Query();
+            if (search != null)
+            {
+                query = query.Where(e => e.User.Email.Contains(search) || e.User.Name.Contains(search) || e.User.Phone.Contains(search));
+            }
+            if (status != null)
+            {
+                query = query.Where(e => (int)e.Status == status);
+            }
+            query = query.OrderBy(e => e.Status).ThenByDescending(e => e.Id);
+            return Ok(_sellerApplicationRepo.WrapListResult<SellerApplicationOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]
@@ -87,7 +112,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Unauthorized");
             }
-            MemoryStream image = _photoRepo.Get(imageId);
+            MemoryStream? image = _photoRepo.Get(imageId);
             if (image == null)
             {
                 return BadRequest("Image does not exist");
@@ -101,7 +126,7 @@ namespace Vaux.Controllers
         [Route("/api/Seller/Application/Get/Image/{imageId}")]
         public IActionResult GetImage(int imageId)
         {
-            MemoryStream image = _photoRepo.Get(imageId);
+            MemoryStream? image = _photoRepo.Get(imageId);
             if (image == null)
             {
                 return BadRequest("Image does not exist");
@@ -113,32 +138,49 @@ namespace Vaux.Controllers
         [HttpPatch]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Approve")]
-        public IActionResult ApproveApplication(int applicationId)
+        public IActionResult ApproveApplication(int applicationId, [FromBody] string reason)
         {
-            var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
-            if (u == null || u.Status != SellerApplicationStatus.PENDING)
+            var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
+            if (i == null || i.Status != SellerApplicationStatus.PENDING)
             {
-                return BadRequest("Application does not exist");
+                return BadRequest("No such pending application");
             }
-            u.Status = SellerApplicationStatus.APPROVED;
-            _sellerApplicationRepo.Update<SellerApplication, SellerApplication>(e => e.Id == u.Id, u);
-            var result = _userRepo.Update<User, SellerApplication>(e => e.Id == u.UserId, u, RoleId.SELLER);
-            return Ok(result);
+            var sam = _userRepo.Get<SellerApplication>(e => e.Email == i.Email);
+            if (sam != null)
+            {
+                return BadRequest("Email already existed");
+            }
+            i.Status = SellerApplicationStatus.APPROVED;
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.UserId,
+                Content = $"Đăng ký tài khoản người bán cho \"{i.User.Name}\" đã được phê duyệt"
+            });
+            _userRepo.Update<User, SellerApplication>(e => e.Id == i.UserId, i, RoleId.SELLER);
+            return Ok(_sellerApplicationRepo.Update<SellerApplicationOutDTO, SellerApplication>(e => e.Id == i.Id, i, reason));
         }
 
         [HttpPatch]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Seller/Application/Deny")]
-        public IActionResult DenyApplication(int applicationId)
+        public IActionResult DenyApplication(int applicationId, [FromBody] string reason)
         {
-            var u = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
-            if (u == null || u.Status != SellerApplicationStatus.PENDING)
+            var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
+            if (i == null || i.Status != SellerApplicationStatus.PENDING)
             {
-                return BadRequest("Application does not exist");
+                return BadRequest("No such pending application");
             }
-            u.Status = SellerApplicationStatus.DENIED;
-            var result =_sellerApplicationRepo.Update<SellerApplication, SellerApplication>(e => e.Id == u.Id, u);
-            return Ok(result);
+
+            i.Status = SellerApplicationStatus.DENIED;
+
+            _notificationRepo.Create<Notification, Notification>(new Notification()
+            {
+                UserId = i.UserId,
+                Content = $"Đăng ký tài khoản người bán cho \"{i.User.Name}\" đã bị từ chối"
+            });
+
+            return Ok(_sellerApplicationRepo.Update<SellerApplicationOutDTO, SellerApplication>(e => e.Id == i.Id, i, reason));
         }
     }
 }

@@ -35,11 +35,11 @@
             {
                 if (e.ClrType.IsSubclassOf(typeof(ModelBase)))
                 {
-                    e.FindProperty(nameof(ModelBase.Created)).SetDefaultValueSql("GETDATE()");
-                    e.FindProperty(nameof(ModelBase.Created)).ValueGenerated = ValueGenerated.OnAdd;
+                    e.FindProperty(nameof(ModelBase.Created))!.SetDefaultValueSql("GETDATE()");
+                    e.FindProperty(nameof(ModelBase.Created))!.ValueGenerated = ValueGenerated.OnAdd;
 
-                    e.FindProperty(nameof(ModelBase.Updated)).SetDefaultValueSql("GETDATE()");
-                    e.FindProperty(nameof(ModelBase.Updated)).ValueGenerated = ValueGenerated.OnAdd;
+                    e.FindProperty(nameof(ModelBase.Updated))!.SetDefaultValueSql("GETDATE()");
+                    e.FindProperty(nameof(ModelBase.Updated))!.ValueGenerated = ValueGenerated.OnAdd;
 
                     var parameter = Expression.Parameter(e.ClrType);
                     var body = ReplacingExpressionVisitor.Replace(notDeletedExpr.Parameters.First(), parameter, notDeletedExpr.Body);
