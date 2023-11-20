@@ -16,11 +16,13 @@ namespace Vaux.Repositories
     {
         private VxDbc _vxDbc;
         private IConfiguration _config;
+        private ISmsRepo _smsRepo;
 
-        public AuthRepo(VxDbc dbc, IConfiguration config) 
+        public AuthRepo(VxDbc dbc, IConfiguration config, ISmsRepo smsRepo) 
         {
             _vxDbc = dbc;
             _config = config;
+            _smsRepo = smsRepo;
         }
 
         public bool CheckOtp(int id, string otp)
@@ -68,41 +70,7 @@ namespace Vaux.Repositories
             Random rng = new Random();
             string otp = rng.Next(0, 1000000).ToString("D6");
 
-            string accountSid = "ACdb5cb630bc0d972abcc437d4c3d5c161";
-            string authToken = "eb103e79f1c4ec2262afb4394890cf4e";
-            //string phone =  "+84" + u.Phone.Remove(0, 1);
-
-            /*            TwilioClient.Init(accountSid, authToken);
-
-                        var message = MessageResource.Create(
-                            body: otp,
-                            from: new Twilio.Types.PhoneNumber("+12567279723"),
-                            to: new Twilio.Types.PhoneNumber("+84858617701") //Replace with phone number when account is upgraded
-                        );
-
-                        Console.WriteLine(message.Sid + "\n" + message.Body + "\n" + phone);*/
-
-            string number = u.Phone;
-            string apiUrl = $"http://api.abenla.com/api2/SendSms?loginName=ABRR1HE&sign=610534c66912f752088903afe34ff18b&serviceTypeId=535&phoneNumber={number}&message={otp}&brandName=Verify3&callBack=false&smsGuid=1";
-            Uri address = new Uri(apiUrl);
-
-            // Create the web request
-            HttpWebRequest request = WebRequest.Create(address) as HttpWebRequest;
-
-            // Set type to POST
-            request.Method = "GET";
-            request.ContentType = "application/json";
-
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-            {
-                // Get the response stream
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-
-                // Console application output
-                Console.WriteLine(otp);
-                string strOutputXml = reader.ReadToEnd();
-                Console.WriteLine(strOutputXml);
-            }
+            _smsRepo.SendSms(u.Phone, otp);
 
             u.OtpHash = BCrypt.Net.BCrypt.HashPassword(otp);
             u.OtpExpiry = DateTime.Now.AddMinutes(30);
