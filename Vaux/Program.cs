@@ -31,9 +31,9 @@ namespace Vaux
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
-                    policy.WithOrigins("http://127.0.0.1:5500/")
-                    .WithMethods("GET", "POST")
-                    .AllowCredentials();
+                    policy.WithOrigins("https://sandbox.vnpayment.vn")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                 });
             });
 
