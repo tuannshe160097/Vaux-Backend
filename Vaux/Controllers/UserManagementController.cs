@@ -85,7 +85,7 @@ namespace Vaux.Controllers
 
         [HttpPatch]
         [Route("/api/Mod/Account/ChangeAccess/{id}")]
-        [Authorize($"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult ChangeAccess(int id)
         {
             var u = _userRepo.Get<User>(e => e.Id == id);
