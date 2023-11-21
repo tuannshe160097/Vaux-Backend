@@ -37,7 +37,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Application already existed");
             }
-            var sam = _userRepo.Get<SellerApplication>(e => e.Email == sellerApplication.Email);
+            var sam = _userRepo.Get<User>(e => e.Email == sellerApplication.Email);
             if(sam != null)
             {
                 return BadRequest("Email already existed");
