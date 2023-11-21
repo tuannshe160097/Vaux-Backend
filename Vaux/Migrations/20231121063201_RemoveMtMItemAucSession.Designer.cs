@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vaux.DbContext;
 
@@ -11,9 +12,11 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    partial class VxDbcModelSnapshot : ModelSnapshot
+    [Migration("20231121063201_RemoveMtMItemAucSession")]
+    partial class RemoveMtMItemAucSession
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,9 +346,6 @@ namespace Vaux.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<DateTime>("WonDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int?>("WonUserId")
                         .HasColumnType("int");
@@ -727,10 +727,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Shipments", t =>
-                        {
-                            t.HasTrigger("TOTALCOST_UPDATE");
-                        });
+                    b.ToTable("Shipments");
                 });
 
             modelBuilder.Entity("Vaux.Models.StatusChange", b =>

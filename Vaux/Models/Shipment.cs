@@ -1,10 +1,12 @@
-﻿namespace Vaux.Models
+﻿using Vaux.Models.Enums;
+
+namespace Vaux.Models
 {
     public class Shipment : ModelBase
     {
-        public int Status { get; set; }
+        public ShipmentStatus Status { get; set; }
 
-        public long ShipmentCost { get; set; }
+        public long ShippingCost { get; set; }
         public long ItemCost { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }

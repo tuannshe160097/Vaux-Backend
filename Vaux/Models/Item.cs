@@ -36,8 +36,12 @@ namespace Vaux.Models
 
         public virtual ICollection<Comment>? Comments { get; set; }
 
-        public virtual ICollection<AuctionSessionItem>? AuctionSessionItems { get; set; }
         public virtual ICollection<AuctionSession>? AuctionSessions { get; set; }
+
+        [ForeignKey(nameof(WonUser))]
+        public int? WonUserId { get; set; }
+        public virtual User? WonUser { get; set; }
+        public DateTime WonDate { get; set; }
 
         public int? OrderId { get; set; }
         public virtual Order? Order { get; set; }

@@ -23,7 +23,6 @@
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -75,8 +74,7 @@
 
             modelBuilder.Entity<Item>()
                 .HasMany(e => e.AuctionSessions)
-                .WithMany(e => e.Items)
-                .UsingEntity<AuctionSessionItem>();
+                .WithMany(e => e.Items);
 
             modelBuilder.Entity<ChatMessage>()
                 .Property(e => e.Content)
@@ -87,6 +85,7 @@
                 .HasDefaultValue(AuctionSessionStatus.PENDING);
 
             modelBuilder.Entity<Bid>().ToTable(tb => tb.HasTrigger("BIDS_PREVENT_LOWER"));
+            modelBuilder.Entity<Shipment>().ToTable(tb => tb.HasTrigger("TOTALCOST_UPDATE"));
 
             modelBuilder.Entity<Role>().HasData(
                 new Role()

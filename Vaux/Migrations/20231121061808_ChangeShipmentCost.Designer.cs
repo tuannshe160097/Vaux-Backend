@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vaux.DbContext;
 
@@ -11,9 +12,11 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    partial class VxDbcModelSnapshot : ModelSnapshot
+    [Migration("20231121061808_ChangeShipmentCost")]
+    partial class ChangeShipmentCost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,21 +27,6 @@ namespace Vaux.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AuctionSessionItem", b =>
-                {
-                    b.Property<int>("AuctionSessionsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AuctionSessionsId", "ItemsId");
-
-                    b.HasIndex("ItemsId");
-
-                    b.ToTable("AuctionSessionItem");
-                });
 
             modelBuilder.Entity("ImageItem", b =>
                 {
@@ -90,6 +78,29 @@ namespace Vaux.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AuctionSessions");
+                });
+
+            modelBuilder.Entity("Vaux.Models.AuctionSessionItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuctionSessionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuctionSessionId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("AuctionSessionItem");
                 });
 
             modelBuilder.Entity("Vaux.Models.Bid", b =>
@@ -344,12 +355,6 @@ namespace Vaux.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<DateTime>("WonDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("WonUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -363,8 +368,6 @@ namespace Vaux.Migrations
                     b.HasIndex("ShipmentId");
 
                     b.HasIndex("ThumbnailId");
-
-                    b.HasIndex("WonUserId");
 
                     b.ToTable("Items");
                 });
@@ -727,10 +730,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Shipments", t =>
-                        {
-                            t.HasTrigger("TOTALCOST_UPDATE");
-                        });
+                    b.ToTable("Shipments");
                 });
 
             modelBuilder.Entity("Vaux.Models.StatusChange", b =>
@@ -893,21 +893,6 @@ namespace Vaux.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AuctionSessionItem", b =>
-                {
-                    b.HasOne("Vaux.Models.AuctionSession", null)
-                        .WithMany()
-                        .HasForeignKey("AuctionSessionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Vaux.Models.Item", null)
-                        .WithMany()
-                        .HasForeignKey("ItemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ImageItem", b =>
                 {
                     b.HasOne("Vaux.Models.Image", null)
@@ -921,6 +906,25 @@ namespace Vaux.Migrations
                         .HasForeignKey("ItemsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Vaux.Models.AuctionSessionItem", b =>
+                {
+                    b.HasOne("Vaux.Models.AuctionSession", "AuctionSession")
+                        .WithMany("AuctionSessionItems")
+                        .HasForeignKey("AuctionSessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vaux.Models.Item", "Item")
+                        .WithMany("AuctionSessionItems")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AuctionSession");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Vaux.Models.Bid", b =>
@@ -1010,10 +1014,6 @@ namespace Vaux.Migrations
                         .WithMany("ItemThumbnails")
                         .HasForeignKey("ThumbnailId");
 
-                    b.HasOne("Vaux.Models.User", "WonUser")
-                        .WithMany()
-                        .HasForeignKey("WonUserId");
-
                     b.Navigation("Category");
 
                     b.Navigation("Expert");
@@ -1025,8 +1025,6 @@ namespace Vaux.Migrations
                     b.Navigation("Shipment");
 
                     b.Navigation("Thumbnail");
-
-                    b.Navigation("WonUser");
                 });
 
             modelBuilder.Entity("Vaux.Models.ItemProperty", b =>
@@ -1159,6 +1157,11 @@ namespace Vaux.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Vaux.Models.AuctionSession", b =>
+                {
+                    b.Navigation("AuctionSessionItems");
+                });
+
             modelBuilder.Entity("Vaux.Models.Category", b =>
                 {
                     b.Navigation("Items");
@@ -1171,6 +1174,8 @@ namespace Vaux.Migrations
 
             modelBuilder.Entity("Vaux.Models.Item", b =>
                 {
+                    b.Navigation("AuctionSessionItems");
+
                     b.Navigation("Bids");
 
                     b.Navigation("Comments");

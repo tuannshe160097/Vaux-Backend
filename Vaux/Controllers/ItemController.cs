@@ -77,6 +77,14 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [Route("WonItems")]
+        public IActionResult WonItems()
+        {
+            return Ok(_itemRepo.GetAll<ItemOutDTO>(e => e.WonUserId.ToString() == User.Identity!.Name));
+        }
+
+        [HttpGet]
         [Route("{id}/Comments")]
         public IActionResult GetComments(int id, int pageNum = 1, int pageSize = 30)
         {

@@ -40,6 +40,9 @@ namespace Vaux.CronJobs
                             StatusChangeReason = $"Item won by user {highestBid.UserId}"
                         });
 
+                        item.WonUserId = highestBid.UserId;
+                        item.WonDate = DateTime.Now;
+
                         item.Seller.Notifications!.Add(new Notification()
                         {
                             Content = $"Sản phẩm {item.Name} đã được đấu giá thành công",
