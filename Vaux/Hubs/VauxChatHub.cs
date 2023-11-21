@@ -13,15 +13,17 @@ namespace Vaux.Hubs
 {
     public class VauxChatHub : Hub
     {
-        private VxDbc _context;
+        private readonly VxDbc _context;
         protected readonly IHttpContextAccessor? _httpContextAccessor;
         protected readonly ClaimsPrincipal? _user;
+
         public VauxChatHub (VxDbc VxDbc, IHttpContextAccessor httpContextAccessor)
         {
             _context = VxDbc;
             _httpContextAccessor = httpContextAccessor;
             _user = _httpContextAccessor.HttpContext?.User;
         }
+
         public override Task OnConnectedAsync()
         {
             Console.WriteLine("SignalR Connected");
@@ -32,11 +34,10 @@ namespace Vaux.Hubs
         public void JoinRoom(string roomName, int itemId)
         {
             var item = _context.Items.FirstOrDefault(e => e.Id == itemId);
-            if(_user.Identity.Name == item?.SellerId.ToString() || _user.Identity.Name == item?.ExpertId.ToString())
+            if(_user!.Identity!.Name == item?.SellerId.ToString() || _user.Identity.Name == item?.ExpertId.ToString())
             {
                 Groups.AddToGroupAsync(Context.ConnectionId, roomName);
-                Console.WriteLine("Joined group: " + roomName + "\n"
-                                  +"Item name: " + item.Name + "\n");
+                Console.WriteLine("Joined group: " + roomName + "\n" + "Item name: " + item!.Name + "\n");
             }
             return;
         }

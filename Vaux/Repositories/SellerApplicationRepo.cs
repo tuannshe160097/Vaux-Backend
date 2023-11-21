@@ -30,12 +30,14 @@ namespace Vaux.Repositories
 
             if (oldAppli.Status != newAppli.Status && _user != null)
             {
-                StatusChange sc = new StatusChange();
-                sc.StatusFrom = nameof(oldAppli.Status);
-                sc.StatusFrom = nameof(newAppli.Status);
+                newAppli.StatusChanges.Add(new StatusChange
+                {
+                    StatusFrom = nameof(oldAppli.Status),
+                    StatusTo = nameof(newAppli.Status),
 
-                sc.StatusChangedById = int.Parse(_user.Identity.Name);
-                sc.StatusChangeReason = changeReason;
+                    StatusChangedById = int.Parse(_user.Identity!.Name!),
+                    StatusChangeReason = changeReason
+                });
             }
 
             Save();

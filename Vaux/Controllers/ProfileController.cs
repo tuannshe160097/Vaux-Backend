@@ -14,7 +14,7 @@ namespace Vaux.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        private IUserRepo _userRepo;
+        private readonly IUserRepo _userRepo;
 
         public ProfileController(IUserRepo userRepo)
         {
@@ -25,7 +25,7 @@ namespace Vaux.Controllers
         public IActionResult ViewProfile()
         {
             //User u = _userRepo.Get(int.Parse(User.Identity.Name));
-            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity.Name);
+            var u = _userRepo.Get<UserOutDTO>(e => e.Id.ToString() == User.Identity!.Name);
 
             if (u == null)
             {
@@ -39,7 +39,7 @@ namespace Vaux.Controllers
         [Authorize(Roles = $"{nameof(RoleId.BUYER)},{nameof(RoleId.SELLER)}")]
         public IActionResult UpdateProfile(UserMinimalDTO profile)
         {
-            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity.Name);
+            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity!.Name);
             if (u == null)
             {
                 return BadRequest("User does not exist");
@@ -53,8 +53,7 @@ namespace Vaux.Controllers
                 return BadRequest("Email already taken");
             }
 
-            _userRepo.Update<User, UserMinimalDTO>(e => e.Id == u.Id, profile);
-            return Ok();
+            return Ok(_userRepo.Update<UserOutDTO, UserMinimalDTO>(e => e.Id == u.Id, profile));
         }
 
         [HttpPut]
@@ -62,7 +61,7 @@ namespace Vaux.Controllers
         [Route("/api/Mod/Profile")]
         public IActionResult UpdateProfile(UserStrictDTO profile)
         {
-            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity.Name);
+            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity!.Name);
             if (u == null)
             {
                 return BadRequest("User does not exist");
@@ -76,8 +75,7 @@ namespace Vaux.Controllers
                 return BadRequest("Email already taken");
             }
 
-            _userRepo.Update<User, UserStrictDTO>(e => e.Id == u.Id, profile);
-            return Ok();
+            return Ok(_userRepo.Update<UserOutDTO, UserStrictDTO>(e => e.Id == u.Id, profile));
         }
     }
 }

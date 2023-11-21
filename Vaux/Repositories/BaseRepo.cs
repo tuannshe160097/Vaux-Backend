@@ -48,19 +48,20 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(res);
         }
 
-        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy)
+        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, bool ascending = true)
         {
-            return GetAll<TOut>(null, orderBy);
+            return GetAll<TOut>(null, orderBy, ascending);
         }
 
-        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, int skip, int take)
+        public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, bool ascending, int skip, int take)
         {
-            return GetAll<TOut>(null, orderBy, skip, take);
+            return GetAll<TOut>(null, orderBy,  ascending, skip, take);
         }
 
         public virtual ResultListDTO<TOut> GetAll<TOut>(
             Expression<Func<TEntity, bool>>? predicate = null,
-            Expression<Func<TEntity, object>>? orderBy = null,
+            Expression<Func<TEntity, object>>? orderBy = null, 
+            bool ascending = true,
             int skip = 0,
             int take = -1)
         {
@@ -73,7 +74,7 @@ namespace Vaux.Repositories
 
             if (orderBy != null)
             {
-                query = query.OrderBy(orderBy);
+                query = ascending ? query.OrderBy(orderBy) : query.OrderByDescending(orderBy);
             }
 
             return WrapListResult<TOut>(query, skip, take);
@@ -81,8 +82,8 @@ namespace Vaux.Repositories
 
         public ResultListDTO<TOut> Search<TOut>(string[]? filterEntities, string[]? filterValues, string orderBy = "Id", int skip = 0, int take = -1)
         {
-            filterEntities = filterEntities ?? new string[0];
-            filterValues = filterValues ?? new string[0];
+            filterEntities ??= Array.Empty<string>();
+            filterValues ??= Array.Empty<string>();
             var query = _queryGlobal;
 
             for (int i = 0; i < filterEntities.Length; i++)
@@ -178,9 +179,10 @@ namespace Vaux.Repositories
 
         public ResultListDTO<TOut> WrapListResult<TOut>(IQueryable<TEntity> query, int skip = 0, int take = -1)
         {
-            var result = new ResultListDTO<TOut>();
-
-            result.TotalRecords = query.Count();
+            var result = new ResultListDTO<TOut>
+            {
+                TotalRecords = query.Count()
+            };
 
             query = query.OrderBy(e => e.Id);
 

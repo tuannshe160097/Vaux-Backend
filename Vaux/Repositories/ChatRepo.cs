@@ -13,17 +13,5 @@ namespace Vaux.Repositories
         {
 
         }
-
-        public override TOut Create<TOut, TIn>(TIn message)
-        {
-            var i = Create(message);
-            Save();
-            return _mapper.Map<TOut>(i);
-        }
-
-        public override ResultListDTO<TOut> GetAll<TOut>(Expression<Func<ChatMessage, object>>? orderBy)
-        {
-            return GetAll<TOut>(null, orderBy);
-        }
     }
 }

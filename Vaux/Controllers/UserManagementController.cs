@@ -15,7 +15,7 @@ namespace Vaux.Controllers
     [ApiController]
     public class UserManagementController : ControllerBase
     {
-        private IUserRepo _userRepo;
+        private readonly IUserRepo _userRepo;
 
         public UserManagementController(IUserRepo userRepo)
         {
@@ -29,10 +29,10 @@ namespace Vaux.Controllers
         public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? role = null, bool? banned = null)
         {
             var query = _userRepo.Query();
-            query.OrderBy(e => e.Id);
+            query.OrderByDescending(e => e.Id);
             if (search != null)
             {
-                query = query.Where(e => e.Email.Contains(search) || e.Name.Contains(search) || e.Phone.Contains(search));
+                query = query.Where(e => e.Email!.Contains(search) || e.Name.Contains(search) || e.Phone.Contains(search));
             }
             if (role != null)
             {
@@ -83,33 +83,18 @@ namespace Vaux.Controllers
             return Ok(res);
         }
 
-        [HttpPost]
-        [Route("{id}/CitizenIdImage")]
-        [Authorize(Roles = nameof(RoleId.ADMIN))]
-        public IActionResult UpdateCitizenIdImage(int id)
-        {
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("{id}/FaceImage")]
-        [Authorize(Roles = nameof(RoleId.ADMIN))]
-        public IActionResult UpdateFaceImage(int id)
-        {
-            return Ok();
-        }
-
         [HttpPatch]
         [Route("/api/Mod/Account/ChangeAccess/{id}")]
-        [Authorize($"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult ChangeAccess(int id)
         {
             var u = _userRepo.Get<User>(e => e.Id == id);
+            var user = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity!.Name);
             if (u == null)
             {
                 return BadRequest("User not found");
             }
-            if (u.RoleId == (int)RoleId.ADMIN || u.RoleId == (int)RoleId.MODERATOR)
+            if (user?.RoleId != (int)RoleId.ADMIN && (u.RoleId == (int)RoleId.ADMIN || u.RoleId == (int)RoleId.MODERATOR))
             {
                 return Forbid();
             }

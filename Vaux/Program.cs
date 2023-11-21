@@ -25,13 +25,9 @@ namespace Vaux
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: allowClientOrigin,
-                /*                    builder =>
-                                {
-                                    builder.AllowAnyOrigin() AllowCredentials() ;
-                                });*/
                 policy =>
                 {
-                    policy.WithOrigins(builder.Configuration["JWT:Audience"])
+                    policy.WithOrigins(builder.Configuration["JWT:Audience"]!)
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
@@ -75,7 +71,7 @@ namespace Vaux
                     ValidateLifetime = true,
                     ValidAudience = builder.Configuration["JWT:Audience"],
                     ValidIssuer = builder.Configuration["JWT:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!)),
                     ClockSkew = TimeSpan.Zero
                 };
                 opt.Events = new JwtBearerEvents
@@ -86,8 +82,7 @@ namespace Vaux
 
                         // If the request is for our hub...
                         var path = context.HttpContext.Request.Path;
-                        if (!string.IsNullOrEmpty(accessToken) &&
-                            (path.StartsWithSegments("/vauxchathub")))
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/vauxchathub")))
                         {
                             // Read the token out of the query string
                             context.Token = accessToken;
@@ -119,6 +114,7 @@ namespace Vaux
 
             app.MapControllers();
             app.MapHub<VauxChatHub>("/vauxchathub");
+            app.MapHub<BidHub>("/bidhub");
             app.Run();
         }
     }

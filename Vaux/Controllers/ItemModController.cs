@@ -14,14 +14,12 @@ namespace Vaux.Controllers
     [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
     public class ItemModController : ControllerBase
     {
-        private IItemRepo _itemRepo;
-        private IPhotoRepo _photoRepo;
-        private IBaseRepo<Notification> _notificationRepo;
+        private readonly IItemRepo _itemRepo;
+        private readonly IBaseRepo<Notification> _notificationRepo;
 
-        public ItemModController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Notification> notificationRepo)
+        public ItemModController(IItemRepo itemRepo, IBaseRepo<Notification> notificationRepo)
         {
             _itemRepo = itemRepo;
-            _photoRepo = photoRepo;
             _notificationRepo = notificationRepo;
         }
 
@@ -29,7 +27,7 @@ namespace Vaux.Controllers
         public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, int? status = null)
         {
             var query = _itemRepo.Query();
-            query = query.OrderByDescending(e => e.ExpertId != null);
+            query = query.OrderByDescending(e => e.Id);
             if (search != null)
             {
                 query = query.Where(e => e.Name.Contains(search));
@@ -89,7 +87,7 @@ namespace Vaux.Controllers
 
             i.Status = statusChange.Status;
 
-            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == i.Id, i));
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == i.Id, i, statusChange.StatusChangeReason));
         }
 
         [HttpPost]
@@ -132,7 +130,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest();
             }
-            i.ExpertId = int.Parse(User.Identity.Name);
+            i.ExpertId = int.Parse(User.Identity!.Name!);
 
             _notificationRepo.Create<Notification, Notification>(new Notification()
             {
