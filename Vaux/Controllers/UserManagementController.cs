@@ -94,7 +94,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("User not found");
             }
-            if (u.RoleId == (int)RoleId.ADMIN || u.RoleId == (int)RoleId.MODERATOR)
+            if (user?.RoleId != (int)RoleId.ADMIN && (u.RoleId == (int)RoleId.ADMIN || u.RoleId == (int)RoleId.MODERATOR))
             {
                 return Forbid();
             }
