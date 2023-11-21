@@ -8,7 +8,8 @@
         AUCTION_IN_PROGRESS,
         REMOVED,
         RE_AUCTION_PENDING,
-        PAYMENT_IN_PROGRESS,
+        PAYMENT_PENDING,
         PAID,
+        PAID_TO_SELLER,
     }
 }
