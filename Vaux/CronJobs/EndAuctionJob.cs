@@ -21,7 +21,7 @@ namespace Vaux.CronJobs
 
         public Task Execute(IJobExecutionContext context)
         {
-            var eligibleAuctions = _vxDbc.AuctionSessions.Where(e => e.StartDate.Date == DateTime.Today).ToList();
+            var eligibleAuctions = _vxDbc.AuctionSessions.Where(e => e.EndDate.Date == DateTime.Today).ToList();
             foreach (var auc in eligibleAuctions)
             {
                 auc.Status = AuctionSessionStatus.FINISHED;
