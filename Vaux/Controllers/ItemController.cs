@@ -49,14 +49,19 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll(int pageNum = 1, int pageSize = 30, [FromQuery] string[]? filterEntities = null, [FromQuery] string[]? filterValues = null, string orderBy = "Id")
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null)
         {
-            filterEntities ??= new string[1];
-            filterValues ??= new string[1];
-            filterEntities[^1] = "Status";
-            filterValues[^1] = $"{ItemStatus.AUCTION_IN_PROGRESS}";
-            var res = _itemRepo.Search<ItemOutDTO>(filterEntities, filterValues, orderBy, (pageNum - 1) * pageSize, pageSize);
-            return Ok(res);
+            var query = _itemRepo.Query().Where(e => e.Status == ItemStatus.AUCTION_IN_PROGRESS);
+            query = query.OrderByDescending(e => e.ExpertId != null ? 1 : 0).ThenByDescending(e => e.Id);
+            if (search != null)
+            {
+                query = query.Where(e => e.Name.Contains(search));
+            }
+            if (category != null)
+            {
+                query = query.Where(e => e.CategoryId == category);
+            }
+            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]
@@ -119,7 +124,8 @@ namespace Vaux.Controllers
         public IActionResult GetImage(int id, int imageId)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i?.Images?.FirstOrDefault(e => e.Id == imageId) == null || i.ThumbnailId != imageId)
+            if (i == null) return NotFound();
+            if (i.Images!.FirstOrDefault(e => e.Id == imageId) == null && i.ThumbnailId != imageId)
             {
                 return NotFound();
             }

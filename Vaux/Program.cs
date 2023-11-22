@@ -25,19 +25,15 @@ namespace Vaux
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: allowClientOrigin,
-                /*                    builder =>
-                                {
-                                    builder.AllowAnyOrigin() AllowCredentials() ;
-                                });*/
                 policy =>
                 {
                     policy.WithOrigins(builder.Configuration["JWT:Audience"]!)
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
-                    policy.WithOrigins("http://127.0.0.1:5500/")
-                    .WithMethods("GET", "POST")
-                    .AllowCredentials();
+                    policy.WithOrigins("https://sandbox.vnpayment.vn")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                 });
             });
 
@@ -86,8 +82,7 @@ namespace Vaux
 
                         // If the request is for our hub...
                         var path = context.HttpContext.Request.Path;
-                        if (!string.IsNullOrEmpty(accessToken) &&
-                            (path.StartsWithSegments("/vauxchathub")))
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/vauxchathub")))
                         {
                             // Read the token out of the query string
                             context.Token = accessToken;
@@ -119,6 +114,7 @@ namespace Vaux
 
             app.MapControllers();
             app.MapHub<VauxChatHub>("/vauxchathub");
+            app.MapHub<BidHub>("/bidhub");
             app.Run();
         }
     }

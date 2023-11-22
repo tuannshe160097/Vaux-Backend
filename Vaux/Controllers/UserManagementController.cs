@@ -85,7 +85,7 @@ namespace Vaux.Controllers
 
         [HttpPatch]
         [Route("/api/Mod/Account/ChangeAccess/{id}")]
-        [Authorize($"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         public IActionResult ChangeAccess(int id)
         {
             var u = _userRepo.Get<User>(e => e.Id == id);
@@ -94,7 +94,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("User not found");
             }
-            if (u.RoleId == (int)RoleId.ADMIN || u.RoleId == (int)RoleId.MODERATOR)
+            if (user?.RoleId != (int)RoleId.ADMIN && (u.RoleId == (int)RoleId.ADMIN || u.RoleId == (int)RoleId.MODERATOR))
             {
                 return Forbid();
             }

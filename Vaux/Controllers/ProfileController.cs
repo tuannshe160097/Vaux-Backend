@@ -25,7 +25,7 @@ namespace Vaux.Controllers
         public IActionResult ViewProfile()
         {
             //User u = _userRepo.Get(int.Parse(User.Identity.Name));
-            var u = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity!.Name);
+            var u = _userRepo.Get<UserOutDTO>(e => e.Id.ToString() == User.Identity!.Name);
 
             if (u == null)
             {
@@ -53,8 +53,7 @@ namespace Vaux.Controllers
                 return BadRequest("Email already taken");
             }
 
-            _userRepo.Update<User, UserMinimalDTO>(e => e.Id == u.Id, profile);
-            return Ok();
+            return Ok(_userRepo.Update<UserOutDTO, UserMinimalDTO>(e => e.Id == u.Id, profile));
         }
 
         [HttpPut]
@@ -76,8 +75,7 @@ namespace Vaux.Controllers
                 return BadRequest("Email already taken");
             }
 
-            _userRepo.Update<User, UserStrictDTO>(e => e.Id == u.Id, profile);
-            return Ok();
+            return Ok(_userRepo.Update<UserOutDTO, UserStrictDTO>(e => e.Id == u.Id, profile));
         }
     }
 }
