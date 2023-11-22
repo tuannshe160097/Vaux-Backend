@@ -1,6 +1,6 @@
-﻿namespace Vaux.Models
+﻿namespace Vaux.VNPayIntegration
 {
-    public class PaymentResponseDTO
+    public class PaymentResponse
     {
         public string OrderDescription { get; set; }
         public string TransactionId { get; set; }

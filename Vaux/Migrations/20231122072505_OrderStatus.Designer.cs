@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vaux.DbContext;
 
@@ -11,9 +12,11 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    partial class VxDbcModelSnapshot : ModelSnapshot
+    [Migration("20231122072505_OrderStatus")]
+    partial class OrderStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -475,9 +478,7 @@ namespace Vaux.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasColumnType("int");
 
                     b.Property<string>("Street")
                         .HasColumnType("nvarchar(max)");
@@ -726,9 +727,6 @@ namespace Vaux.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SellerId")
-                        .HasColumnType("int");
-
                     b.Property<long>("ShippingCost")
                         .HasColumnType("bigint");
 
@@ -747,9 +745,10 @@ namespace Vaux.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("SellerId");
-
-                    b.ToTable("Shipments");
+                    b.ToTable("Shipments", t =>
+                        {
+                            t.HasTrigger("TOTALCOST_UPDATE");
+                        });
                 });
 
             modelBuilder.Entity("Vaux.Models.StatusChange", b =>
@@ -1129,13 +1128,7 @@ namespace Vaux.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Vaux.Models.User", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId");
-
                     b.Navigation("Order");
-
-                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("Vaux.Models.StatusChange", b =>

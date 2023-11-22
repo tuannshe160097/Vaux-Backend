@@ -1,5 +1,4 @@
-﻿using Vaux.Models;
-using Vaux.Repositories.Interface;
+﻿using Vaux.Repositories.Interface;
 using Vaux.VNPayIntegration;
 
 namespace Vaux.Repositories
@@ -12,7 +11,7 @@ namespace Vaux.Repositories
         {
             _configuration = configuration;
         }
-        public string CreatePaymentUrl(PaymentInformationDTO model, HttpContext context)
+        public string CreatePaymentUrl(PaymentInformation model, HttpContext context)
         {
             var timeZoneById = TimeZoneInfo.FindSystemTimeZoneById(_configuration["TimeZoneId"]);
             var timeNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneById);
@@ -39,7 +38,7 @@ namespace Vaux.Repositories
             return paymentUrl;
         }
 
-        public PaymentResponseDTO PaymentExecute(IQueryCollection collections)
+        public PaymentResponse PaymentExecute(IQueryCollection collections)
         {
             var pay = new VnPayLibrary();
             var response = pay.GetFullResponseData(collections, _configuration["Vnpay:HashSecret"]);

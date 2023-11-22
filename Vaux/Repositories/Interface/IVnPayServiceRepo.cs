@@ -1,10 +1,10 @@
-﻿using Vaux.Models;
+﻿using Vaux.VNPayIntegration;
 
 namespace Vaux.Repositories.Interface
 {
     public interface IVnPayServiceRepo
     {
-        string CreatePaymentUrl(PaymentInformationDTO model, HttpContext context);
-        PaymentResponseDTO PaymentExecute(IQueryCollection collections);
+        string CreatePaymentUrl(PaymentInformation model, HttpContext context);
+        PaymentResponse PaymentExecute(IQueryCollection collections);
     }
 }

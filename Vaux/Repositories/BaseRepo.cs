@@ -45,7 +45,7 @@ namespace Vaux.Repositories
         {
             var res = _queryGlobal.FirstOrDefault(predicate);
 
-            return _mapper.Map<TOut>(res);
+            return Map<TOut>(res);
         }
 
         public virtual ResultListDTO<TOut> GetAll<TOut>(Expression<Func<TEntity, object>>? orderBy, bool ascending = true)
@@ -111,7 +111,7 @@ namespace Vaux.Repositories
             var e = Create(data);
             Save();
 
-            return _mapper.Map<TOut>(e);
+            return Map<TOut>(e);
         }
 
         public virtual TOut Update<TOut, TIn>(Expression<Func<TEntity, bool>> predicate, TIn data)
@@ -119,7 +119,7 @@ namespace Vaux.Repositories
             var e = Update(predicate, data);
             Save();
 
-            return _mapper.Map<TOut>(e);
+            return Map<TOut>(e);
         }
 
         public virtual TOut Delete<TOut>(Expression<Func<TEntity, bool>> predicate)
@@ -128,7 +128,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(e);
+            return Map<TOut>(e);
         }
 
         public virtual TOut DeletePerma<TOut>(Expression<Func<TEntity, bool>> predicate)
@@ -137,7 +137,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(e);
+            return Map<TOut>(e);
         }
 
         protected virtual TEntity Create<TIn>(TIn data)
@@ -192,7 +192,7 @@ namespace Vaux.Repositories
                 query = query.Take(take);
             }
 
-            result.Records = _mapper.Map<List<TOut>>(query.ToList());
+            result.Records = Map<List<TOut>>(query.ToList());
             result.RecordsTaken = result.Records.Count;
             result.RecordsSkipped = skip;
 
@@ -204,7 +204,7 @@ namespace Vaux.Repositories
             return _queryGlobal;
         }
 
-        public TOut Map<TOut, TIn>(TIn data)
+        public TOut Map<TOut>(object data)
         {
             return _mapper.Map<TOut>(data);
         }

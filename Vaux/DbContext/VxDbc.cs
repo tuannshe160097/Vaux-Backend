@@ -78,14 +78,17 @@
 
             modelBuilder.Entity<ChatMessage>()
                 .Property(e => e.Content)
-                .HasDefaultValue(String.Empty);
+                .HasDefaultValue(string.Empty);
 
             modelBuilder.Entity<AuctionSession>()
                 .Property(e => e.Status)
                 .HasDefaultValue(AuctionSessionStatus.PENDING);
 
             modelBuilder.Entity<Bid>().ToTable(tb => tb.HasTrigger("BIDS_PREVENT_LOWER"));
-            modelBuilder.Entity<Shipment>().ToTable(tb => tb.HasTrigger("TOTALCOST_UPDATE"));
+
+            modelBuilder.Entity<Order>()
+                .Property(e => e.Status)
+                .HasDefaultValue(OrderStatus.UNPAID);
 
             modelBuilder.Entity<Role>().HasData(
                 new Role()

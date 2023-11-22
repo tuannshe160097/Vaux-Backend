@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using System.Linq;
+using System.Linq.Expressions;
+using Twilio.TwiML.Voice;
 using Vaux.DbContext;
 using Vaux.DTO;
 using Vaux.Models;
@@ -9,27 +12,66 @@ namespace Vaux.Repositories
 {
     public class OrderRepo : BaseRepo<Order>, IOrderRepo
     {
-        public OrderRepo(VxDbc vxDbc, IMapper mapper) : base(vxDbc, mapper)
+        public OrderRepo(VxDbc vxDbc, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(vxDbc, mapper, httpContextAccessor)
         {
         }
 
-        public ICollection<ShippingCostDTO> CalculateShip(ICollection<int> itemIds)
+        public TOut Create<TOut>(int[] itemIds)
         {
-            var items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == ItemStatus.PAYMENT_PENDING);
-            List<ShippingCostDTO> res = new();
-            List<int> sellerIds = new();
+            var user = _vxDbc.Users.FirstOrDefault(e => e.Id.ToString() == _user.Identity.Name);
+
+            Order order = new()
+            {
+                UserId = user.Id,
+                City = user.City,
+                Street = user.Street,
+                District = user.District,
+                HouseNumber = user.HouseNumber,
+                TotalCost = 0
+            };
+
+            List<Item> items = _vxDbc.Items.Where(e => e.WonUserId.ToString() == _user.Identity.Name && itemIds.Contains(e.Id)).ToList();
+
+            List<Shipment> shipments = new();
             foreach (var item in items)
             {
-                if (sellerIds.Contains(item.SellerId))
+                var shipment = shipments.FirstOrDefault(e => e.SellerId == item.SellerId);
+                if (shipment == null)
                 {
-                    continue;
+                    shipment = new();
+                    shipment.ItemCost = 0;
+                    shipment.ShippingCost = 0;
+                    shipment.SellerId = item.SellerId;
+                    shipment.City = item.Seller.City;
+                    shipment.Street = item.Seller.Street;
+                    shipment.District = item.Seller.District;
+                    shipment.HouseNumber = item.Seller.HouseNumber;
+
+                    shipments.Add(shipment);
                 }
 
-                sellerIds.Add(item.SellerId);
-
+                shipment.Items.Add(item);
+                shipment.ShippingCost += 10;
+                shipment.ItemCost += item.Bids!.Last().Amount;
+                order.TotalCost += shipment.ItemCost + shipment.ShippingCost;
             }
 
-            return res;
+            order.Items = items;
+            order.Shipment = shipments;
+            return Map<TOut>(order);
+        }
+
+        public TOut ConfirmPaid<TOut>(Expression<Func<Order, bool>> predicate)
+        {
+            var res = _queryGlobal.FirstOrDefault(predicate);
+
+            res.Status = OrderStatus.PAID;
+
+            //@TODO: Send email
+
+            Save();
+
+            return Map<TOut>(res);
         }
     }
 }

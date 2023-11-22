@@ -48,8 +48,6 @@ namespace Vaux.Migrations
                 column: "ShipmentId",
                 principalTable: "Shipments",
                 principalColumn: "Id");
-
-            migrationBuilder.Sql(Shipment.OrderTotalCostTriggerSql());
         }
 
         /// <inheritdoc />

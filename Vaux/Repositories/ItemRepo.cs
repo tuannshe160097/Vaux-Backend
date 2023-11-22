@@ -26,7 +26,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(i);
+            return Map<TOut>(i);
         }
 
         public override TOut Update<TOut, TIn>(Expression<Func<Item, bool>> predicate, TIn data)
@@ -70,7 +70,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(newItem);
+            return Map<TOut>(newItem);
         }
 
         protected override Item Delete(Expression<Func<Item, bool>> predicate)
@@ -89,7 +89,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(i);
+            return Map<TOut>(i);
         }
 
         public TOut AddImages<TOut>(Expression<Func<Item, bool>> predicate, List<IFormFile> images)
@@ -120,7 +120,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(i);
+            return Map<TOut>(i);
         }
     }
 }

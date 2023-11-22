@@ -6,16 +6,15 @@ using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
-using Vaux.Models;
 
 namespace Vaux.VNPayIntegration
 {
-        public class VnPayLibrary
+    public class VnPayLibrary
         {
             private readonly SortedList<string, string> _requestData = new SortedList<string, string>(new VnPayCompare());
             private readonly SortedList<string, string> _responseData = new SortedList<string, string>(new VnPayCompare());
 
-            public PaymentResponseDTO GetFullResponseData(IQueryCollection collection, string hashSecret)
+            public PaymentResponse GetFullResponseData(IQueryCollection collection, string hashSecret)
             {
                 var vnPay = new VnPayLibrary();
 
@@ -38,12 +37,12 @@ namespace Vaux.VNPayIntegration
                     vnPay.ValidateSignature(vnpSecureHash, hashSecret); //check Signature
 
                 if (!checkSignature)
-                    return new PaymentResponseDTO()
+                    return new PaymentResponse()
                     {
                         Success = false
                     };
 
-                return new PaymentResponseDTO()
+                return new PaymentResponse()
                 {
                     Success = true,
                     PaymentMethod = "VnPay",
