@@ -41,7 +41,8 @@ namespace Vaux.CronJobs
                         });
 
                         item.WonUserId = highestBid.UserId;
-                        item.WonDate = DateTime.Now;
+                        item.WonDate = DateTime.Today;
+                        item.PaymentDueDate = DateTime.Today.AddDays(7);
 
                         item.Seller.Notifications!.Add(new Notification()
                         {

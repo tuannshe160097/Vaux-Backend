@@ -41,7 +41,8 @@ namespace Vaux.Models
         [ForeignKey(nameof(WonUser))]
         public int? WonUserId { get; set; }
         public virtual User? WonUser { get; set; }
-        public DateTime WonDate { get; set; }
+        public DateTime? WonDate { get; set; }
+        public DateTime? PaymentDueDate { get; set; }
 
         public int? OrderId { get; set; }
         public virtual Order? Order { get; set; }

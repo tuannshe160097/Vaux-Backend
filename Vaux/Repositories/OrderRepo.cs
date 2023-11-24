@@ -66,6 +66,22 @@ namespace Vaux.Repositories
             var res = _queryGlobal.FirstOrDefault(predicate);
 
             res.Status = OrderStatus.PAID;
+            foreach (var shipment in res.Shipment)
+            {
+                foreach (var item in shipment.Items)
+                {
+                    item.Status = ItemStatus.PAID;
+
+                    item.StatusChanges!.Add(new StatusChange
+                    {
+                        StatusFrom = nameof(ItemStatus.PAYMENT_PENDING),
+                        StatusTo = nameof(ItemStatus.PAID),
+
+                        StatusChangedById = int.Parse(_user.Identity.Name),
+                        StatusChangeReason = $"Changed status from {nameof(ItemStatus.PAYMENT_PENDING)} to {nameof(ItemStatus.PAID)}"
+                    });
+                }
+            }
 
             //@TODO: Send email
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vaux.DTO;
+using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
 
@@ -13,7 +14,7 @@ namespace Vaux.Controllers
     {
         private IOrderRepo _orderRepo;
 
-        public OrderModController(IOrderRepo orderRepo)
+        public OrderModController(IOrderRepo orderRepo, IBaseRepo<Shipment> shipmentRepo)
         {
             _orderRepo = orderRepo;
         }

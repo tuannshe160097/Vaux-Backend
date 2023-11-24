@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vaux.DTO;
 using Vaux.Models;
@@ -7,29 +8,22 @@ using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
 {
-    [Route("api/Mod/Shipment")]
+    [Route("api/Shipment")]
     [ApiController]
+    [Authorize]
     public class ShipmentController : ControllerBase
     {
-        IBaseRepo<Shipment> _shipmentRepo;
+        private readonly IBaseRepo<Shipment> _shipmentRepo;
 
         public ShipmentController(IBaseRepo<Shipment> shipemntRepo)
         {
             _shipmentRepo = shipemntRepo;
         }
 
-        [HttpPatch]
-        [Route("{id}/ChangeStatus")]
-        public IActionResult ChangeStatus(int id, ShipmentStatus status)
+        [HttpGet]
+        public IActionResult Get()
         {
-            var s = _shipmentRepo.Get<Shipment>(e => e.Id == id);
-            if (s == null)
-            {
-                return BadRequest();
-            }
-
-            s.Status = status;
-            return Ok(_shipmentRepo.Update<ShipmentOutDTO, Shipment>(e => e.Id == id, s));
+            return Ok(_shipmentRepo.GetAll<ShipmentOutDTO>(e => e.Order.UserId.ToString() == User.Identity!.Name));
         }
     }
 }
