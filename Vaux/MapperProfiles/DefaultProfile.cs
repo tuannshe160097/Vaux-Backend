@@ -75,6 +75,8 @@ namespace Vaux.MapperProfiles
 
             CreateMap<Order, OrderOutDTO>();
             CreateMap<Shipment, ShipmentOutDTO>();
+
+            CreateMap<SellerPayment, SellerPaymentOutDTO>()
         }
     }
 }

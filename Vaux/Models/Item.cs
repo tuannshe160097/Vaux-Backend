@@ -38,11 +38,12 @@ namespace Vaux.Models
 
         public virtual ICollection<AuctionSession>? AuctionSessions { get; set; }
 
-        [ForeignKey(nameof(WonUser))]
-        public int? WonUserId { get; set; }
-        public virtual User? WonUser { get; set; }
         public DateTime? WonDate { get; set; }
         public DateTime? PaymentDueDate { get; set; }
+
+        [ForeignKey(nameof(WonBid))]
+        public int? WonBidId { get; set; }
+        public virtual Bid? WonBid { get; set; }
 
         public int? OrderId { get; set; }
         public virtual Order? Order { get; set; }
@@ -51,5 +52,7 @@ namespace Vaux.Models
         public virtual Shipment? Shipment { get; set; }
 
         public virtual ICollection<StatusChange>? StatusChanges { get; set; }
+
+        public virtual SellerPayment SellerPayment { get; set; }
     }
 }

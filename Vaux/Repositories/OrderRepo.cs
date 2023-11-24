@@ -30,7 +30,7 @@ namespace Vaux.Repositories
                 TotalCost = 0
             };
 
-            List<Item> items = _vxDbc.Items.Where(e => e.WonUserId.ToString() == _user.Identity.Name && itemIds.Contains(e.Id)).ToList();
+            List<Item> items = _vxDbc.Items.Where(e => e.WonBid!.UserId.ToString() == _user.Identity.Name && itemIds.Contains(e.Id)).ToList();
 
             List<Shipment> shipments = new();
             foreach (var item in items)
@@ -52,7 +52,7 @@ namespace Vaux.Repositories
 
                 shipment.Items.Add(item);
                 shipment.ShippingCost += 10;
-                shipment.ItemCost += item.Bids!.Last().Amount;
+                shipment.ItemCost += item.WonBid!.Amount;
                 order.TotalCost += shipment.ItemCost + shipment.ShippingCost;
             }
 
@@ -80,6 +80,11 @@ namespace Vaux.Repositories
                         StatusChangedById = int.Parse(_user.Identity.Name),
                         StatusChangeReason = $"Changed status from {nameof(ItemStatus.PAYMENT_PENDING)} to {nameof(ItemStatus.PAID)}"
                     });
+
+                    item.SellerPayment = new()
+                    {
+                        Amount = CalculateSellerPayment(item.WonBid!.Amount)
+                    };
                 }
             }
 
@@ -88,6 +93,11 @@ namespace Vaux.Repositories
             Save();
 
             return Map<TOut>(res);
+        }
+
+        private static long CalculateSellerPayment(long bidAmount)
+        {
+            return bidAmount;
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vaux.DbContext;
 
@@ -11,9 +12,11 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    partial class VxDbcModelSnapshot : ModelSnapshot
+    [Migration("20231124101325_ItemPaymentDueDate")]
+    partial class ItemPaymentDueDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -347,11 +350,11 @@ namespace Vaux.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<int?>("WonBidId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("WonDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("WonUserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -367,7 +370,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("ThumbnailId");
 
-                    b.HasIndex("WonBidId");
+                    b.HasIndex("WonUserId");
 
                     b.ToTable("Items");
                 });
@@ -673,13 +676,14 @@ namespace Vaux.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ItemId")
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SellerId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Updated")
                         .ValueGeneratedOnAdd()
@@ -690,9 +694,9 @@ namespace Vaux.Migrations
 
                     b.HasIndex("ApprovedById");
 
-                    b.HasIndex("ItemId")
-                        .IsUnique()
-                        .HasFilter("[ItemId] IS NOT NULL");
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("SellerId");
 
                     b.ToTable("SellerPayments");
                 });
@@ -1031,9 +1035,9 @@ namespace Vaux.Migrations
                         .WithMany("ItemThumbnails")
                         .HasForeignKey("ThumbnailId");
 
-                    b.HasOne("Vaux.Models.Bid", "WonBid")
+                    b.HasOne("Vaux.Models.User", "WonUser")
                         .WithMany()
-                        .HasForeignKey("WonBidId");
+                        .HasForeignKey("WonUserId");
 
                     b.Navigation("Category");
 
@@ -1047,7 +1051,7 @@ namespace Vaux.Migrations
 
                     b.Navigation("Thumbnail");
 
-                    b.Navigation("WonBid");
+                    b.Navigation("WonUser");
                 });
 
             modelBuilder.Entity("Vaux.Models.ItemProperty", b =>
@@ -1108,13 +1112,19 @@ namespace Vaux.Migrations
                         .WithMany()
                         .HasForeignKey("ApprovedById");
 
-                    b.HasOne("Vaux.Models.Item", "Item")
-                        .WithOne("SellerPayment")
-                        .HasForeignKey("Vaux.Models.SellerPayment", "ItemId");
+                    b.HasOne("Vaux.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("Vaux.Models.User", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerId");
 
                     b.Navigation("ApprovedBy");
 
-                    b.Navigation("Item");
+                    b.Navigation("Order");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("Vaux.Models.Shipment", b =>
@@ -1197,9 +1207,6 @@ namespace Vaux.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("ItemProperties");
-
-                    b.Navigation("SellerPayment")
-                        .IsRequired();
 
                     b.Navigation("StatusChanges");
                 });

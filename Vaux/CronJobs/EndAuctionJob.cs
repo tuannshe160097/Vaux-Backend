@@ -40,7 +40,7 @@ namespace Vaux.CronJobs
                             StatusChangeReason = $"Item won by user {highestBid.UserId}"
                         });
 
-                        item.WonUserId = highestBid.UserId;
+                        item.WonBid = highestBid;
                         item.WonDate = DateTime.Today;
                         item.PaymentDueDate = DateTime.Today.AddDays(7);
 

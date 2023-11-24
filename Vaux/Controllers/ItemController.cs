@@ -86,7 +86,7 @@ namespace Vaux.Controllers
         [Route("WonItems")]
         public IActionResult WonItems()
         {
-            return Ok(_itemRepo.GetAll<ItemOutDTO>(e => e.WonUserId.ToString() == User.Identity!.Name));
+            return Ok(_itemRepo.GetAll<ItemOutDTO>(e => e.WonBid!.UserId.ToString() == User.Identity!.Name));
         }
 
         [HttpGet]

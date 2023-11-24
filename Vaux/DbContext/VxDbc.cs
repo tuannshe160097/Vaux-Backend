@@ -90,6 +90,10 @@
                 .Property(e => e.Status)
                 .HasDefaultValue(OrderStatus.UNPAID);
 
+            modelBuilder.Entity<SellerPayment>()
+                .Property(e => e.Status)
+                .HasDefaultValue(SellerPaymentStatus.UNPAID);
+
             modelBuilder.Entity<Role>().HasData(
                 new Role()
                 {

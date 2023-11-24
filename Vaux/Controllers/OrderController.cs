@@ -40,7 +40,7 @@ namespace Vaux.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] int[] itemIds)
         {
-            var items = _itemRepo.GetAll<Item>(e => itemIds.Contains(e.Id) && e.WonUserId.ToString() == User.Identity!.Name);
+            var items = _itemRepo.GetAll<Item>(e => itemIds.Contains(e.Id) && e.WonBid!.UserId.ToString() == User.Identity!.Name);
             if (items.TotalRecords == 0)
             {
                 return BadRequest();

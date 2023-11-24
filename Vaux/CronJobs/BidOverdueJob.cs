@@ -30,10 +30,10 @@ namespace Vaux.CronJobs
                     StatusFrom = ItemStatus.PAYMENT_PENDING.ToString(),
                     StatusTo = ItemStatus.RE_AUCTION_PENDING.ToString(),
                     StatusChangedById = 1,
-                    StatusChangeReason = $"User {item.WonUserId} did not pay"
+                    StatusChangeReason = $"User {item.WonBid!.UserId} did not pay"
                 });
 
-                item.WonUser!.Deleted = DateTime.Now;
+                item.WonBid!.User.Deleted = DateTime.Now;
 
                 item.Seller.Notifications!.Add(new Notification()
                 {
@@ -41,7 +41,7 @@ namespace Vaux.CronJobs
                     UserId = item.SellerId
                 });
 
-                item.WonUserId = null;
+                item.WonBid = null;
                 item.WonDate = null;
                 item.PaymentDueDate = null;
             }
