@@ -36,7 +36,7 @@ namespace Vaux.Controllers
             return Ok(_sellerPaymentRepo.WrapListResult<SellerApplicationOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("{id}/CreatePayment")]
         public IActionResult CreatePayment(int id)
         {
@@ -73,6 +73,6 @@ namespace Vaux.Controllers
             }
 
             return Ok(_sellerPaymentRepo.ConfirmPaid<OrderOutDTO>(e => e.Id == id));
-        }
+        }*/
     }
 }
