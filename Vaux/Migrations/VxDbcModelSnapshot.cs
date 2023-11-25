@@ -25,6 +25,21 @@ namespace Vaux.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AuctionSessionItem", b =>
+                {
+                    b.Property<int>("AuctionSessionsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AuctionSessionsId", "ItemsId");
+
+                    b.HasIndex("ItemsId");
+
+                    b.ToTable("AuctionSessionItem");
+                });
+
             modelBuilder.Entity("ImageItem", b =>
                 {
                     b.Property<int>("ImagesId")
@@ -75,29 +90,6 @@ namespace Vaux.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AuctionSessions");
-                });
-
-            modelBuilder.Entity("Vaux.Models.AuctionSessionItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AuctionSessionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuctionSessionId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("AuctionSessionItem");
                 });
 
             modelBuilder.Entity("Vaux.Models.Bid", b =>
@@ -328,6 +320,9 @@ namespace Vaux.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("PaymentDueDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("ReservePrice")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
@@ -352,6 +347,12 @@ namespace Vaux.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
+                    b.Property<int?>("WonBidId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("WonDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -365,6 +366,8 @@ namespace Vaux.Migrations
                     b.HasIndex("ShipmentId");
 
                     b.HasIndex("ThumbnailId");
+
+                    b.HasIndex("WonBidId");
 
                     b.ToTable("Items");
                 });
@@ -473,6 +476,11 @@ namespace Vaux.Migrations
 
                     b.Property<string>("HouseNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<string>("Street")
                         .HasColumnType("nvarchar(max)");
@@ -665,14 +673,13 @@ namespace Vaux.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SellerId")
+                    b.Property<int?>("ItemId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<DateTime>("Updated")
                         .ValueGeneratedOnAdd()
@@ -683,9 +690,9 @@ namespace Vaux.Migrations
 
                     b.HasIndex("ApprovedById");
 
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("SellerId");
+                    b.HasIndex("ItemId")
+                        .IsUnique()
+                        .HasFilter("[ItemId] IS NOT NULL");
 
                     b.ToTable("SellerPayments");
                 });
@@ -698,6 +705,9 @@ namespace Vaux.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -706,17 +716,29 @@ namespace Vaux.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HouseNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("ItemCost")
                         .HasColumnType("bigint");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<long>("ShipmentCost")
+                    b.Property<int?>("SellerId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ShippingCost")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated")
                         .ValueGeneratedOnAdd()
@@ -726,6 +748,8 @@ namespace Vaux.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("SellerId");
 
                     b.ToTable("Shipments");
                 });
@@ -890,6 +914,21 @@ namespace Vaux.Migrations
                         });
                 });
 
+            modelBuilder.Entity("AuctionSessionItem", b =>
+                {
+                    b.HasOne("Vaux.Models.AuctionSession", null)
+                        .WithMany()
+                        .HasForeignKey("AuctionSessionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vaux.Models.Item", null)
+                        .WithMany()
+                        .HasForeignKey("ItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ImageItem", b =>
                 {
                     b.HasOne("Vaux.Models.Image", null)
@@ -903,25 +942,6 @@ namespace Vaux.Migrations
                         .HasForeignKey("ItemsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Vaux.Models.AuctionSessionItem", b =>
-                {
-                    b.HasOne("Vaux.Models.AuctionSession", "AuctionSession")
-                        .WithMany("AuctionSessionItems")
-                        .HasForeignKey("AuctionSessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Vaux.Models.Item", "Item")
-                        .WithMany("AuctionSessionItems")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AuctionSession");
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Vaux.Models.Bid", b =>
@@ -1011,6 +1031,10 @@ namespace Vaux.Migrations
                         .WithMany("ItemThumbnails")
                         .HasForeignKey("ThumbnailId");
 
+                    b.HasOne("Vaux.Models.Bid", "WonBid")
+                        .WithMany()
+                        .HasForeignKey("WonBidId");
+
                     b.Navigation("Category");
 
                     b.Navigation("Expert");
@@ -1022,6 +1046,8 @@ namespace Vaux.Migrations
                     b.Navigation("Shipment");
 
                     b.Navigation("Thumbnail");
+
+                    b.Navigation("WonBid");
                 });
 
             modelBuilder.Entity("Vaux.Models.ItemProperty", b =>
@@ -1082,19 +1108,13 @@ namespace Vaux.Migrations
                         .WithMany()
                         .HasForeignKey("ApprovedById");
 
-                    b.HasOne("Vaux.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("Vaux.Models.User", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId");
+                    b.HasOne("Vaux.Models.Item", "Item")
+                        .WithOne("SellerPayment")
+                        .HasForeignKey("Vaux.Models.SellerPayment", "ItemId");
 
                     b.Navigation("ApprovedBy");
 
-                    b.Navigation("Order");
-
-                    b.Navigation("Seller");
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Vaux.Models.Shipment", b =>
@@ -1105,7 +1125,13 @@ namespace Vaux.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Vaux.Models.User", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerId");
+
                     b.Navigation("Order");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("Vaux.Models.StatusChange", b =>
@@ -1154,11 +1180,6 @@ namespace Vaux.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Vaux.Models.AuctionSession", b =>
-                {
-                    b.Navigation("AuctionSessionItems");
-                });
-
             modelBuilder.Entity("Vaux.Models.Category", b =>
                 {
                     b.Navigation("Items");
@@ -1171,13 +1192,14 @@ namespace Vaux.Migrations
 
             modelBuilder.Entity("Vaux.Models.Item", b =>
                 {
-                    b.Navigation("AuctionSessionItems");
-
                     b.Navigation("Bids");
 
                     b.Navigation("Comments");
 
                     b.Navigation("ItemProperties");
+
+                    b.Navigation("SellerPayment")
+                        .IsRequired();
 
                     b.Navigation("StatusChanges");
                 });

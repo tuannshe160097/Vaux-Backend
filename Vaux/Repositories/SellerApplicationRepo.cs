@@ -20,7 +20,7 @@ namespace Vaux.Repositories
             var a = Create(data);
             a.Status = SellerApplicationStatus.PENDING;
             Save();          
-            return _mapper.Map<TOut>(a);
+            return Map<TOut>(a);
         }
 
         public TOut Update<TOut, TIn>(Expression<Func<SellerApplication, bool>> predicate, TIn data, string changeReason)
@@ -42,7 +42,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(newAppli);
+            return Map<TOut>(newAppli);
         }
     }
 }

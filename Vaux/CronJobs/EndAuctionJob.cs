@@ -31,14 +31,18 @@ namespace Vaux.CronJobs
                     var highestBid = item.Bids?.LastOrDefault();
                     if (highestBid?.Amount >= item.ReservePrice)
                     {
-                        item.Status = ItemStatus.PAYMENT_IN_PROGRESS;
+                        item.Status = ItemStatus.PAYMENT_PENDING;
                         item.StatusChanges!.Add(new StatusChange()
                         {
                             StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
-                            StatusTo = ItemStatus.PAYMENT_IN_PROGRESS.ToString(),
+                            StatusTo = ItemStatus.PAYMENT_PENDING.ToString(),
                             StatusChangedById = 1,
                             StatusChangeReason = $"Item won by user {highestBid.UserId}"
                         });
+
+                        item.WonBid = highestBid;
+                        item.WonDate = DateTime.Today;
+                        item.PaymentDueDate = DateTime.Today.AddDays(7);
 
                         item.Seller.Notifications!.Add(new Notification()
                         {

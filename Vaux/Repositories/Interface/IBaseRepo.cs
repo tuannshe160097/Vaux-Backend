@@ -20,7 +20,7 @@ namespace Vaux.Repositories.Interface
             int skip = 0,
             int take = -1);
 
-        [Obsolete]
+        [Obsolete("Use GetAll() or construct a query using Query() instead")]
         public ResultListDTO<TOut> Search<TOut>(string[]? filterEntities, string[]? filterValues, string orderBy = "Id", int skip = 0, int take = -1);
 
         public TOut Create<TOut, TIn>(TIn data);
@@ -35,7 +35,7 @@ namespace Vaux.Repositories.Interface
 
         public ResultListDTO<TOut> WrapListResult<TOut>(IQueryable<TEntity> query, int skip = 0, int take = -1);
 
-        public TOut Map<TOut, TIn>(TIn data);
+        public TOut Map<TOut>(object data);
 
         public TOut Map<TOut>(TEntity data);
 

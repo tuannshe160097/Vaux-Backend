@@ -48,7 +48,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(u);
+            return Map<TOut>(u);
         }
 
         public TOut Create<TOut>(UserStrictDTO user, RoleId role)
@@ -58,7 +58,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(u);
+            return Map<TOut>(u);
         }
 
         public TOut Update<TOut, TIn>(Expression<Func<User, bool>> predicate, TIn user, RoleId role)
@@ -67,7 +67,7 @@ namespace Vaux.Repositories
             u.RoleId = (int)role;
             Save();
 
-            return _mapper.Map<TOut>(u);
+            return Map<TOut>(u);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Vaux.Repositories
             auc.Items = _vxDbc.Items.Where(e => itemIds.Contains(e.Id) && e.Status == ItemStatus.AUCTION_PENDING && e.AuctionSessions!.All(auc => auc.Status == AuctionSessionStatus.FINISHED)).ToList();
 
             Save();
-            return _mapper.Map<TOut>(auc);
+            return Map<TOut>(auc);
         }
 
         public TOut Update<TOut, TIn>(Expression<Func<AuctionSession, bool>> predicate, TIn data, ICollection<int> itemIds)
@@ -34,7 +34,7 @@ namespace Vaux.Repositories
 
             Save();
 
-            return _mapper.Map<TOut>(auc);
+            return Map<TOut>(auc);
         }
 
         protected override AuctionSession Create<TIn>(TIn data)

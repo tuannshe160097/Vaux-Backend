@@ -148,6 +148,20 @@ namespace Vaux.Controllers
             return Ok(_itemRepo.Update<ItemOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
 
+        [HttpPatch]
+        [Route("{id}/ReAuction")]
+        public IActionResult ReAuction(int id)
+        {
+            var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.RE_AUCTION_PENDING);
+            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
+            {
+                return BadRequest();
+            }
+
+            i.Status = ItemStatus.AUCTION_PENDING;
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == id, i));
+        }
+
         [HttpDelete]
         [Route("{id}")]
         public IActionResult Delete(int id)

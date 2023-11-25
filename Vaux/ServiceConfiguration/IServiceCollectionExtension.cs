@@ -23,7 +23,10 @@ namespace Vaux.ServiceConfiguration
             services.AddScoped<ISellerApplicationRepo, SellerApplicationRepo>();
             services.AddScoped<IPhotoRepo, PhotoRepo>();
             services.AddScoped<IAuctionSessionRepo, AuctionSessionRepo>();
+            services.AddScoped<IOrderRepo, OrderRepo>();
+            services.AddScoped<ISellerPaymentRepo, SellerPaymentRepo>();
             services.AddScoped<ISmsRepo, SmsRepo>();
+            services.AddScoped<IVnPayServiceRepo, VnPayServiceRepo>();
 
             return services;
         }
@@ -58,6 +61,13 @@ namespace Vaux.ServiceConfiguration
                     .ForJob(endAuction)
                     .WithIdentity("EndAuctionTrigger")
                     .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(19, 0)));
+
+                var bidOverdue = "BidOverdueJob";
+                q.AddJob<BidOverdueJob>(opts => opts.WithIdentity(bidOverdue));
+                q.AddTrigger(opts => opts
+                    .ForJob(bidOverdue)
+                    .WithIdentity("BidOverdueTrigger")
+                    .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(7, 0)));
             });
 
             services.AddQuartzServer(options =>
