@@ -68,8 +68,6 @@ namespace Vaux.MapperProfiles
             
             CreateMap<ChatMessageDTO, ChatMessage>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
-            CreateMap<ChatMessage, ChatMessageDTO>()
-                .ForMember(dest => dest.RawImage, opt => opt.Ignore());
             CreateMap<ChatMessage, ChatMessageOutDTO>()
                 .ForMember(dest => dest.Sender, src => src.MapFrom(c => c.Sender!.Name));
 
