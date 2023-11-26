@@ -20,6 +20,12 @@ namespace Vaux.Controllers
             _shipmentRepo = shipemntRepo;
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_shipmentRepo.GetAll<ShipmentOutDTO>());
+        }
+
         [HttpPatch]
         [Route("{id}/ChangeStatus")]
         public IActionResult ChangeStatus(int id, ShipmentStatus status)
