@@ -39,6 +39,26 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(img);
         }
 
+        public ICollection<TOut> Create<TOut>(ICollection<IFormFile> image)
+        {
+            List<Image> images = new List<Image>();
+            foreach(var i in image){
+                var img = new Image
+                {
+                    Url = "tmp"
+                };
+                images.Add(img);
+                _vxDbc.Images.Add(img);
+            }
+            _vxDbc.SaveChanges();
+            Parallel.ForEach(image.ToList(), (i, state, index) =>
+            {
+                images.ElementAt((int)index).Url = DriveUpload(i, images.ElementAt((int)index).Id.ToString()).Result;
+            });
+            _vxDbc.SaveChanges();
+            return _mapper.Map<ICollection<TOut>>(images);
+        }
+
         public TOut Update<TOut>(int id, IFormFile image)
         {
             var img = _vxDbc.Images.FirstOrDefault(x => x.Id == id);
@@ -159,7 +179,7 @@ namespace Vaux.Repositories
                     Parents = new List<string>() { DirectoryId }
                 };
                 string? uploadedFileId;
-                await using (var msSource = image)
+                using (var msSource = image)
                 {
                     // Create a new file, with metadata and stream.
                     var request = service.Files.Create(fileMetadata, msSource, "image/jpeg");
