@@ -22,6 +22,8 @@ namespace Vaux.DTO
         public Role Role { get; set; }
         public int? PortraitId { get; set; }
         public int? CitizenIdImageId { get; set; }
+        public string? BankAccountNum { get; set; }
+        public string? BankName { get; set; }
         public ICollection<Notification>? Notifications { get; set; }
     }
 }

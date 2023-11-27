@@ -34,7 +34,8 @@ namespace Vaux.Models
         [ForeignKey(nameof(CitizenIdImage))]
         public int? CitizenIdImageId { get; set; }
         public virtual Image? CitizenIdImage { get; set; }
-
+        public string? BankAccountNum { get; set; }
+        public string? BankName { get; set; }
         public virtual ICollection<Notification>? Notifications { get; set; }
     }
 }
