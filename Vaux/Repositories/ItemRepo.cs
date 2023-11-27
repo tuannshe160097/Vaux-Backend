@@ -95,10 +95,11 @@ namespace Vaux.Repositories
         public TOut AddImages<TOut>(Expression<Func<Item, bool>> predicate, List<IFormFile> images)
         {
             var i = Get<Item>(predicate);
+            var result = _photoRepo.Create<Image>(images);
 
-            foreach (var image in images)
+            foreach (var img in result)
             {
-                i.Images.Add(_photoRepo.Create<Image>(image));
+                i!.Images!.Add(img);
             }
 
             Save();
