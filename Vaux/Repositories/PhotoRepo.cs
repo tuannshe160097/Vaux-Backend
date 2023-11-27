@@ -39,24 +39,25 @@ namespace Vaux.Repositories
             return _mapper.Map<TOut>(img);
         }
 
-        public ICollection<TOut> Create<TOut>(ICollection<IFormFile> image)
+        public ICollection<TOut> Create<TOut>(ICollection<IFormFile> images)
         {
-            List<Image> images = new List<Image>();
-            foreach(var i in image){
+            List<Image> newImages = new List<Image>();
+            foreach(var i in images)
+            {
                 var img = new Image
                 {
                     Url = "tmp"
                 };
-                images.Add(img);
+                newImages.Add(img);
                 _vxDbc.Images.Add(img);
             }
             _vxDbc.SaveChanges();
-            Parallel.ForEach(image.ToList(), (i, state, index) =>
+            Parallel.ForEach(images, (i, state, index) =>
             {
-                images.ElementAt((int)index).Url = DriveUpload(i, images.ElementAt((int)index).Id.ToString()).Result;
+                newImages[(int)index].Url = DriveUpload(i, newImages[(int)index].Id.ToString()).Result;
             });
             _vxDbc.SaveChanges();
-            return _mapper.Map<ICollection<TOut>>(images);
+            return _mapper.Map<ICollection<TOut>>(newImages);
         }
 
         public TOut Update<TOut>(int id, IFormFile image)

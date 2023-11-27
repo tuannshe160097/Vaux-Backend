@@ -8,6 +8,6 @@ namespace Vaux.Repositories.Interface
         public TOut Delete<TOut>(int id);
         public TOut Update<TOut>(int id, IFormFile image);
         public TOut Create<TOut>(IFormFile image);
-        public ICollection<TOut> Create<TOut>(ICollection<IFormFile> image);
+        public ICollection<TOut> Create<TOut>(ICollection<IFormFile> images);
     }
 }
