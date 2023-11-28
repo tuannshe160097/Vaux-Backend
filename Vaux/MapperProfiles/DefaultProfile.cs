@@ -20,6 +20,7 @@ namespace Vaux.MapperProfiles
 
             CreateMap<User, UserMinimalDTO>();
             CreateMap<User, UserOutDTO>();
+            CreateMap<User, UserOutMinimalDTO>();
 
             CreateMap<UserStrictDTO, User>()
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
@@ -64,7 +65,7 @@ namespace Vaux.MapperProfiles
 
             CreateMap<Comment, CommentOutDTO>();
 
-            CreateMap<Bid, BidDTO>();
+            CreateMap<Bid, BidOutDTO>();
             
             CreateMap<ChatMessageDTO, ChatMessage>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
