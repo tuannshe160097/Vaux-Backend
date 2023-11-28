@@ -31,14 +31,16 @@ namespace Vaux.Controllers
         private readonly IBaseRepo<Comment> _commentRepo;
         private readonly IBaseRepo<Bid> _bidRepo;
         private readonly IHubContext<BidHub> _bidHub;
+        private readonly ILogger<ItemController> _logger;
 
-        public ItemController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Comment> commentRepo, IBaseRepo<Bid> bidRepo, IHubContext<BidHub> hubContext)
+        public ItemController(IItemRepo itemRepo, IPhotoRepo photoRepo, IBaseRepo<Comment> commentRepo, IBaseRepo<Bid> bidRepo, IHubContext<BidHub> hubContext, ILogger<ItemController> logger)
         {
             _itemRepo = itemRepo;
             _photoRepo = photoRepo;
             _commentRepo = commentRepo;
             _bidRepo = bidRepo;
             _bidHub = hubContext;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -104,7 +106,7 @@ namespace Vaux.Controllers
             var item = _itemRepo.Get<Item>(e => e.Id == id);
             if (item == null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             Comment c = new()
@@ -124,15 +126,15 @@ namespace Vaux.Controllers
         public IActionResult GetImage(int id, int imageId)
         {
             var i = _itemRepo.Get<Item>(e => e.Id == id);
-            if (i == null) return NotFound();
+            if (i == null) return NotFound("Sản phẩm không tồn tại!");
             if (i.Images!.FirstOrDefault(e => e.Id == imageId) == null && i.ThumbnailId != imageId)
             {
-                return NotFound();
+                return NotFound("Ảnh không tồn tại!");
             }
             var res = _photoRepo.Get(imageId)?.ToArray();
             if (res == null)
             {
-                return BadRequest();
+                return BadRequest("Đã có lỗi xảy ra!");
             }
 
             return File(res, "image/jpeg");
@@ -150,11 +152,11 @@ namespace Vaux.Controllers
         [Route("{id}/Bid")]
         public IActionResult Bid(int id, BidInDto bid)
         {
-            Console.WriteLine($"Request from user {User.Identity!.Name!} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}");
+            _logger.LogInformation($"Request from user {User.Identity!.Name!} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}");
             var item = _itemRepo.Get<Item>(e => e.Id == id);
             if (item == null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             var locker = GetBidLocker(item.Id);
@@ -164,8 +166,8 @@ namespace Vaux.Controllers
 
                 if (bid.Amount <= item.Bids?.LastOrDefault()?.Amount + 10000)
                 {
-                    Console.WriteLine($"Response for user {User.Identity.Name} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}/too low");
-                    return BadRequest("Bid must be 10k higher than curreent bid");
+                    _logger.LogInformation($"Response for user {User.Identity.Name} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}/too low");
+                    return BadRequest("Giá được trả phái lớn hơn giá hiện tại ít nhất 10.000 VND");
                 }
 
                 var b = new Bid
@@ -182,7 +184,7 @@ namespace Vaux.Controllers
                 string group = string.Format(BidHub.BID_ROOM_FORMAT, item.Id);
                 _bidHub.Clients.Group(group).SendAsync(group, User.Identity.Name, bid.Amount);
 
-                Console.WriteLine($"Response for user {User.Identity.Name} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}/ok");
+                _logger.LogInformation($"Response for user {User.Identity.Name} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}/ok");
                 return Ok(res);
             }
         }

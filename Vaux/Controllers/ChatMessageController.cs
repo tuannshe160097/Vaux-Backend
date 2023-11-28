@@ -34,11 +34,11 @@ namespace Vaux.Controllers
             var c = _itemRepo.Get<Item>(e => e.Id == id);
             if (c == null)
             {
-                return BadRequest("Item does not exist");
+                return BadRequest("Sản phẩm không tồn tại!");
             }
             if (User.Identity!.Name != c.ExpertId.ToString() && User.Identity.Name != c.SellerId.ToString())
             {
-                return Unauthorized("Blud got rejected 💀");
+                return Unauthorized("Tài khoản không hợp lệ!");
             }
             return Ok(_chatRepo.GetAll<ChatMessageOutDTO>(e => e.ItemId == id,  false));
         }
@@ -50,15 +50,15 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == chatMessage.ItemId);
             if(i == null)
             {
-                return BadRequest("Item does not exist");
+                return BadRequest("Sản phẩm không tồn tại!");
             }
             if (User!.Identity!.Name != i.ExpertId.ToString() && User.Identity.Name != i.SellerId.ToString())
             {
-                return Unauthorized("Blud got rejected 💀");
+                return Unauthorized("Tài khoản không hợp lệ!");
             }
             if (chatMessage.RawImage == null && chatMessage.Content == null)
             {
-                return BadRequest("Must send content or image");
+                return BadRequest("Nội dung gửi không hợp lệ!");
             }
             if (chatMessage.RawImage != null)
             {

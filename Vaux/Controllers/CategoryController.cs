@@ -50,7 +50,7 @@ namespace Vaux.Controllers
             var c = _categoryRepo.Get<Category>(e => e.Id == id);
             if (c == null)
             {
-                return BadRequest("Category doesn't exist");
+                return BadRequest("Hạng mục không tồn tại!");
             }
 
             return Ok(_categoryRepo.Update<CategoryDTO, CategoryDTO>(e => e.Id == id, categoryDTO));
@@ -63,7 +63,7 @@ namespace Vaux.Controllers
             var c = _categoryRepo.Get<Category>(e => e.Id == id);
             if (c == null)
             {
-                return BadRequest("Category doesn't exist");
+                return BadRequest("Hạng mục không tồn tại!");
             }
 
             return Ok(_categoryRepo.Delete<CategoryDTO>(e => e.Id == id));

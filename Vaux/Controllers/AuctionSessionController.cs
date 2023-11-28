@@ -27,7 +27,7 @@ namespace Vaux.Controllers
             var auc = _auctionRepo.Get<AuctionSessionIFullDTO>(e => e.Id == id);
             if (auc == null)
             {
-                return BadRequest();
+                return BadRequest("Phiên đấu giá không tồn tại!");
             }
 
             return Ok(auc);
@@ -52,9 +52,13 @@ namespace Vaux.Controllers
         [HttpPost]
         public IActionResult Create(AuctionSessionUploadDTO auction)
         {
-            if (auction.StartDate.Date <= DateTime.Today || auction.StartDate.Date <= auction.EndDate.Date) 
+            if (auction.StartDate.Date <= DateTime.Today) 
             {
-                return BadRequest();
+                return BadRequest("Ngày bắt đầu phiên phải ở sau ngày hiện tại!");
+            }
+            if(auction.StartDate.Date <= auction.EndDate.Date)
+            {
+                return BadRequest("Ngày kết thúc phiên phải ở sau ngày bắt đầu!");
             }
 
             auction.StartDate = auction.StartDate.Date.AddHours(7);
@@ -69,7 +73,7 @@ namespace Vaux.Controllers
             var auc = _auctionRepo.Get<AuctionSession>(e => e.Id == id && e.Status == AuctionSessionStatus.PENDING);
             if (auc == null)
             {
-                return BadRequest();
+                return BadRequest("Phiên đấu giá không tồn tại!");
             }
 
             auction.StartDate = auction.StartDate.Date.AddHours(7);
@@ -85,7 +89,7 @@ namespace Vaux.Controllers
             var auc = _auctionRepo.Get<AuctionSession>(e => e.Id == id && e.Status == AuctionSessionStatus.PENDING);
             if (auc == null)
             {
-                return BadRequest();
+                return BadRequest("Phiên đấu giá không tồn tại!");
             }
 
             return Ok(_auctionRepo.Delete<AuctionSessionIFullDTO>(e => e.Id == id));

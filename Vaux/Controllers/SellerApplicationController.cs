@@ -35,12 +35,12 @@ namespace Vaux.Controllers
             var sa = _sellerApplicationRepo.Get<SellerApplication>(e => e.UserId == int.Parse(User.Identity!.Name!));
             if (sa != null && sa.Status == SellerApplicationStatus.PENDING)
             {
-                return BadRequest("Application already existed");
+                return BadRequest("Đơn đăng ký đã tồn tại!");
             }
             var sam = _userRepo.Get<User>(e => e.Email == sellerApplication.Email);
             if(sam != null)
             {
-                return BadRequest("Email already existed");
+                return BadRequest("Email đã được sử dụng!");
             }
             sellerApplication.PortraitId = _photoRepo.Create<Image>(sellerApplication.RawPortrait).Id;
             sellerApplication.CitizenIdImageId = _photoRepo.Create<Image>(sellerApplication.RawCitizenIdImage).Id;
@@ -57,7 +57,7 @@ namespace Vaux.Controllers
             var u = _sellerApplicationRepo.Get<SellerApplicationOutDTO>(e => e.Id == id);
             if (u == null)
             {
-                return BadRequest("Application does not exist");
+                return BadRequest("Đơn đăng ký không tồn tại!");
             }
             return Ok(u);
         }
@@ -106,16 +106,16 @@ namespace Vaux.Controllers
             var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == id);
             if (i?.UserId.ToString() != User.Identity.Name)
             {
-                return BadRequest("Unauthorized");
+                return BadRequest("Tài khoản không hợp lệ!");
             }
             if(i.PortraitId != imageId && i.CitizenIdImageId != imageId)
             {
-                return BadRequest("Unauthorized");
+                return BadRequest("Tài khoản không hợp lệ!");
             }
             MemoryStream? image = _photoRepo.Get(imageId);
             if (image == null)
             {
-                return BadRequest("Image does not exist");
+                return BadRequest("Ảnh không tồn tại!");
             }
             byte[] bytes = image.ToArray();
             return File(bytes, "image/jpeg");
@@ -129,7 +129,7 @@ namespace Vaux.Controllers
             MemoryStream? image = _photoRepo.Get(imageId);
             if (image == null)
             {
-                return BadRequest("Image does not exist");
+                return BadRequest("Ảnh không tồn tại!");
             }
             byte[] bytes = image.ToArray();
             return File(bytes, "image/jpeg");
@@ -143,12 +143,12 @@ namespace Vaux.Controllers
             var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
             if (i == null || i.Status != SellerApplicationStatus.PENDING)
             {
-                return BadRequest("No such pending application");
+                return BadRequest("Đơn đăng ký không tồn tại!");
             }
             var sam = _userRepo.Get<SellerApplication>(e => e.Email == i.Email);
             if (sam != null)
             {
-                return BadRequest("Email already existed");
+                return BadRequest("Email đã được sử dụng!");
             }
             i.Status = SellerApplicationStatus.APPROVED;
 
@@ -166,7 +166,7 @@ namespace Vaux.Controllers
             var i = _sellerApplicationRepo.Get<SellerApplication>(e => e.Id == applicationId);
             if (i == null || i.Status != SellerApplicationStatus.PENDING)
             {
-                return BadRequest("No such pending application");
+                return BadRequest("Đơn đăng ký không tồn tại!");
             }
 
             i.Status = SellerApplicationStatus.DENIED;

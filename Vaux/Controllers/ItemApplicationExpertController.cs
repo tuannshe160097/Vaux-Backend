@@ -30,7 +30,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             return Ok(i);
@@ -61,7 +61,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId != null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             i.ExpertId = int.Parse(User.Identity!.Name!);
@@ -79,7 +79,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
             i.ExpertId = null;
 
@@ -96,7 +96,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity!.Name) 
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi chuyên gia");
@@ -112,7 +112,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             i.Status = ItemStatus.AUCTION_PENDING;
@@ -130,7 +130,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null || i.Status != ItemStatus.EXAMINATION_PENDING || i.ExpertId?.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             i.Status = ItemStatus.REJECTED;

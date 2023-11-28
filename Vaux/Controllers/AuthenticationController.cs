@@ -28,7 +28,7 @@ namespace Vaux.Controllers
             var u = _userRepo.Get<User>(e => e.Phone == user.Phone);
             if (u != null && u.IsVerified)
             {
-                return BadRequest("User already exists");
+                return BadRequest("Tài khoản đã tồn tại!");
             }
 
             if (u != null)
@@ -49,12 +49,12 @@ namespace Vaux.Controllers
             var u = _userRepo.Get<User>(e => e.Phone == phone);
             if (u == null)
             {
-                return BadRequest("User not found");
+                return BadRequest("Tài khoản không tồn tại!");
             }
 
             if (u.Deleted != null)
             {
-                return BadRequest("User banned");
+                return BadRequest("Tài khoản đã bị cấm!");
             }
 
             _authRepo.GenerateAndSendOtp(u.Id);
@@ -70,17 +70,17 @@ namespace Vaux.Controllers
 
             if (u == null)
             {
-                return BadRequest("User not found");
+                return BadRequest("Tài khoản không tồn tại!");
             }
 
             if (u.OtpExpiry < DateTime.Now)
             {
-                return BadRequest("OTP has expired");
+                return BadRequest("OTP đã hết hạn!");
             }
 
             if (!_authRepo.CheckOtp(u.Id, otp))
             {
-                return BadRequest("Wrong OTP");
+                return BadRequest("OTP không hợp lệ!");
             }
 
             if (!u.IsVerified)
