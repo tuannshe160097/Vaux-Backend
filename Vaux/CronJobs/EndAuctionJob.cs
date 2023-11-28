@@ -31,7 +31,7 @@ namespace Vaux.CronJobs
 
                 foreach (var item in auc.Items!)
                 {
-                    var highestBid = item.Bids?.LastOrDefault();
+                    var highestBid = item.HighestBid;
                     if (highestBid?.Amount >= item.ReservePrice)
                     {
                         item.Status = ItemStatus.PAYMENT_PENDING;
@@ -43,7 +43,6 @@ namespace Vaux.CronJobs
                             StatusChangeReason = $"Item won by user {highestBid.UserId}"
                         });
 
-                        item.WonBid = highestBid;
                         item.WonDate = DateTime.Today;
                         item.PaymentDueDate = DateTime.Today.AddDays(7);
 

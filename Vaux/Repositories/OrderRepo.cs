@@ -30,7 +30,7 @@ namespace Vaux.Repositories
                 TotalCost = 0
             };
 
-            List<Item> items = _vxDbc.Items.Where(e => e.WonBid!.UserId.ToString() == _user.Identity.Name && itemIds.Contains(e.Id)).ToList();
+            List<Item> items = _vxDbc.Items.Where(e => e.HighestBid!.UserId.ToString() == _user.Identity.Name && itemIds.Contains(e.Id)).ToList();
 
             List<Shipment> shipments = new();
             foreach (var item in items)
@@ -52,7 +52,7 @@ namespace Vaux.Repositories
 
                 shipment.Items.Add(item);
                 shipment.ShippingCost += 10;
-                shipment.ItemCost += item.WonBid!.Amount;
+                shipment.ItemCost += item.HighestBid!.Amount;
                 order.TotalCost += shipment.ItemCost + shipment.ShippingCost;
             }
 
@@ -83,7 +83,7 @@ namespace Vaux.Repositories
 
                     item.SellerPayment = new()
                     {
-                        Amount = CalculateSellerPayment(item.WonBid!.Amount)
+                        Amount = CalculateSellerPayment(item.HighestBid!.Amount)
                     };
                 }
             }

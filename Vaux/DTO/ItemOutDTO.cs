@@ -24,6 +24,8 @@ namespace Vaux.DTO
 
         public List<ItemPropertyDTO>? ItemProperties { get; set; }
 
+        public BidDTO? HighestBid { get; set; }
+
         public List<int>? Images { get; set; }
 
         public int? ThumbnailId { get; set; }
