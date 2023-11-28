@@ -142,7 +142,7 @@ namespace Vaux.Controllers
         [Route("{id}/Bids")]
         public IActionResult GetBids(int id)
         {
-            return Ok(_bidRepo.GetAll<BidDTO>(e => e.ItemId == id));
+            return Ok(_bidRepo.GetAll<BidOutDTO>(e => e.ItemId == id));
         }
 
         [HttpPost]
