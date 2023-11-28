@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Vaux.DbContext;
 using Vaux.Models.Enums;
 using Vaux.Models;
+using Vaux.Repositories.Interface;
 
 namespace Vaux.CronJobs
 {
@@ -12,11 +13,13 @@ namespace Vaux.CronJobs
     {
         private readonly VxDbc _vxDbc;
         private readonly ILogger<EndAuctionJob> _logger;
+        private readonly INotificationRepo _notificationRepo;
 
-        public EndAuctionJob(VxDbc vxDbc, ILogger<EndAuctionJob> logger)
+        public EndAuctionJob(VxDbc vxDbc, ILogger<EndAuctionJob> logger, INotificationRepo notificationRepo)
         {
             _vxDbc = vxDbc;
             _logger = logger;
+            _notificationRepo = notificationRepo;
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -44,17 +47,9 @@ namespace Vaux.CronJobs
                         item.WonDate = DateTime.Today;
                         item.PaymentDueDate = DateTime.Today.AddDays(7);
 
-                        item.Seller.Notifications!.Add(new Notification()
-                        {
-                            Content = $"Sản phẩm {item.Name} đã được đấu giá thành công",
-                            UserId = item.SellerId
-                        });
+                        _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã được đấu giá thành công");
 
-                        highestBid.User.Notifications!.Add(new Notification()
-                        {
-                            Content = $"Bạn đã thắng được sản phẩm {item.Name}",
-                            UserId = highestBid.UserId
-                        });
+                        _notificationRepo.Create<Notification>(e => e.Id == highestBid.UserId, $"Bạn đã thắng được sản phẩm {item.Name}");
                     }
                     else
                     {
@@ -67,11 +62,7 @@ namespace Vaux.CronJobs
                             StatusChangeReason = $"Item auction failed"
                         });
 
-                        item.Seller.Notifications!.Add(new Notification()
-                        {
-                            Content = $"Sản phẩm {item.Name} đã không được đấu giá thành công",
-                            UserId = item.SellerId
-                        });
+                        _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã không được đấu giá thành công");
                     }
                 }
             }

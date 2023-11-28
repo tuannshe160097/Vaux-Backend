@@ -5,7 +5,7 @@ namespace Vaux.DTO
     public class ImageCollectionDTO
     {
         [CollectionAllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
-        [CollectionAllowedImageSize(10)]
+        [CollectionAllowedImageSize(20)]
         public List<IFormFile> Images { get; set; }
     }
 }

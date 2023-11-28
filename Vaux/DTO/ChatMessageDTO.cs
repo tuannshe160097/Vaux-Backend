@@ -10,7 +10,7 @@ namespace Vaux.DTO
         public int? ImageId { get; set; }
         [Display(Name = "Image")]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
-        [AllowedImageSize(10)]
+        [AllowedImageSize(20)]
         public IFormFile? RawImage { get; set; }
 
     }
