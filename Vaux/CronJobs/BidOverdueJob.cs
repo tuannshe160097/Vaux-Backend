@@ -33,15 +33,15 @@ namespace Vaux.CronJobs
                     StatusFrom = ItemStatus.PAYMENT_PENDING.ToString(),
                     StatusTo = ItemStatus.RE_AUCTION_PENDING.ToString(),
                     StatusChangedById = 1,
-                    StatusChangeReason = $"User {item.WonBid!.UserId} did not pay"
+                    StatusChangeReason = $"User {item.HighestBid!.UserId} did not pay"
                 });
 
-                item.WonBid!.User.Deleted = DateTime.Now;
+                item.HighestBid!.User.Deleted = DateTime.Now;
 
                 _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã được đưa lại vào danh sách chờ do người mua không trả tiền");
 
 
-                item.WonBid = null;
+                item.HighestBid = null;
                 item.WonDate = null;
                 item.PaymentDueDate = null;
             }

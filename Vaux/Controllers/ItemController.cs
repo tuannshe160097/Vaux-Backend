@@ -86,7 +86,7 @@ namespace Vaux.Controllers
         [Route("WonItems")]
         public IActionResult WonItems()
         {
-            return Ok(_itemRepo.GetAll<ItemOutDTO>(e => e.WonBid!.UserId.ToString() == User.Identity!.Name));
+            return Ok(_itemRepo.GetAll<ItemOutDTO>(e => e.HighestBid!.UserId.ToString() == User.Identity!.Name));
         }
 
         [HttpGet]
@@ -175,6 +175,9 @@ namespace Vaux.Controllers
                     UserId = int.Parse(User.Identity!.Name!)
                 };
                 var res = _bidRepo.Create<Bid, Bid>(b);
+
+                item.HighestBidId = res.Id;
+                _itemRepo.Update<Item, Item>(e => e.Id == item.Id, item);
 
                 string group = string.Format(BidHub.BID_ROOM_FORMAT, item.Id);
                 _bidHub.Clients.Group(group).SendAsync(group, User.Identity.Name, bid.Amount);

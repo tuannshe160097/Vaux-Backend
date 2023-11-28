@@ -41,9 +41,9 @@ namespace Vaux.Models
         public DateTime? WonDate { get; set; }
         public DateTime? PaymentDueDate { get; set; }
 
-        [ForeignKey(nameof(WonBid))]
-        public int? WonBidId { get; set; }
-        public virtual Bid? WonBid { get; set; }
+        [ForeignKey(nameof(HighestBid))]
+        public int? HighestBidId { get; set; }
+        public virtual Bid? HighestBid { get; set; }
 
         public int? OrderId { get; set; }
         public virtual Order? Order { get; set; }
