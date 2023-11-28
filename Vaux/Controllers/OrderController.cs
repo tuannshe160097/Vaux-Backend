@@ -43,7 +43,7 @@ namespace Vaux.Controllers
             var items = _itemRepo.GetAll<Item>(e => itemIds.Contains(e.Id) && e.HighestBid!.UserId.ToString() == User.Identity!.Name);
             if (items.TotalRecords == 0)
             {
-                return BadRequest();
+                return BadRequest("Đã có lỗi xảy ra!");
             }
 
             return Ok(_orderRepo.Create<OrderOutDTO>(itemIds));
@@ -56,7 +56,7 @@ namespace Vaux.Controllers
             var order = _orderRepo.Get<Order>(e => e.Id == id);
             if (order == null)
             {
-                return BadRequest();
+                return BadRequest("Đơn thanh toán không tồn tại!");
             }
 
             PaymentInformation paymentInformation = new PaymentInformation();
@@ -75,14 +75,14 @@ namespace Vaux.Controllers
             var order = _orderRepo.Get<Order>(e => e.Id == id);
             if (order == null)
             {
-                return BadRequest();
+                return BadRequest("Đơn thanh toán không tồn tại!");
             }
 
             var payment = _vnPayService.PaymentExecute(Request.Query);
 
             if (!payment.Success)
             {
-                return StatusCode(402);
+                return StatusCode(402, "Thanh toán thất bại!");
             }
 
             return Ok(_orderRepo.ConfirmPaid<OrderOutDTO>(e => e.Id == id));

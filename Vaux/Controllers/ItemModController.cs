@@ -50,7 +50,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
             if (i == null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             return Ok(i);
@@ -63,7 +63,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi quản trị viên");
@@ -78,7 +78,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             i.Status = statusChange.Status;
@@ -93,7 +93,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             var res = _itemRepo.AddImages<Image>(e => e.Id == id, images.Images);
@@ -108,7 +108,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             var res = _itemRepo.RemoveImages<ItemOutDTO>(e => e.Id == id, imageIds);
@@ -124,7 +124,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id);
             if (i == null)
             {
-                return BadRequest();
+                return BadRequest("Sản phẩm không tồn tại!");
             }
 
             i.ExpertId = null;

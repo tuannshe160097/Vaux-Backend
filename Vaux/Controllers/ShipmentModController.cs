@@ -33,7 +33,7 @@ namespace Vaux.Controllers
             var s = _shipmentRepo.Get<Shipment>(e => e.Id == id);
             if (s == null)
             {
-                return BadRequest();
+                return BadRequest("Kiện hàng không tồn tại!");
             }
 
             s.Status = status;

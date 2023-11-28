@@ -31,7 +31,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
             if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Tài khoản không hợp lệ!");
             }
 
             return Ok(i);
@@ -71,7 +71,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Tài khoản không hợp lệ!");
             }
 
             if (i.ExpertId != null)
@@ -90,7 +90,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Tài khoản không hợp lệ!");
             }
 
             if (i.ExpertId != null)
@@ -110,7 +110,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Tài khoản không hợp lệ!");
             }
 
             var res = _itemRepo.RemoveImages<ItemOutDTO>(e => e.Id == id, imageIds);
@@ -125,7 +125,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Tài khoản không hợp lệ!");
             }
 
             if (i.ExpertId != null)
@@ -143,7 +143,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.RE_AUCTION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Tài khoản không hợp lệ!");
             }
 
             i.Status = ItemStatus.AUCTION_PENDING;
@@ -157,7 +157,7 @@ namespace Vaux.Controllers
             var i = _itemRepo.Get<Item>(e => e.Id == id && e.Status == ItemStatus.EXAMINATION_PENDING);
             if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
-                return BadRequest();
+                return BadRequest("Tài khoản không hợp lệ!");
             }
 
             if (i.ExpertId != null)

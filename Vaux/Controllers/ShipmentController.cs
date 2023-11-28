@@ -15,9 +15,9 @@ namespace Vaux.Controllers
     {
         private readonly IBaseRepo<Shipment> _shipmentRepo;
 
-        public ShipmentController(IBaseRepo<Shipment> shipemntRepo)
+        public ShipmentController(IBaseRepo<Shipment> shipmentRepo)
         {
-            _shipmentRepo = shipemntRepo;
+            _shipmentRepo = shipmentRepo;
         }
 
         [HttpGet]

@@ -68,15 +68,15 @@ namespace Vaux.Controllers
             var u = _userRepo.Get<User>(e => e.Id == id);
             if (u == null)
             {
-                return BadRequest("User does not exist");
+                return BadRequest("Tài khoản không tồn tại!");
             }
             if (u.Phone != profile.Phone && _userRepo.Get<User>(e => e.Phone == profile.Phone) != null)
             {
-                return BadRequest("Phone number already taken");
+                return BadRequest("Số điện thoại đã được sử dụng!");
             }
             if (u.Email != profile.Email && _userRepo.Get<User>(e => e.Email == profile.Email) != null)
             {
-                return BadRequest("Email already taken");
+                return BadRequest("Email đã được sử dụng!");
             }
 
             var res = _userRepo.Update<User, UserStrictDTO>(e => e.Id == id, profile);
@@ -92,7 +92,7 @@ namespace Vaux.Controllers
             var user = _userRepo.Get<User>(e => e.Id.ToString() == User.Identity!.Name);
             if (u == null)
             {
-                return BadRequest("User not found");
+                return BadRequest("Tài khoản không tồn tại!");
             }
             if (user?.RoleId != (int)RoleId.ADMIN && (u.RoleId == (int)RoleId.ADMIN || u.RoleId == (int)RoleId.MODERATOR))
             {
@@ -112,7 +112,7 @@ namespace Vaux.Controllers
             var u = _userRepo.Get<User>(e => e.Id == id);
             if (u == null)
             {
-                return BadRequest("User not found");
+                return BadRequest("Tài khoản không tồn tại!");
             }
             _userRepo.ChangeAccess(id);
 
@@ -126,7 +126,7 @@ namespace Vaux.Controllers
         {
             if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
             {
-                return BadRequest("User already exists");
+                return BadRequest("Tài khoản không tồn tại!");
             }
 
             var res = _userRepo.Create<User>(superUser, RoleId.MODERATOR);
@@ -141,7 +141,7 @@ namespace Vaux.Controllers
         {
             if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
             {
-                return BadRequest("User already exists");
+                return BadRequest("Tài khoản không tồn tại!");
             }
 
             var res = _userRepo.Create<User>(superUser, RoleId.EXPERT);
