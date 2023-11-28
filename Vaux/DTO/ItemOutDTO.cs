@@ -26,6 +26,8 @@ namespace Vaux.DTO
 
         public BidOutDTO? HighestBid { get; set; }
 
+        public ICollection<AuctionSessionMinimalDTO>? AuctionSessions { get; set; }
+
         public List<int>? Images { get; set; }
 
         public int? ThumbnailId { get; set; }
