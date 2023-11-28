@@ -45,6 +45,7 @@ namespace Vaux.MapperProfiles
 
             CreateMap<Item, ItemOutDTO>()
                 .ForMember(dest => dest.StatusString, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.AuctionSessions, opt => opt.MapFrom(src => src.AuctionSessions!.OrderByDescending(e => e.EndDate)))
                 .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images != null ? src.Images.Select(e => e.Id) : null));
 
             CreateMap<SellerApplicationDTO, SellerApplication>()

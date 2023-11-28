@@ -66,7 +66,7 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Update(int id, AuctionSessionUploadDTO auction)
         {
-            var auc = _auctionRepo.Get<AuctionSession>(e => e.Id == id);
+            var auc = _auctionRepo.Get<AuctionSession>(e => e.Id == id && e.Status == AuctionSessionStatus.PENDING);
             if (auc == null)
             {
                 return BadRequest();
@@ -82,7 +82,7 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Delete(int id)
         {
-            var auc = _auctionRepo.Get<AuctionSession>(e => e.Id == id);
+            var auc = _auctionRepo.Get<AuctionSession>(e => e.Id == id && e.Status == AuctionSessionStatus.PENDING);
             if (auc == null)
             {
                 return BadRequest();
