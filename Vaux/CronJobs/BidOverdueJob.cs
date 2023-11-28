@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Vaux.DbContext;
 using Vaux.Models;
 using Vaux.Models.Enums;
+using Vaux.Repositories.Interface;
 
 namespace Vaux.CronJobs
 {
@@ -12,11 +13,13 @@ namespace Vaux.CronJobs
     {
         private readonly VxDbc _vxDbc;
         private readonly ILogger<BidOverdueJob> _logger;
+        private readonly INotificationRepo _notificationRepo;
 
-        public BidOverdueJob(VxDbc vxDbc, ILogger<BidOverdueJob> logger)
+        public BidOverdueJob(VxDbc vxDbc, ILogger<BidOverdueJob> logger, INotificationRepo notificationRepo)
         {
             _vxDbc = vxDbc;
             _logger = logger;
+            _notificationRepo = notificationRepo;
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -35,11 +38,8 @@ namespace Vaux.CronJobs
 
                 item.WonBid!.User.Deleted = DateTime.Now;
 
-                item.Seller.Notifications!.Add(new Notification()
-                {
-                    Content = $"Sản phẩm {item.Name} đã được đưa lại vào danh sách chờ do người mua không trả tiền",
-                    UserId = item.SellerId
-                });
+                _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã được đưa lại vào danh sách chờ do người mua không trả tiền");
+
 
                 item.WonBid = null;
                 item.WonDate = null;

@@ -52,6 +52,11 @@ namespace Vaux.Controllers
         [HttpPost]
         public IActionResult Create(AuctionSessionUploadDTO auction)
         {
+            if (auction.StartDate.Date <= DateTime.Today || auction.StartDate.Date <= auction.EndDate.Date) 
+            {
+                return BadRequest();
+            }
+
             auction.StartDate = auction.StartDate.Date.AddHours(7);
             auction.EndDate = auction.EndDate.Date.AddHours(19);
             return Ok(_auctionRepo.Create<AuctionSessionIFullDTO, AuctionSessionUploadDTO>(auction, auction.ItemIds));

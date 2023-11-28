@@ -16,9 +16,9 @@ namespace Vaux.Controllers
     public class ItemApplicationController : ControllerBase
     {
         private readonly IItemRepo _itemRepo;
-        private readonly IBaseRepo<Notification> _notificationRepo;
+        private readonly INotificationRepo _notificationRepo;
 
-        public ItemApplicationController(IItemRepo itemRepo, IBaseRepo<Notification> notificationRepo)
+        public ItemApplicationController(IItemRepo itemRepo, INotificationRepo notificationRepo)
         {
             _itemRepo = itemRepo;
             _notificationRepo = notificationRepo;
@@ -76,11 +76,7 @@ namespace Vaux.Controllers
 
             if (i.ExpertId != null)
             {
-                _notificationRepo.Create<Notification, Notification>(new Notification()
-                {
-                    UserId = (int)i.ExpertId,
-                    Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh"
-                });
+                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh");
             }
 
             return Ok(_itemRepo.EditThumbnail<ItemOutDTO>(e => e.Id == id, thumbnail.Image));
@@ -99,11 +95,7 @@ namespace Vaux.Controllers
 
             if (i.ExpertId != null)
             {
-                _notificationRepo.Create<Notification, Notification>(new Notification()
-                {
-                    UserId = (int)i.ExpertId,
-                    Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh"
-                });
+                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh");
             }
 
             var res = _itemRepo.AddImages<ItemOutDTO>(e => e.Id == id, images.Images);
@@ -138,11 +130,7 @@ namespace Vaux.Controllers
 
             if (i.ExpertId != null)
             {
-                _notificationRepo.Create<Notification, Notification>(new Notification()
-                {
-                    UserId = (int)i.ExpertId,
-                    Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật"
-                });
+                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật");
             }
 
             return Ok(_itemRepo.Update<ItemOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
@@ -174,11 +162,7 @@ namespace Vaux.Controllers
 
             if (i.ExpertId != null)
             {
-                _notificationRepo.Create<Notification, Notification>(new Notification()
-                {
-                    UserId = (int)i.ExpertId,
-                    Content = $"Đăng ký sản phẩm \"{i.Name}\" đã bị xóa"
-                });
+                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã bị xóa");
             }
 
             return Ok(_itemRepo.Delete<ItemOutDTO>(e => e.Id == id));

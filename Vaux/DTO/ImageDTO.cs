@@ -4,7 +4,7 @@ namespace Vaux.DTO
 {
     public class ImageDTO
     {
-        [AllowedImageSize(1)]
+        [AllowedImageSize(20)]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
         public IFormFile Image { get; set; }
     }

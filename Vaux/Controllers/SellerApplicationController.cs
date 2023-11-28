@@ -17,9 +17,9 @@ namespace Vaux.Controllers
         private readonly ISellerApplicationRepo _sellerApplicationRepo;
         private readonly IPhotoRepo _photoRepo;
         private readonly IUserRepo _userRepo;
-        private readonly IBaseRepo<Notification> _notificationRepo;
+        private readonly INotificationRepo _notificationRepo;
 
-        public SellerApplicationController(ISellerApplicationRepo sellerApplicationRepo, IPhotoRepo photoRepo, IUserRepo userRepo, IBaseRepo<Notification> notificationRepo)
+        public SellerApplicationController(ISellerApplicationRepo sellerApplicationRepo, IPhotoRepo photoRepo, IUserRepo userRepo, INotificationRepo notificationRepo)
         {
             _sellerApplicationRepo = sellerApplicationRepo;
             _photoRepo = photoRepo;
@@ -152,11 +152,8 @@ namespace Vaux.Controllers
             }
             i.Status = SellerApplicationStatus.APPROVED;
 
-            _notificationRepo.Create<Notification, Notification>(new Notification()
-            {
-                UserId = i.UserId,
-                Content = $"Đăng ký tài khoản người bán cho \"{i.User.Name}\" đã được phê duyệt"
-            });
+            _notificationRepo.Create<Notification>(e => e.Id == i.UserId, $"Đăng ký tài khoản người bán cho \"{i.User.Name}\" đã được phê duyệt");
+
             _userRepo.Update<User, SellerApplication>(e => e.Id == i.UserId, i, RoleId.SELLER);
             return Ok(_sellerApplicationRepo.Update<SellerApplicationOutDTO, SellerApplication>(e => e.Id == i.Id, i, reason));
         }
@@ -174,11 +171,8 @@ namespace Vaux.Controllers
 
             i.Status = SellerApplicationStatus.DENIED;
 
-            _notificationRepo.Create<Notification, Notification>(new Notification()
-            {
-                UserId = i.UserId,
-                Content = $"Đăng ký tài khoản người bán cho \"{i.User.Name}\" đã bị từ chối"
-            });
+
+            _notificationRepo.Create<Notification>(e => e.Id == i.UserId, $"Đăng ký tài khoản người bán cho \"{i.User.Name}\" đã bị từ chối");
 
             return Ok(_sellerApplicationRepo.Update<SellerApplicationOutDTO, SellerApplication>(e => e.Id == i.Id, i, reason));
         }

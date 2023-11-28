@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Vaux.DbContext;
 using Vaux.Models;
 using Vaux.Models.Enums;
+using Vaux.Repositories.Interface;
 
 namespace Vaux.CronJobs
 {
@@ -12,11 +13,13 @@ namespace Vaux.CronJobs
     {
         private readonly VxDbc _vxDbc;
         private readonly ILogger<StartAuctionJob> _logger;
+        private readonly INotificationRepo _notificationRepo;
 
-        public StartAuctionJob(VxDbc vxDbc, ILogger<StartAuctionJob> logger)
+        public StartAuctionJob(VxDbc vxDbc, ILogger<StartAuctionJob> logger, INotificationRepo notificationRepo)
         {
             _vxDbc = vxDbc;
             _logger = logger;
+            _notificationRepo = notificationRepo;
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -37,11 +40,7 @@ namespace Vaux.CronJobs
                         StatusChangeReason = "Start auction"
                     });
 
-                    item.Seller.Notifications!.Add(new Notification()
-                    {
-                        Content = $"Sản phẩm {item.Name} đã bắt đầu được đấu giá",
-                        UserId = item.SellerId
-                    });
+                    _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã bắt đầu được đấu giá");
                 }
             }
 

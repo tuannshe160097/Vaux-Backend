@@ -15,9 +15,9 @@ namespace Vaux.Controllers
     public class ItemModController : ControllerBase
     {
         private readonly IItemRepo _itemRepo;
-        private readonly IBaseRepo<Notification> _notificationRepo;
+        private readonly INotificationRepo _notificationRepo;
 
-        public ItemModController(IItemRepo itemRepo, IBaseRepo<Notification> notificationRepo)
+        public ItemModController(IItemRepo itemRepo, INotificationRepo notificationRepo)
         {
             _itemRepo = itemRepo;
             _notificationRepo = notificationRepo;
@@ -66,11 +66,7 @@ namespace Vaux.Controllers
                 return BadRequest();
             }
 
-            _notificationRepo.Create<Notification, Notification>(new Notification()
-            {
-                UserId = i.SellerId,
-                Content = $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi chuyên gia"
-            });
+            _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi quản trị viên");
 
             return Ok(_itemRepo.Update<ItemOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
@@ -130,13 +126,10 @@ namespace Vaux.Controllers
             {
                 return BadRequest();
             }
-            i.ExpertId = int.Parse(User.Identity!.Name!);
 
-            _notificationRepo.Create<Notification, Notification>(new Notification()
-            {
-                UserId = i.SellerId,
-                Content = $"Đăng ký sản phẩm \"{i.Name}\" đang chờ xử lý"
-            });
+            i.ExpertId = null;
+
+            _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đang chờ xử lý");
 
             return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == id, i));
         }
