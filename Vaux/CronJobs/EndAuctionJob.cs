@@ -35,6 +35,7 @@ namespace Vaux.CronJobs
                     if (highestBid?.Amount >= item.ReservePrice)
                     {
                         item.Status = ItemStatus.PAYMENT_PENDING;
+                        item.OngoingSession = null;
                         item.StatusChanges!.Add(new StatusChange()
                         {
                             StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),

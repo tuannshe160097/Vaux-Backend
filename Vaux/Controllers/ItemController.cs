@@ -144,7 +144,7 @@ namespace Vaux.Controllers
         [Route("{id}/Bids")]
         public IActionResult GetBids(int id)
         {
-            return Ok(_bidRepo.GetAll<BidOutDTO>(e => e.ItemId == id));
+            return Ok(_bidRepo.GetAll<BidOutDTO>(e => e.ItemId == id && e.AuctionSessionId == e.Item!.OngoingSessionId));
         }
 
         [HttpPost]
@@ -164,7 +164,7 @@ namespace Vaux.Controllers
             {
                 _itemRepo.Reload(item);
 
-                if (bid.Amount <= item.Bids?.LastOrDefault()?.Amount + 10000)
+                if (bid.Amount <= item.HighestBid?.Amount + 10000)
                 {
                     _logger.LogInformation($"Response for user {User.Identity.Name} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}/too low");
                     return BadRequest("Giá được trả phái lớn hơn giá hiện tại ít nhất 10.000 VND");
@@ -174,7 +174,8 @@ namespace Vaux.Controllers
                 {
                     ItemId = item.Id,
                     Amount = bid.Amount,
-                    UserId = int.Parse(User.Identity!.Name!)
+                    UserId = int.Parse(User.Identity!.Name!),
+                    AuctionSessionId = item.OngoingSessionId,
                 };
                 var res = _bidRepo.Create<Bid, Bid>(b);
 
