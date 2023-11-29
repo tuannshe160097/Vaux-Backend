@@ -40,7 +40,7 @@ namespace Vaux.Controllers
             {
                 return Unauthorized("Tài khoản không hợp lệ!");
             }
-            return Ok(_chatRepo.GetAll<ChatMessageOutDTO>(e => e.ItemId == id,  false));
+            return Ok(_chatRepo.GetAll<ChatMessageOutDTO>(e => e.ItemId == id, e => e.Created, false));
         }
         [HttpPost]
         [Authorize]
