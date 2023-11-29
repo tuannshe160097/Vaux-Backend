@@ -32,7 +32,7 @@ namespace Vaux.Repositories
         public ICollection<TOut> Create<TOut>(Expression<Func<User, bool>> predicate, string content, string? redirect = null)
         {
             List<Notification> notifications = new();
-            var users = _vxDbc.Users.Where(predicate);
+            var users = _vxDbc.Users.Where(predicate).ToList();
 
             foreach (var user in users)
             {
