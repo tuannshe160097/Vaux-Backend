@@ -89,7 +89,7 @@ namespace Vaux.Controllers
             var auc = _auctionRepo.Get<AuctionSession>(e => e.Id == id && e.Status == AuctionSessionStatus.PENDING);
             if (auc == null)
             {
-                return BadRequest("Phiên đấu giá không tồn tại!");
+                return BadRequest("Không thể xóa phiên đang hoạt động!");
             }
 
             return Ok(_auctionRepo.Delete<AuctionSessionIFullDTO>(e => e.Id == id));
