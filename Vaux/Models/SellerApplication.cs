@@ -27,6 +27,7 @@ namespace Vaux.Models
         public int? CitizenIdImageId { get; set; }
         public virtual Image? CitizenIdImage { get; set; }
         public string BankAccountNum { get; set; }
+        public string BankCode { get; set; }
         public string BankName { get; set; }
         public virtual ICollection<StatusChange> StatusChanges { get; set; }
     }

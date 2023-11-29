@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vaux.DbContext;
 
@@ -11,9 +12,11 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    partial class VxDbcModelSnapshot : ModelSnapshot
+    [Migration("20231129155419_BankModel2")]
+    partial class BankModel2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,9 +106,6 @@ namespace Vaux.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("AuctionSessionId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -126,8 +126,6 @@ namespace Vaux.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuctionSessionId");
 
                     b.HasIndex("ItemId");
 
@@ -325,9 +323,6 @@ namespace Vaux.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OngoingSessionId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
@@ -368,8 +363,6 @@ namespace Vaux.Migrations
                     b.HasIndex("ExpertId");
 
                     b.HasIndex("HighestBidId");
-
-                    b.HasIndex("OngoingSessionId");
 
                     b.HasIndex("OrderId");
 
@@ -977,10 +970,6 @@ namespace Vaux.Migrations
 
             modelBuilder.Entity("Vaux.Models.Bid", b =>
                 {
-                    b.HasOne("Vaux.Models.AuctionSession", "AuctionSession")
-                        .WithMany()
-                        .HasForeignKey("AuctionSessionId");
-
                     b.HasOne("Vaux.Models.Item", "Item")
                         .WithMany("Bids")
                         .HasForeignKey("ItemId");
@@ -990,8 +979,6 @@ namespace Vaux.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AuctionSession");
 
                     b.Navigation("Item");
 
@@ -1054,10 +1041,6 @@ namespace Vaux.Migrations
                         .WithMany()
                         .HasForeignKey("HighestBidId");
 
-                    b.HasOne("Vaux.Models.AuctionSession", "OngoingSession")
-                        .WithMany()
-                        .HasForeignKey("OngoingSessionId");
-
                     b.HasOne("Vaux.Models.Order", "Order")
                         .WithMany("Items")
                         .HasForeignKey("OrderId");
@@ -1081,8 +1064,6 @@ namespace Vaux.Migrations
                     b.Navigation("Expert");
 
                     b.Navigation("HighestBid");
-
-                    b.Navigation("OngoingSession");
 
                     b.Navigation("Order");
 
