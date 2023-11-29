@@ -45,6 +45,10 @@ namespace Vaux.Models
         public int? HighestBidId { get; set; }
         public virtual Bid? HighestBid { get; set; }
 
+        [ForeignKey(nameof(OngoingSession))]
+        public int? OngoingSessionId {  get; set; }
+        public virtual AuctionSession? OngoingSession { get; set; }
+
         public int? OrderId { get; set; }
         public virtual Order? Order { get; set; }
 

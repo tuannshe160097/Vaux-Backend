@@ -40,14 +40,14 @@ namespace Vaux.Controllers
             {
                 query = query.Where(e => e.CategoryId == category);
             }
-            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
+            return Ok(_itemRepo.WrapListResult<ItemWithBidsOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
+            var i = _itemRepo.Get<ItemWithBidsOutDTO>(e => e.Id == id);
             if (i == null)
             {
                 return BadRequest("Sản phẩm không tồn tại!");
@@ -68,7 +68,7 @@ namespace Vaux.Controllers
 
             _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi quản trị viên");
 
-            return Ok(_itemRepo.Update<ItemOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
+            return Ok(_itemRepo.Update<ItemWithBidsOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
 
         [HttpPatch]
@@ -83,7 +83,7 @@ namespace Vaux.Controllers
 
             i.Status = statusChange.Status;
 
-            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == i.Id, i, statusChange.StatusChangeReason));
+            return Ok(_itemRepo.Update<ItemWithBidsOutDTO, Item>(e => e.Id == i.Id, i, statusChange.StatusChangeReason));
         }
 
         [HttpPost]
@@ -111,7 +111,7 @@ namespace Vaux.Controllers
                 return BadRequest("Sản phẩm không tồn tại!");
             }
 
-            var res = _itemRepo.RemoveImages<ItemOutDTO>(e => e.Id == id, imageIds);
+            var res = _itemRepo.RemoveImages<ItemWithBidsOutDTO>(e => e.Id == id, imageIds);
 
             return Ok(res);
         }
@@ -131,7 +131,7 @@ namespace Vaux.Controllers
 
             _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đang chờ xử lý");
 
-            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == id, i));
+            return Ok(_itemRepo.Update<ItemWithBidsOutDTO, Item>(e => e.Id == id, i));
         }
     }
 }

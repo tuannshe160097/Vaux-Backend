@@ -32,6 +32,7 @@ namespace Vaux.CronJobs
                 foreach (var item in auc.Items!)
                 {
                     item.Status = ItemStatus.AUCTION_IN_PROGRESS;
+                    item.OngoingSession = auc;
                     item.StatusChanges!.Add(new StatusChange()
                     {
                         StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),

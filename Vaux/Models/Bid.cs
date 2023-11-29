@@ -9,6 +9,9 @@ namespace Vaux.Models
         public int? ItemId { get; set; }
         public virtual Item? Item { get; set; }
 
+        public int? AuctionSessionId { get; set; }
+        public virtual AuctionSession? AuctionSession { get; set; }
+
         public int UserId { get; set; }
         public virtual User User { get; set; }
 

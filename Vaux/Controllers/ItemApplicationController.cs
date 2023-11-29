@@ -28,7 +28,7 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
+            var i = _itemRepo.Get<ItemWithBidsOutDTO>(e => e.Id == id);
             if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest("Tài khoản không hợp lệ!");
@@ -54,13 +54,13 @@ namespace Vaux.Controllers
             {
                 query = query.Where(e => e.Status == status);
             }
-            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
+            return Ok(_itemRepo.WrapListResult<ItemWithBidsOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpPost]
         public IActionResult Create(ItemApplicationDTO item)
         {
-            var res = _itemRepo.Create<ItemOutDTO, ItemApplicationDTO>(item, int.Parse(User.Identity!.Name!));
+            var res = _itemRepo.Create<ItemWithBidsOutDTO, ItemApplicationDTO>(item, int.Parse(User.Identity!.Name!));
             return Ok(res);
         }
 
@@ -79,7 +79,7 @@ namespace Vaux.Controllers
                 _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh");
             }
 
-            return Ok(_itemRepo.EditThumbnail<ItemOutDTO>(e => e.Id == id, thumbnail.Image));
+            return Ok(_itemRepo.EditThumbnail<ItemWithBidsOutDTO>(e => e.Id == id, thumbnail.Image));
         }
 
 
@@ -98,7 +98,7 @@ namespace Vaux.Controllers
                 _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh");
             }
 
-            var res = _itemRepo.AddImages<ItemOutDTO>(e => e.Id == id, images.Images);
+            var res = _itemRepo.AddImages<ItemWithBidsOutDTO>(e => e.Id == id, images.Images);
 
             return Ok(res);
         }
@@ -113,7 +113,7 @@ namespace Vaux.Controllers
                 return BadRequest("Tài khoản không hợp lệ!");
             }
 
-            var res = _itemRepo.RemoveImages<ItemOutDTO>(e => e.Id == id, imageIds);
+            var res = _itemRepo.RemoveImages<ItemWithBidsOutDTO>(e => e.Id == id, imageIds);
 
             return Ok(res);
         }
@@ -133,7 +133,7 @@ namespace Vaux.Controllers
                 _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật");
             }
 
-            return Ok(_itemRepo.Update<ItemOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
+            return Ok(_itemRepo.Update<ItemWithBidsOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
 
         [HttpPatch]
@@ -147,7 +147,7 @@ namespace Vaux.Controllers
             }
 
             i.Status = ItemStatus.AUCTION_PENDING;
-            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == id, i));
+            return Ok(_itemRepo.Update<ItemWithBidsOutDTO, Item>(e => e.Id == id, i));
         }
 
         [HttpDelete]
@@ -165,7 +165,7 @@ namespace Vaux.Controllers
                 _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã bị xóa");
             }
 
-            return Ok(_itemRepo.Delete<ItemOutDTO>(e => e.Id == id));
+            return Ok(_itemRepo.Delete<ItemWithBidsOutDTO>(e => e.Id == id));
         }
     }
 }

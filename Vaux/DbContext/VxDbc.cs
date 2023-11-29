@@ -57,6 +57,9 @@
                 .WithMany(e => e.Items);
 
             modelBuilder.Entity<Item>()
+                .HasOne(e => e.OngoingSession);
+
+            modelBuilder.Entity<Item>()
                 .Property(e => e.ReservePrice)
                 .HasDefaultValue(0);
 
