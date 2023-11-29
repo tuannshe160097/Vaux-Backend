@@ -36,6 +36,7 @@ namespace Vaux.DTO
         [JsonIgnore]
         public int? CitizenIdImageId { get; set; }
         public string BankAccountNum { get; set; }
+        public string BankCode { get; set; }
         public string BankName { get; set; }
     }
 }
