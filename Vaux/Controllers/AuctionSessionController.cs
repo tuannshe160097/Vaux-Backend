@@ -56,7 +56,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Ngày bắt đầu phiên phải ở sau ngày hiện tại!");
             }
-            if(auction.StartDate.Date <= auction.EndDate.Date)
+            if(auction.StartDate.Date >= auction.EndDate.Date)
             {
                 return BadRequest("Ngày kết thúc phiên phải ở sau ngày bắt đầu!");
             }
@@ -74,6 +74,15 @@ namespace Vaux.Controllers
             if (auc == null)
             {
                 return BadRequest("Phiên đấu giá không tồn tại!");
+            }
+
+            if (auction.StartDate.Date <= DateTime.Today)
+            {
+                return BadRequest("Ngày bắt đầu phiên phải ở sau ngày hiện tại!");
+            }
+            if (auction.StartDate.Date >= auction.EndDate.Date)
+            {
+                return BadRequest("Ngày kết thúc phiên phải ở sau ngày bắt đầu!");
             }
 
             auction.StartDate = auction.StartDate.Date.AddHours(7);
