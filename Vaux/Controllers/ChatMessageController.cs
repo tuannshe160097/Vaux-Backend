@@ -26,7 +26,8 @@ namespace Vaux.Controllers
             _chatRepo = chatRepo;
             _hubContext = hubContext;
         }
-        [HttpPost]
+        
+        [HttpGet]
         [Authorize]
         [Route("/api/Chat/{id}")]
         public IActionResult GetAll(int id)
@@ -40,7 +41,7 @@ namespace Vaux.Controllers
             {
                 return Unauthorized("Tài khoản không hợp lệ!");
             }
-            return Ok(_chatRepo.GetAll<ChatMessageOutDTO>(e => e.ItemId == id, e => e.ItemId,  false));
+            return Ok(_chatRepo.GetAll<ChatMessageOutDTO>(e => e.ItemId == id, e => e.Created, false));
         }
 
         [HttpGet]
