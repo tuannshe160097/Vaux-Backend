@@ -164,7 +164,7 @@ namespace Vaux.DbContext
             "Yên",
         };
 
-        static string[] ADDRESS = new string[]
+        static readonly string[] ADDRESS = new string[]
         {
             "Hàng Bè, số ",
             "Phố Huế, số ",
@@ -330,6 +330,60 @@ namespace Vaux.DbContext
             "Hàng Bài, số ",
             "Hồng Hà, số ",
             "Nhà Chung, số ",
+        };
+
+        static readonly string[] COMMENTS = new string[]
+        {
+            "Món này giá cuối không thể quá 10tr được",
+            "Trông anh hơi mờ nhỉ, không biết có uy tín không",
+            "Anh em dẹp hết ra tôi all-in món này",
+            "Vcl con này 100tr là ít",
+            "Sắp hết phiên rồi mà chưa thấy ai ra giá nhỉ?",
+            "Đúng món mình còn thiếu luôn!",
+            "Anh em nhường mình món này mua tặng vợ nhé",
+            "Vl biếu sếp con này chắc phải tăng 3 bậc lương!",
+            "Có thật là đồ cổ không thế, trông mới lắm",
+            "Mua một món bé thế này mà bằng 10 bữa thịt chó cơ à?",
+            "Lần đầu tiên trái thanh long có trong mỳ tôm",
+            "Đang săn con này mà lại thiếu tiền mới cay chứ :v",
+            "Món này trên TikTok thấy đầy á",
+            "Đẹp dã man luôn!",
+            "Món này 10 điểm nha!",
+            "Ui hồi xưa ở nhà thấy cái này suốt",
+            "Cái này hồi xưa rẻ như cho",
+            "Giá sàn bằng 2 tháng lương thế này thì theo sao nổi?",
+            "Mấy cái comment trông như bot ấy",
+            "Ảnh trông tối quá",
+            "Ảnh chụp mờ quá",
+            "Đồ này trông hay mà ít người theo nhỉ?",
+            "Món này trông có vẻ hot nè",
+            "Tôi quen người bán cái này bà con không lo bị scam nha",
+            "Ai thẩm định món này mà để giá sàn cao thế?",
+            "Ai thẩm định món này mà để giá sàn thấp thế?",
+            "Chơi môn này áp lực ngang cớ bạc!",
+            "Mọi người muốn mua thêm mấy món thế này thì đợi phiên tiếp theo mua của mình nha",
+            "Hội mua mấy món như này chắc cũng phải U50 hết nhỉ?",
+            "Đồ cổ kiểu này tìm ngoài đời khó thật sự, lên đây tìm một tí thấy luôn tiện thật",
+            "Web này đảm bảo an toàn nhé mình có mua đồ rồi",
+            "Người bán trước đây có bán gì khác chưa?",
+            "Món này ai thẩm định vậy?",
+            "Đồ rất đẹp mình cho 1 like",
+            "Món này mình thích nhưng hơi xước quá rồi nên nhường mọi người đó",
+            "Phiên mới lên nhanh thế?",
+            "Mãi mới tới phiên có đồ hay",
+            "Đồ rẻ quá mình xin bỏ nha",
+            "Đồ vô nghĩa quá chắc thôi",
+            "Mua món này bán lại có khi nhà lầu xe hơi đấy",
+            "Có khi nào mấy món này để rửa tiền không?",
+            "Đồ đắt thật, đúng web cho giới nhà giàu",
+            "Bán một món này có khi tiền ăn cả đời không hết",
+            "Web trung gian bán mấy món thế này chắc giàu nhanh lắm nhỉ",
+            "Ai tiền nhiều thì cứ sưu tầm cái này đi",
+            "Mình trốn vợ mua cái này về chơi chắc không biết đâu nhỉ?",
+            "Trông sang chảnh thật!",
+            "Đồ cổ mà trông hơi phén",
+            "Ai phải biết cảm nhận mới thấy món này giá trị",
+            "Thẩm định được món này chắc phải đỉnh lắm",
         };
 
         public static void Seed(ModelBuilder modelBuilder)
