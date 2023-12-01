@@ -97,42 +97,7 @@
                 .Property(e => e.Status)
                 .HasDefaultValue(SellerPaymentStatus.UNPAID);
 
-            modelBuilder.Entity<Role>().HasData(
-                new Role()
-                {
-                    Id = (int)RoleId.MODERATOR,
-                    Title = nameof(RoleId.MODERATOR)
-                },
-                new Role()
-                {
-                    Id = (int)RoleId.EXPERT,
-                    Title = nameof(RoleId.EXPERT)
-                },
-                new Role()
-                {
-                    Id = (int)RoleId.SELLER,
-                    Title = nameof(RoleId.SELLER)
-                },
-                new Role()
-                {
-                    Id = (int)RoleId.BUYER,
-                    Title = nameof(RoleId.BUYER)
-                },
-                new Role()
-                {
-                    Id = (int)RoleId.ADMIN,
-                    Title = nameof(RoleId.ADMIN)
-                }
-            );
-
-            modelBuilder.Entity<User>().HasData(new User()
-            {
-                Id = 1,
-                RoleId = (int)RoleId.ADMIN,
-                Name = "Doxx him John",
-                Phone = "0855068490",
-                Email = "tuannshe160097@fpt.edu.vn"
-            });
+            DbInitializer.Seed(modelBuilder);
         }
 
         public override int SaveChanges()
