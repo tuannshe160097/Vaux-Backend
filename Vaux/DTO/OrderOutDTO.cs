@@ -5,6 +5,7 @@ namespace Vaux.DTO
     public class OrderOutDTO
     {
         public int Id { get; set; }
+        public DateTime Created { get; set; }
 
         public int UserId { get; set; }
         public UserMinimalDTO User { get; set; }
