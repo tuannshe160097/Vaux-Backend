@@ -49,15 +49,17 @@ namespace Vaux.Controllers
             return Ok(_orderRepo.Create<OrderOutDTO>(itemIds));
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("{id}/Pay")]
-        public IActionResult CreatePayment(int id)
+        public IActionResult CreatePayment(int id, AddressDTO address)
         {
             var order = _orderRepo.Get<Order>(e => e.Id == id);
             if (order == null)
             {
                 return BadRequest();
             }
+
+            _orderRepo.Update<Order, AddressDTO>(e => e.Id == id, address);
 
             PaymentInformation paymentInformation = new PaymentInformation();
             paymentInformation.Name = $"VXBO{order.Id}";
