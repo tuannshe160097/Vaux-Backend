@@ -5,6 +5,9 @@ namespace Vaux.DTO
 {
     public class ShipmentOutDTO
     {
+        public int Id { get; set; }
+        public DateTime Created { get; set; }
+
         public ShipmentStatus Status { get; set; }
         public string ShipmentStatusStrinng { get; set; }
 
