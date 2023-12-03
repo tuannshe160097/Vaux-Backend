@@ -1,13 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Vaux.Models.Enums;
 using Vaux.Models;
-using Vaux.DTO;
-using Castle.Components.DictionaryAdapter.Xml;
-using Microsoft.AspNetCore.SignalR;
-using System.Net.NetworkInformation;
-using System.Security.Policy;
-using System;
-using Twilio.TwiML.Voice;
 
 namespace Vaux.DbContext
 {
@@ -17,7 +10,11 @@ namespace Vaux.DbContext
 
         static readonly string[] ID_URLS = new string[]
         {
-            ""
+            "1fDReENNEAcCtkvWpvMwiF_HnqCdfHIOE",
+            "1VQyOksZ9hyEd3L84xEg2sbPy8-zsJWtG",
+            "1K1eSFe7JESqKVoj89U2cDKG76piC-29p",
+            "1zvORDR3ME5QAVdpdkvVhqC1I-cftwmeP",
+            "1DOJgh8UniAvTGW6inoLYgjN68XIlHTyR",
         };
 
         static readonly string[] IMAGE_URLS = new string[]
@@ -386,30 +383,32 @@ namespace Vaux.DbContext
             "Thẩm định được món này chắc phải đỉnh lắm",
         };
 
+        static string ITEM_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.";
+
         public static void Seed(ModelBuilder modelBuilder)
         {
             Role[] roles = new Role[] {
-                new Role()
+                new()
                 {
                     Id = (int)RoleId.MODERATOR,
                     Title = nameof(RoleId.MODERATOR)
                 },
-                new Role()
+                new()
                 {
                     Id = (int)RoleId.EXPERT,
                     Title = nameof(RoleId.EXPERT)
                 },
-                new Role()
+                new()
                 {
                     Id = (int)RoleId.SELLER,
                     Title = nameof(RoleId.SELLER)
                 },
-                new Role()
+                new()
                 {
                     Id = (int)RoleId.BUYER,
                     Title = nameof(RoleId.BUYER)
                 },
-                new Role()
+                new()
                 {
                     Id = (int)RoleId.ADMIN,
                     Title = nameof(RoleId.ADMIN)
@@ -417,15 +416,119 @@ namespace Vaux.DbContext
             };
             modelBuilder.Entity<Role>().HasData(roles);
 
-            List<User> users = new List<User>();
-            users.Add(new User()
+            Category[] categories = new Category[]
             {
-                Id = 1,
-                RoleId = (int)RoleId.ADMIN,
-                Name = "Admin",
-                Phone = "0855068490",
-                Email = "tuannshe160097@fpt.edu.vn"
-            });
+                new()
+                {
+                    Id = 1,
+                    Name = "Tiền cổ"
+                },
+                new()
+                {
+                    Id = 2,
+                    Name = "Nội thất"
+                },
+                new()
+                {
+                    Id = 3,
+                    Name = "Xe"
+                },
+                new()
+                {
+                    Id = 4,
+                    Name = "Trang sức"
+                },
+                new()
+                {
+                    Id = 5,
+                    Name = "Tranh"
+                },
+                new()
+                {
+                    Id = 6,
+                    Name = "Khoáng sản"
+                },
+                new()
+                {
+                    Id = 7,
+                    Name = "Văn tự"
+                },
+                new()
+                {
+                    Id = 8,
+                    Name = "Trang phục"
+                },
+                new()
+                {
+                    Id = 9,
+                    Name = "Đồ sưu tầm"
+                },
+                new()
+                {
+                    Id = 10,
+                    Name = "Văn tự"
+                },
+            };
+            modelBuilder.Entity<Category>().HasData(categories);
+
+            List<AuctionSession> auctionSessions = new();
+            DateTime start = new DateTime(2023, 12, 4);
+            for (int i = 0; i < 5; i++)
+            {
+                auctionSessions.Add(new AuctionSession()
+                {
+                    Id = i + 1,
+                    StartDate = start.AddDays(i * 7).AddHours(7),
+                    EndDate = start.AddDays(i * 7 + 6).AddHours(19),
+                    Status = AuctionSessionStatus.PENDING,
+                });
+            }
+            modelBuilder.Entity<AuctionSession>().HasData(auctionSessions);
+
+            List<User> users = new List<User>
+            {
+                new User()
+                {
+                    Id = 1,
+                    RoleId = (int)RoleId.ADMIN,
+                    Name = "Admin",
+                    Phone = "0855068490",
+                    Email = "tuannshe160097@fpt.edu.vn"
+                },
+                new User()
+                {
+                    Id = 2,
+                    RoleId = (int)RoleId.MODERATOR,
+                    Name = "Admin",
+                    Phone = "08550684901",
+                    Email = "1@fpt.edu.vn"
+                },
+                new User()
+                {
+                    Id = 3,
+                    RoleId = (int)RoleId.MODERATOR,
+                    Name = "Admin",
+                    Phone = "08550684902",
+                    Email = "2@fpt.edu.vn"
+                },
+                new User()
+                {
+                    Id = 4,
+                    RoleId = (int)RoleId.MODERATOR,
+                    Name = "Admin",
+                    Phone = "08550684903",
+                    Email = "3@fpt.edu.vn"
+                },
+                new User()
+                {
+                    Id = 5,
+                    RoleId = (int)RoleId.MODERATOR,
+                    Name = "Admin",
+                    Phone = "08550684904",
+                    Email = "4@fpt.edu.vn"
+                }
+            };
+            modelBuilder.Entity<User>().HasData(users);
 
             List<Image> idImages = new();
             foreach (var image in ID_URLS)
@@ -458,20 +561,24 @@ namespace Vaux.DbContext
                 {
                     phone = GeneratePhone();
                 }
-                users.Add(new User()
+                var user = new User()
                 {
-                    Id = users.Count + 1,
+                    Id = users.Count + 5,
                     RoleId = (int)RoleId.BUYER,
                     Name = ConstructName(),
                     Phone = phone,
                     IsVerified = true,
                     City = "thanh_pho_ha_noi",
-                    District = "quan_ba_dinh",
-                    Street = "phuong_giang_vo",
-                    HouseNumber = RandomElement(ADDRESS),
-                });
+                    District = "quan_hoan_kiem",
+                    Street = "",
+                    HouseNumber = RandomElement(ADDRESS) + _random.Next(100),
+                };
+                users.Add(user);
+                modelBuilder.Entity<User>().HasData(user);
             }
 
+            List<StatusChange> statusChanges = new();
+            List<SellerApplication> sellerApplications = new();
             for (int i = 0; i < 50; i++)
             {
                 var phone = GeneratePhone();
@@ -479,28 +586,65 @@ namespace Vaux.DbContext
                 {
                     phone = GeneratePhone();
                 }
-                var idImage = RandomElement(idImages.ToArray()).Id;
-                users.Add(new User()
+                var idImage = RandomElement(idImages.ToArray());
+                var user = new User()
                 {
-                    Id = users.Count + 1,
+                    Id = users.Count + 5,
                     RoleId = (int)RoleId.SELLER,
                     Name = ConstructName(),
                     Phone = phone,
                     Email = $"{users.Count + 1}@gmail.com",
                     IsVerified = true,
                     City = "thanh_pho_ha_noi",
-                    District = "quan_ba_dinh",
-                    Street = "phuong_giang_vo",
-                    HouseNumber = RandomElement(ADDRESS),
+                    District = "quan_hoan_kiem",
+                    Street = "",
+                    HouseNumber = RandomElement(ADDRESS) + _random.Next(100),
                     Gender = _random.Next(1) == 1 ? "Male" : "Female",
                     DoB = RandomDate(),
                     CitizenId = GeneratePhone(),
-                    CitizenIdImageId = idImage,
-                    PortraitId = idImage,
+                    CitizenIdImageId = idImage.Id,
+                    PortraitId = idImage.Id,
                     BankAccountNum = GeneratePhone(),
                     BankCode = "ICB",
                     BankName = "VietinBank"
-                });
+                };
+                users.Add(user);
+                modelBuilder.Entity<User>().HasData(user);
+
+                SellerApplication sellerApplication = new()
+                {
+                    Id = i + 1,
+                    UserId = user.Id,
+                    Gender = user.Gender,
+                    CitizenId = user.CitizenId,
+                    Content = ITEM_DESCRIPTION,
+                    Email = user.Email,
+                    BankAccountNum = user.BankAccountNum,
+                    BankCode = user.BankCode,
+                    BankName = user.BankName,
+                    CitizenIdImageId = user.CitizenIdImageId,
+                    City = user.City,
+                    District = user.District,
+                    Street = user.Street,
+                    HouseNumber = user.HouseNumber,
+                    DoB = user.DoB ?? new DateTime(2000, 1, 1),
+                    PortraitId = user.PortraitId,
+                    Status = SellerApplicationStatus.APPROVED,
+                };
+                sellerApplications.Add(sellerApplication);
+                modelBuilder.Entity<SellerApplication>().HasData(sellerApplication);
+
+                StatusChange statusChange = new()
+                {
+                    Id = statusChanges.Count + 1,
+                    SellerApplicationId = i + 1,
+                    StatusChangedById = _random.Next(1, 5),
+                    StatusFrom = SellerApplicationStatus.PENDING.ToString(),
+                    StatusTo = SellerApplicationStatus.APPROVED.ToString(),
+                    StatusChangeReason = "Ok"
+                };
+                statusChanges.Add(statusChange);
+                modelBuilder.Entity<StatusChange>().HasData(statusChange);
             }
 
             for (int i = 0; i < 10; i++)
@@ -510,49 +654,135 @@ namespace Vaux.DbContext
                 {
                     phone = GeneratePhone();
                 }
-                var idImage = RandomElement(idImages.ToArray()).Id;
-                users.Add(new User()
+                var idImage = RandomElement(idImages.ToArray());
+                var user = new User()
                 {
-                    Id = users.Count + 1,
+                    Id = users.Count + 5,
                     RoleId = (int)RoleId.EXPERT,
                     Name = ConstructName(),
                     Phone = phone,
                     Email = $"{users.Count + 1}@gmail.com",
                     IsVerified = true,
                     City = "thanh_pho_ha_noi",
-                    District = "quan_ba_dinh",
-                    Street = "phuong_giang_vo",
-                    HouseNumber = RandomElement(ADDRESS),
+                    District = "quan_hoan_kiem",
+                    Street = "",
+                    HouseNumber = RandomElement(ADDRESS) + _random.Next(100),
                     Gender = _random.Next(1) == 1 ? "Male" : "Female",
                     DoB = RandomDate(),
                     CitizenId = GeneratePhone(),
-                    CitizenIdImageId = idImage,
-                    PortraitId = idImage,
+                    CitizenIdImageId = idImage.Id,
+                    PortraitId = idImage.Id,
                     BankAccountNum = GeneratePhone(),
                     BankCode = "ICB",
                     BankName = "VietinBank"
-                });
+                };
+                users.Add(user);
+                modelBuilder.Entity<User>().HasData(user);
             }
 
-            modelBuilder.Entity<User>().HasData(users);
-
-            List<AuctionSession> auctionSessions = new();
-            DateTime start = new DateTime(2023, 12, 4);
-            for (int i = 0; i < 5; i++)
+            List<Item> items = new List<Item>();
+            List<ItemProperty> itemProperties = new();
+            User[] sellers = users.Where(e => e.RoleId == (int)RoleId.SELLER).ToArray();
+            User[] experts = users.Where(e => e.RoleId == (int)RoleId.EXPERT).ToArray();
+            for (int i = 0; i < 50; i++)
             {
-                auctionSessions.Add(new AuctionSession()
+                var category = RandomElement(categories);
+                var expert = RandomElement(experts);
+                var id = items.Count + 1;
+
+                var item = new Item()
                 {
-                    Id = i + 1,
-                    StartDate = start.AddDays(i * 7).AddHours(7),
-                    EndDate = start.AddDays(i * 7 + 6).AddHours(19),
-                    Status = AuctionSessionStatus.PENDING,
-                });
+                    Id = id,
+                    Status = ItemStatus.REJECTED,
+                    SellerId = RandomElement(sellers).Id,
+                    ExpertId = expert.Id,
+                    CategoryId = category.Id,
+                    Name = category.Name + " " + id,
+                    Description = ITEM_DESCRIPTION,
+                    ThumbnailId = RandomElement(itemImages.ToArray()).Id,
+                };
+                items.Add(item);
+                modelBuilder.Entity<Item>().HasData(item);
+
+                var properties = new ItemProperty[]
+                {
+                    new()
+                    {
+                        Id = itemProperties.Count + 1,
+                        Label = "Chiều dài",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 2,
+                        Label = "Chiều rộng",
+                        Value = $"{_random.Next(20)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 3,
+                        Label = "Chiều cao",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 4,
+                        Label = "Cân nặng",
+                        Value = $"{_random.Next(500, 5000)}g",
+                        ItemId = id,
+                    },
+                };
+                itemProperties.AddRange(properties);
+                modelBuilder.Entity<ItemProperty>().HasData(properties);
+
+                Image[] images = RandomElements(itemImages.ToArray(), 5);
+                for (int j = 0; j < 5; j++)
+                {
+                    var imageItem = new
+                    {
+                        ImagesId = images[j].Id,
+                        ItemsId = id,
+                    };
+                    modelBuilder.Entity("ImageItem").HasData(imageItem);
+                }
+
+                var statusChange = new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = _random.Next(1, 5),
+                    StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
+                    StatusTo = ItemStatus.REJECTED.ToString(),
+                    StatusChangeReason = "Không đạt tiêu chuẩn"
+                };
+                statusChanges.Add(statusChange);
+                modelBuilder.Entity<StatusChange>().HasData(statusChange);
             }
         }
 
         private static T RandomElement<T>(T[] array)
         {
             return array[_random.Next(array.Length)];
+        }
+
+        private static T[] RandomElements<T>(T[] array, int count) 
+        {
+            if (count >= array.Length) return array;
+
+            Dictionary<int, T> res = new();
+            for (int i = 0; i < count; i++)
+            {
+                var index = _random.Next(array.Length);
+                while (!res.TryAdd(index, array[index]))
+                {
+                    index = _random.Next(array.Length);
+                }
+            }
+
+            return res.Values.ToArray();
         }
 
         private static string ConstructName()
