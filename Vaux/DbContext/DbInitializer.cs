@@ -1044,6 +1044,7 @@ namespace Vaux.DbContext
                     {
                         shipment = new();
                         shipment.Id = shipments.Count + 1;
+                        shipment.Status = ShipmentStatus.SHIPPED;
                         shipment.OrderId = order.Id;
                         shipment.ItemCost = 0;
                         shipment.ShippingCost = 0;
