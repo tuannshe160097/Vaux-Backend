@@ -23,10 +23,7 @@ namespace Vaux.Repositories
             Order order = new()
             {
                 UserId = user.Id,
-                City = user.City,
-                Street = user.Street,
-                District = user.District,
-                HouseNumber = user.HouseNumber,
+                Address = user.Address,
                 TotalCost = 0
             };
 
@@ -42,12 +39,10 @@ namespace Vaux.Repositories
                     shipment.ItemCost = 0;
                     shipment.ShippingCost = 0;
                     shipment.SellerId = item.SellerId;
-                    shipment.City = item.Seller.City;
-                    shipment.Street = item.Seller.Street;
-                    shipment.District = item.Seller.District;
-                    shipment.HouseNumber = item.Seller.HouseNumber;
+                    shipment.Address = item.Seller.Address;
 
                     shipments.Add(shipment);
+                    shipment.Items = new List<Item>();
                 }
 
                 shipment.Items.Add(item);

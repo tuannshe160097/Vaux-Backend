@@ -80,7 +80,7 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.Sender, src => src.MapFrom(c => c.Sender!.Name))
                 .ForMember(dest => dest.SenderId, src => src.MapFrom(c => c.SenderId));
 
-            CreateMap<AddressDTO, Order>();
+            CreateMap<OrderPaymentDTO, Order>();
             CreateMap<Order, OrderOutDTO>();
             CreateMap<Shipment, ShipmentOutDTO>();
 

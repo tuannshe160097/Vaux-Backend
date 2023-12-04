@@ -11,10 +11,7 @@ namespace Vaux.DTO
         public ShipmentStatus Status { get; set; }
         public string ShipmentStatusStrinng { get; set; }
 
-        public string? City { get; set; }
-        public string? District { get; set; }
-        public string? Street { get; set; }
-        public string? HouseNumber { get; set; }
+        public string? Address { get; set; }
 
         public long ShippingCost { get; set; }
         public long ItemCost { get; set; }
