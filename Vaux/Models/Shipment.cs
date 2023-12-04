@@ -14,10 +14,7 @@ namespace Vaux.Models
         public int? SellerId { get; set; }
         public virtual User? Seller { get; set; }
 
-        public string? City { get; set; }
-        public string? District { get; set; }
-        public string? Street { get; set; }
-        public string? HouseNumber { get; set; }
+        public string Address { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
 

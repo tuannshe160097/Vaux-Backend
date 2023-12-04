@@ -45,13 +45,27 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Đã có lỗi xảy ra!");
             }
-
+            
             return Ok(_orderRepo.Create<OrderOutDTO>(itemIds));
         }
 
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult CancelOrder(int id)
+        {
+            var items = _orderRepo.GetAll<Item>(e => e.Id == id && e.UserId.ToString() == User.Identity!.Name && e.Status == OrderStatus.UNPAID);
+            if (items.TotalRecords == 0)
+            {
+                return BadRequest("Đã có lỗi xảy ra!");
+            }
+
+            return Ok(_orderRepo.Delete<OrderOutDTO>(e => e.Id == id));
+        }
+
+
         [HttpPost]
         [Route("{id}/Pay")]
-        public IActionResult CreatePayment(int id, AddressDTO address)
+        public IActionResult CreatePayment(int id, OrderPaymentDTO address)
         {
             var order = _orderRepo.Get<Order>(e => e.Id == id);
             if (order == null)
@@ -59,7 +73,7 @@ namespace Vaux.Controllers
                 return BadRequest("Đơn thanh toán không tồn tại!");
             }
 
-            _orderRepo.Update<Order, AddressDTO>(e => e.Id == id, address);
+            _orderRepo.Update<Order, OrderPaymentDTO>(e => e.Id == id, address);
 
             PaymentInformation paymentInformation = new PaymentInformation();
             paymentInformation.Name = $"VXBO{order.Id}";

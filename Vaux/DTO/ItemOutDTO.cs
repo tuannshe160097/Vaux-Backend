@@ -26,6 +26,7 @@ namespace Vaux.DTO
 
         public BidOutDTO? HighestBid { get; set; }
 
+        public int? OngoingSessionId { get; set; }
         public ICollection<AuctionSessionMinimalDTO>? AuctionSessions { get; set; }
 
         public List<int>? Images { get; set; }
@@ -34,5 +35,7 @@ namespace Vaux.DTO
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public DateTime? Deleted { get; set; }
+        public DateTime? WonDate { get; set; }
+        public DateTime? PaymentDueDate { get; set; }
     }
 }
