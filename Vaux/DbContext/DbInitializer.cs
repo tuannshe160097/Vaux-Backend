@@ -939,7 +939,7 @@ namespace Vaux.DbContext
                 items.Add(item);
 
                 List<Bid> bidsLocal = new();
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 50; j++)
                 {
                     var bid = new Bid()
                     {
