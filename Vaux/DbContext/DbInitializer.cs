@@ -572,6 +572,7 @@ namespace Vaux.DbContext
                     District = "quan_hoan_kiem",
                     Street = "",
                     HouseNumber = RandomElement(ADDRESS) + _random.Next(100),
+                    Address = "Generated",
                 };
                 users.Add(user);
                 modelBuilder.Entity<User>().HasData(user);
@@ -599,6 +600,7 @@ namespace Vaux.DbContext
                     District = "quan_hoan_kiem",
                     Street = "",
                     HouseNumber = RandomElement(ADDRESS) + _random.Next(100),
+                    Address = "Generated",
                     Gender = _random.Next(1) == 1 ? "Male" : "Female",
                     DoB = RandomDate(),
                     CitizenId = GeneratePhone(),
@@ -627,6 +629,7 @@ namespace Vaux.DbContext
                     District = user.District,
                     Street = user.Street,
                     HouseNumber = user.HouseNumber,
+                    Address = user.Address,
                     DoB = user.DoB ?? new DateTime(2000, 1, 1),
                     PortraitId = user.PortraitId,
                     Status = SellerApplicationStatus.APPROVED,
@@ -667,6 +670,7 @@ namespace Vaux.DbContext
                     District = "quan_hoan_kiem",
                     Street = "",
                     HouseNumber = RandomElement(ADDRESS) + _random.Next(100),
+                    Address = "Generated",
                     Gender = _random.Next(1) == 1 ? "Male" : "Female",
                     DoB = RandomDate(),
                     CitizenId = GeneratePhone(),
