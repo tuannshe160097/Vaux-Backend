@@ -6,5 +6,9 @@ namespace Vaux.Models
     {
         public string Label { get; set; }
         public string Value { get; set; }
+
+        [ForeignKey(nameof(Item))]
+        public int ItemId { get; set; }
+        public virtual Item Item { get; set; }
     }
 }
