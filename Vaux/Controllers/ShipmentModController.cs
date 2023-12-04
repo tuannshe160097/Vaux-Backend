@@ -28,7 +28,7 @@ namespace Vaux.Controllers
 
         [HttpPatch]
         [Route("{id}/ChangeStatus")]
-        public IActionResult ChangeStatus(int id, ShipmentStatus status)
+        public IActionResult ChangeStatus(int id, [FromBody] ShipmentStatus status)
         {
             var s = _shipmentRepo.Get<Shipment>(e => e.Id == id);
             if (s == null)

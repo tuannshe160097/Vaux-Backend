@@ -12,7 +12,7 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    [Migration("20231204190650_seed")]
+    [Migration("20231204192924_seed")]
     partial class seed
     {
         /// <inheritdoc />
@@ -43488,7 +43488,7 @@ namespace Vaux.Migrations
                             OrderId = 1,
                             SellerId = 148,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43500,7 +43500,7 @@ namespace Vaux.Migrations
                             OrderId = 2,
                             SellerId = 119,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43512,7 +43512,7 @@ namespace Vaux.Migrations
                             OrderId = 3,
                             SellerId = 140,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43524,7 +43524,7 @@ namespace Vaux.Migrations
                             OrderId = 3,
                             SellerId = 129,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43536,7 +43536,7 @@ namespace Vaux.Migrations
                             OrderId = 4,
                             SellerId = 110,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43548,7 +43548,7 @@ namespace Vaux.Migrations
                             OrderId = 5,
                             SellerId = 159,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43560,7 +43560,7 @@ namespace Vaux.Migrations
                             OrderId = 6,
                             SellerId = 129,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43572,7 +43572,7 @@ namespace Vaux.Migrations
                             OrderId = 7,
                             SellerId = 117,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43584,7 +43584,7 @@ namespace Vaux.Migrations
                             OrderId = 8,
                             SellerId = 130,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43596,7 +43596,7 @@ namespace Vaux.Migrations
                             OrderId = 9,
                             SellerId = 112,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43608,7 +43608,7 @@ namespace Vaux.Migrations
                             OrderId = 10,
                             SellerId = 140,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43620,7 +43620,7 @@ namespace Vaux.Migrations
                             OrderId = 11,
                             SellerId = 114,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43632,7 +43632,7 @@ namespace Vaux.Migrations
                             OrderId = 12,
                             SellerId = 129,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43644,7 +43644,7 @@ namespace Vaux.Migrations
                             OrderId = 13,
                             SellerId = 135,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43656,7 +43656,7 @@ namespace Vaux.Migrations
                             OrderId = 14,
                             SellerId = 138,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43668,7 +43668,7 @@ namespace Vaux.Migrations
                             OrderId = 15,
                             SellerId = 144,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43680,7 +43680,7 @@ namespace Vaux.Migrations
                             OrderId = 15,
                             SellerId = 136,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43692,7 +43692,7 @@ namespace Vaux.Migrations
                             OrderId = 16,
                             SellerId = 147,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43704,7 +43704,7 @@ namespace Vaux.Migrations
                             OrderId = 17,
                             SellerId = 127,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43716,7 +43716,7 @@ namespace Vaux.Migrations
                             OrderId = 18,
                             SellerId = 138,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43728,7 +43728,7 @@ namespace Vaux.Migrations
                             OrderId = 19,
                             SellerId = 126,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43740,7 +43740,7 @@ namespace Vaux.Migrations
                             OrderId = 20,
                             SellerId = 115,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43752,7 +43752,7 @@ namespace Vaux.Migrations
                             OrderId = 21,
                             SellerId = 136,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43764,7 +43764,7 @@ namespace Vaux.Migrations
                             OrderId = 21,
                             SellerId = 149,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43776,7 +43776,7 @@ namespace Vaux.Migrations
                             OrderId = 22,
                             SellerId = 154,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43788,7 +43788,7 @@ namespace Vaux.Migrations
                             OrderId = 22,
                             SellerId = 129,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43800,7 +43800,7 @@ namespace Vaux.Migrations
                             OrderId = 23,
                             SellerId = 144,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43812,7 +43812,7 @@ namespace Vaux.Migrations
                             OrderId = 24,
                             SellerId = 124,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43824,7 +43824,7 @@ namespace Vaux.Migrations
                             OrderId = 24,
                             SellerId = 134,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43836,7 +43836,7 @@ namespace Vaux.Migrations
                             OrderId = 25,
                             SellerId = 123,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43848,7 +43848,7 @@ namespace Vaux.Migrations
                             OrderId = 26,
                             SellerId = 135,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43860,7 +43860,7 @@ namespace Vaux.Migrations
                             OrderId = 27,
                             SellerId = 113,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43872,7 +43872,7 @@ namespace Vaux.Migrations
                             OrderId = 28,
                             SellerId = 111,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43884,7 +43884,7 @@ namespace Vaux.Migrations
                             OrderId = 29,
                             SellerId = 156,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43896,7 +43896,7 @@ namespace Vaux.Migrations
                             OrderId = 30,
                             SellerId = 141,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43908,7 +43908,7 @@ namespace Vaux.Migrations
                             OrderId = 30,
                             SellerId = 146,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43920,7 +43920,7 @@ namespace Vaux.Migrations
                             OrderId = 31,
                             SellerId = 132,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43932,7 +43932,7 @@ namespace Vaux.Migrations
                             OrderId = 32,
                             SellerId = 147,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43944,7 +43944,7 @@ namespace Vaux.Migrations
                             OrderId = 33,
                             SellerId = 153,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43956,7 +43956,7 @@ namespace Vaux.Migrations
                             OrderId = 34,
                             SellerId = 128,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43968,7 +43968,7 @@ namespace Vaux.Migrations
                             OrderId = 35,
                             SellerId = 132,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43980,7 +43980,7 @@ namespace Vaux.Migrations
                             OrderId = 35,
                             SellerId = 114,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -43992,7 +43992,7 @@ namespace Vaux.Migrations
                             OrderId = 36,
                             SellerId = 122,
                             ShippingCost = 20000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -44004,7 +44004,7 @@ namespace Vaux.Migrations
                             OrderId = 37,
                             SellerId = 136,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -44016,7 +44016,7 @@ namespace Vaux.Migrations
                             OrderId = 38,
                             SellerId = 119,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -44028,7 +44028,7 @@ namespace Vaux.Migrations
                             OrderId = 39,
                             SellerId = 141,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -44040,7 +44040,7 @@ namespace Vaux.Migrations
                             OrderId = 40,
                             SellerId = 147,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -44052,7 +44052,7 @@ namespace Vaux.Migrations
                             OrderId = 41,
                             SellerId = 111,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -44064,7 +44064,7 @@ namespace Vaux.Migrations
                             OrderId = 41,
                             SellerId = 148,
                             ShippingCost = 10000L,
-                            Status = 0,
+                            Status = 2,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
