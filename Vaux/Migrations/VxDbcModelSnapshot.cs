@@ -37,7 +37,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("ItemsId");
 
-                    b.ToTable("AuctionSessionItem");
+                    b.ToTable("AuctionSessionItem", (string)null);
                 });
 
             modelBuilder.Entity("ImageItem", b =>
@@ -52,7 +52,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("ItemsId");
 
-                    b.ToTable("ImageItem");
+                    b.ToTable("ImageItem", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.AuctionSession", b =>
@@ -89,7 +89,7 @@ namespace Vaux.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuctionSessions");
+                    b.ToTable("AuctionSessions", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.Bid", b =>
@@ -133,7 +133,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bids", t =>
+                    b.ToTable("Bids", null, t =>
                         {
                             t.HasTrigger("BIDS_PREVENT_LOWER");
                         });
@@ -169,7 +169,7 @@ namespace Vaux.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.ChatMessage", b =>
@@ -216,7 +216,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("ChatMessages");
+                    b.ToTable("ChatMessages", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.Comment", b =>
@@ -256,7 +256,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.Image", b =>
@@ -289,7 +289,7 @@ namespace Vaux.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.Item", b =>
@@ -379,7 +379,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("ThumbnailId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.ItemProperty", b =>
@@ -418,7 +418,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("ItemProperties");
+                    b.ToTable("ItemProperties", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.Notification", b =>
@@ -459,7 +459,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.Order", b =>
@@ -511,7 +511,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.Role", b =>
@@ -541,7 +541,7 @@ namespace Vaux.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -673,7 +673,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SellerApplications");
+                    b.ToTable("SellerApplications", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.SellerPayment", b =>
@@ -719,7 +719,7 @@ namespace Vaux.Migrations
                         .IsUnique()
                         .HasFilter("[ItemId] IS NOT NULL");
 
-                    b.ToTable("SellerPayments");
+                    b.ToTable("SellerPayments", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.Shipment", b =>
@@ -768,7 +768,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("Shipments");
+                    b.ToTable("Shipments", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.StatusChange", b =>
@@ -821,7 +821,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("StatusChangedById");
 
-                    b.ToTable("StatusChanges");
+                    b.ToTable("StatusChanges", (string)null);
                 });
 
             modelBuilder.Entity("Vaux.Models.User", b =>
@@ -927,7 +927,7 @@ namespace Vaux.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new

@@ -414,7 +414,7 @@ namespace Vaux.DbContext
                     Title = nameof(RoleId.ADMIN)
                 }
             };
-            modelBuilder.Entity<Role>().HasData(roles);
+
 
             Category[] categories = new Category[]
             {
@@ -469,7 +469,6 @@ namespace Vaux.DbContext
                     Name = "Văn tự"
                 },
             };
-            modelBuilder.Entity<Category>().HasData(categories);
 
             List<AuctionSession> auctionSessions = new();
             DateTime start = new DateTime(2023, 12, 4);
@@ -483,7 +482,13 @@ namespace Vaux.DbContext
                     Status = AuctionSessionStatus.PENDING,
                 });
             }
-            modelBuilder.Entity<AuctionSession>().HasData(auctionSessions);
+            auctionSessions.Add(new AuctionSession()
+            {
+                Id = 6,
+                StartDate = start.AddHours(7),
+                EndDate = new DateTime(2024, 1, 1).AddHours(19),
+                Status = AuctionSessionStatus.ONGOING,
+            });
 
             List<User> users = new List<User>
             {
@@ -528,7 +533,6 @@ namespace Vaux.DbContext
                     Email = "4@fpt.edu.vn"
                 }
             };
-            modelBuilder.Entity<User>().HasData(users);
 
             List<Image> idImages = new();
             foreach (var image in ID_URLS)
@@ -540,7 +544,6 @@ namespace Vaux.DbContext
                     Note = "Generated"
                 });
             }
-            modelBuilder.Entity<Image>().HasData(idImages);
 
             List<Image> itemImages = new();
             foreach (var image in IMAGE_URLS)
@@ -552,7 +555,6 @@ namespace Vaux.DbContext
                     Note = "Generated"
                 });
             }
-            modelBuilder.Entity<Image>().HasData(itemImages);
 
             for (int i = 0; i < 100; i++)
             {
@@ -575,7 +577,6 @@ namespace Vaux.DbContext
                     Address = "Generated",
                 };
                 users.Add(user);
-                modelBuilder.Entity<User>().HasData(user);
             }
 
             List<StatusChange> statusChanges = new();
@@ -611,7 +612,6 @@ namespace Vaux.DbContext
                     BankName = "VietinBank"
                 };
                 users.Add(user);
-                modelBuilder.Entity<User>().HasData(user);
 
                 SellerApplication sellerApplication = new()
                 {
@@ -635,7 +635,6 @@ namespace Vaux.DbContext
                     Status = SellerApplicationStatus.APPROVED,
                 };
                 sellerApplications.Add(sellerApplication);
-                modelBuilder.Entity<SellerApplication>().HasData(sellerApplication);
 
                 StatusChange statusChange = new()
                 {
@@ -647,7 +646,6 @@ namespace Vaux.DbContext
                     StatusChangeReason = "Ok"
                 };
                 statusChanges.Add(statusChange);
-                modelBuilder.Entity<StatusChange>().HasData(statusChange);
             }
 
             for (int i = 0; i < 10; i++)
@@ -681,11 +679,12 @@ namespace Vaux.DbContext
                     BankName = "VietinBank"
                 };
                 users.Add(user);
-                modelBuilder.Entity<User>().HasData(user);
             }
 
             List<Item> items = new List<Item>();
             List<ItemProperty> itemProperties = new();
+            List<Object> imageItemsTable = new();
+            List<Object> auctionSessionItemTable = new();
             User[] sellers = users.Where(e => e.RoleId == (int)RoleId.SELLER).ToArray();
             User[] experts = users.Where(e => e.RoleId == (int)RoleId.EXPERT).ToArray();
             for (int i = 0; i < 50; i++)
@@ -706,7 +705,6 @@ namespace Vaux.DbContext
                     ThumbnailId = RandomElement(itemImages.ToArray()).Id,
                 };
                 items.Add(item);
-                modelBuilder.Entity<Item>().HasData(item);
 
                 var properties = new ItemProperty[]
                 {
@@ -740,7 +738,6 @@ namespace Vaux.DbContext
                     },
                 };
                 itemProperties.AddRange(properties);
-                modelBuilder.Entity<ItemProperty>().HasData(properties);
 
                 Image[] images = RandomElements(itemImages.ToArray(), 5);
                 for (int j = 0; j < 5; j++)
@@ -750,7 +747,7 @@ namespace Vaux.DbContext
                         ImagesId = images[j].Id,
                         ItemsId = id,
                     };
-                    modelBuilder.Entity("ImageItem").HasData(imageItem);
+                    imageItemsTable.Add(imageItem);
                 }
 
                 var statusChange = new StatusChange()
@@ -763,8 +760,320 @@ namespace Vaux.DbContext
                     StatusChangeReason = "Không đạt tiêu chuẩn"
                 };
                 statusChanges.Add(statusChange);
-                modelBuilder.Entity<StatusChange>().HasData(statusChange);
             }
+
+            for (int i = 0; i < 50; i++)
+            {
+                var category = RandomElement(categories);
+                var expert = RandomElement(experts);
+                var id = items.Count + 1;
+
+                var item = new Item()
+                {
+                    Id = id,
+                    Status = ItemStatus.AUCTION_PENDING,
+                    SellerId = RandomElement(sellers).Id,
+                    ExpertId = expert.Id,
+                    CategoryId = category.Id,
+                    Name = category.Name + " " + id,
+                    Description = ITEM_DESCRIPTION,
+                    ThumbnailId = RandomElement(itemImages.ToArray()).Id,
+                };
+                items.Add(item);
+
+                var properties = new ItemProperty[]
+                {
+                    new()
+                    {
+                        Id = itemProperties.Count + 1,
+                        Label = "Chiều dài",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 2,
+                        Label = "Chiều rộng",
+                        Value = $"{_random.Next(20)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 3,
+                        Label = "Chiều cao",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 4,
+                        Label = "Cân nặng",
+                        Value = $"{_random.Next(500, 5000)}g",
+                        ItemId = id,
+                    },
+                };
+                itemProperties.AddRange(properties);
+
+                Image[] images = RandomElements(itemImages.ToArray(), 5);
+                for (int j = 0; j < 5; j++)
+                {
+                    var imageItem = new
+                    {
+                        ImagesId = images[j].Id,
+                        ItemsId = id,
+                    };
+                    imageItemsTable.Add(imageItem);
+                }
+
+                var statusChange = new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = expert.Id,
+                    StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
+                    StatusTo = ItemStatus.AUCTION_PENDING.ToString(),
+                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá"
+                };
+                statusChanges.Add(statusChange);
+            }
+
+            for (int i = 0; i < 50; i++)
+            {
+                var category = RandomElement(categories);
+                var expert = RandomElement(experts);
+                var id = items.Count + 1;
+
+                var item = new Item()
+                {
+                    Id = id,
+                    Status = ItemStatus.AUCTION_IN_PROGRESS,
+                    SellerId = RandomElement(sellers).Id,
+                    ExpertId = expert.Id,
+                    CategoryId = category.Id,
+                    Name = category.Name + " " + id,
+                    Description = ITEM_DESCRIPTION,
+                    ThumbnailId = RandomElement(itemImages.ToArray()).Id,
+                    OngoingSessionId = 6
+                };
+                items.Add(item);
+                var auctionSessionItem = new
+                {
+                    AuctionSessionsId = 6,
+                    ItemsId = id,
+                };
+                auctionSessionItemTable.Add(auctionSessionItem);
+                var properties = new ItemProperty[]
+                {
+                    new()
+                    {
+                        Id = itemProperties.Count + 1,
+                        Label = "Chiều dài",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 2,
+                        Label = "Chiều rộng",
+                        Value = $"{_random.Next(20)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 3,
+                        Label = "Chiều cao",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 4,
+                        Label = "Cân nặng",
+                        Value = $"{_random.Next(500, 5000)}g",
+                        ItemId = id,
+                    },
+                };
+                itemProperties.AddRange(properties);
+
+                Image[] images = RandomElements(itemImages.ToArray(), 5);
+                for (int j = 0; j < 5; j++)
+                {
+                    var imageItem = new
+                    {
+                        ImagesId = images[j].Id,
+                        ItemsId = id,
+                    };
+                    imageItemsTable.Add(imageItem);
+                }
+
+                var statusChange = new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = expert.Id,
+                    StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
+                    StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
+                    StatusChangeReason = "Đang trong phiên đấu giá"
+                };
+                statusChanges.Add(statusChange);
+            }
+
+            List<Bid> bids = new();
+            for (int i = 0; i < 50; i++)
+            {
+                var category = RandomElement(categories);
+                var expert = RandomElement(experts);
+                var id = items.Count + 1;
+
+                var item = new Item()
+                {
+                    Id = id,
+                    Status = ItemStatus.PAID,
+                    SellerId = RandomElement(sellers).Id,
+                    ExpertId = expert.Id,
+                    CategoryId = category.Id,
+                    Name = category.Name + " " + id,
+                    Description = ITEM_DESCRIPTION,
+                    ThumbnailId = RandomElement(itemImages.ToArray()).Id,
+                };
+
+                items.Add(item);
+
+                List<Bid> bidsLocal = new();
+                for (int j = 0; j < 50; j++)
+                {
+                    var bid = new Bid()
+                    {
+                        Id = bids.Count + 1,
+                        ItemId = id,
+                        Amount = _random.Next(50000, 50000000),
+                        AuctionSessionId = 6,
+                        UserId = RandomElement(users.ToArray()).Id
+                    };
+                    bids.Add(bid);
+                    bidsLocal.Add(bid);
+                }
+                item.HighestBidId = bidsLocal.Aggregate((i1, i2) => i1.Amount > i2.Amount ? i1 : i2).Id;
+                var auctionSessionItem = new
+                {
+                    AuctionSessionsId = 6,
+                    ItemsId = id,
+                };
+                auctionSessionItemTable.Add(auctionSessionItem);
+                var properties = new ItemProperty[]
+                {
+                    new()
+                    {
+                        Id = itemProperties.Count + 1,
+                        Label = "Chiều dài",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 2,
+                        Label = "Chiều rộng",
+                        Value = $"{_random.Next(20)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 3,
+                        Label = "Chiều cao",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 4,
+                        Label = "Cân nặng",
+                        Value = $"{_random.Next(500, 5000)}g",
+                        ItemId = id,
+                    },
+                };
+                itemProperties.AddRange(properties);
+                Image[] images = RandomElements(itemImages.ToArray(), 5);
+                for (int j = 0; j < 5; j++)
+                {
+                    var imageItem = new
+                    {
+                        ImagesId = images[j].Id,
+                        ItemsId = id,
+                    };
+                    imageItemsTable.Add(imageItem);
+                }
+
+                var statusChange = new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = 1,
+                    StatusFrom = ItemStatus.PAYMENT_PENDING.ToString(),
+                    StatusTo = ItemStatus.PAID.ToString(),
+                    StatusChangeReason = "Đã bán"
+                };
+                statusChanges.Add(statusChange);
+            }
+
+            List<Order> orders = new();
+            List<Item> soldItems = items.Where(e => e.Status == ItemStatus.PAID).ToList();
+            List<User> wonUsers = users.Where(e => bids.Where(b => soldItems.Select(i => i.HighestBidId).Contains(b.Id)).Select(b => b.UserId).Contains(e.Id)).ToList();
+            List<Shipment> shipments = new();
+            for (int i = 0; i < wonUsers.Count; i++)
+            {
+                var user = wonUsers.ElementAt(i);
+                var id = i + 1;
+                List<Item> orderItems = soldItems.Where(e => bids.First(b => b.Id == e.HighestBidId).UserId == user.Id).ToList();
+                var order = new Order()
+                {
+                    Id = id,
+                    UserId = user.Id,
+                    Status = OrderStatus.PAID,
+                    ReceiverName = user.Name,
+                    ReceiverPhone = user.Phone,
+                    Address = user.Address,
+                };
+                List<Shipment> localShipments = new();
+                foreach (var item in orderItems)
+                {
+                    var shipment = localShipments.FirstOrDefault(e => e.SellerId == item.SellerId);
+                    if (shipment == null)
+                    {
+                        shipment = new();
+                        shipment.Id = shipments.Count + 1;
+                        shipment.OrderId = order.Id;
+                        shipment.ItemCost = 0;
+                        shipment.ShippingCost = 0;
+                        shipment.SellerId = item.SellerId;
+                        shipment.Address = sellers.First(e => e.Id == item!.SellerId).Address;
+                        shipments.Add(shipment);
+                        localShipments.Add(shipment);
+                    }
+                    shipment.ShippingCost += 10000;
+                    shipment.ItemCost += bids.First(e => e.Id == item.HighestBidId).Amount;
+                    order.TotalCost += shipment.ItemCost + shipment.ShippingCost;
+                    item.ShipmentId = shipment.Id;
+                    item.OrderId = order.Id;
+                }
+                orders.Add(order);
+            }
+
+
+            modelBuilder.Entity<Role>().HasData(roles);
+            modelBuilder.Entity<Category>().HasData(categories);
+            modelBuilder.Entity<AuctionSession>().HasData(auctionSessions);
+            modelBuilder.Entity<User>().HasData(users);
+            modelBuilder.Entity<Image>().HasData(idImages);
+            modelBuilder.Entity<Image>().HasData(itemImages);
+            modelBuilder.Entity<SellerApplication>().HasData(sellerApplications);
+            modelBuilder.Entity<Item>().HasData(items);
+            modelBuilder.Entity<StatusChange>().HasData(statusChanges);
+            modelBuilder.Entity<ItemProperty>().HasData(itemProperties);
+            modelBuilder.Entity("ImageItem").HasData(imageItemsTable);
+            modelBuilder.Entity("AuctionSessionItem").HasData(auctionSessionItemTable);
+            modelBuilder.Entity<Bid>().HasData(bids);
+            modelBuilder.Entity<Order>().HasData(orders);
+            modelBuilder.Entity<Shipment>().HasData(shipments);
         }
 
         private static T RandomElement<T>(T[] array)
