@@ -53,6 +53,9 @@ namespace Vaux.Repositories
 
             order.Items = items;
             order.Shipment = shipments;
+
+            Save();
+
             return Map<TOut>(order);
         }
 
