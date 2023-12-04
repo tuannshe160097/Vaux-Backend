@@ -936,16 +936,15 @@ namespace Vaux.DbContext
                     Description = ITEM_DESCRIPTION,
                     ThumbnailId = RandomElement(itemImages.ToArray()).Id,
                 };
-
                 items.Add(item);
 
                 List<Bid> bidsLocal = new();
-                for (int j = 0; j < 50; j++)
+                for (int j = 0; j < 10; j++)
                 {
                     var bid = new Bid()
                     {
                         Id = bids.Count + 1,
-                        ItemId = id,
+                        ItemId = item.Id,
                         Amount = _random.Next(50000, 50000000),
                         AuctionSessionId = 6,
                         UserId = RandomElement(users.ToArray()).Id
@@ -953,13 +952,16 @@ namespace Vaux.DbContext
                     bids.Add(bid);
                     bidsLocal.Add(bid);
                 }
+
                 item.HighestBidId = bidsLocal.Aggregate((i1, i2) => i1.Amount > i2.Amount ? i1 : i2).Id;
+
                 var auctionSessionItem = new
                 {
                     AuctionSessionsId = 6,
                     ItemsId = id,
                 };
                 auctionSessionItemTable.Add(auctionSessionItem);
+
                 var properties = new ItemProperty[]
                 {
                     new()
@@ -992,6 +994,7 @@ namespace Vaux.DbContext
                     },
                 };
                 itemProperties.AddRange(properties);
+
                 Image[] images = RandomElements(itemImages.ToArray(), 5);
                 for (int j = 0; j < 5; j++)
                 {
@@ -1021,7 +1024,7 @@ namespace Vaux.DbContext
             List<Shipment> shipments = new();
             for (int i = 0; i < wonUsers.Count; i++)
             {
-                var user = wonUsers.ElementAt(i);
+                var user = wonUsers[i];
                 var id = i + 1;
                 List<Item> orderItems = soldItems.Where(e => bids.First(b => b.Id == e.HighestBidId).UserId == user.Id).ToList();
                 var order = new Order()
@@ -1057,7 +1060,6 @@ namespace Vaux.DbContext
                 }
                 orders.Add(order);
             }
-
 
             modelBuilder.Entity<Role>().HasData(roles);
             modelBuilder.Entity<Category>().HasData(categories);

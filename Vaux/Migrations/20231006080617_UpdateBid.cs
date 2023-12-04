@@ -23,7 +23,7 @@ namespace Vaux.Migrations
                 name: "HighestBidId",
                 table: "Items");
 
-            migrationBuilder.Sql(Bid.PreventLowerBidsTriggerSql());
+            //migrationBuilder.Sql(Bid.PreventLowerBidsTriggerSql());
         }
 
         /// <inheritdoc />

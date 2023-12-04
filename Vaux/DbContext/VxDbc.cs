@@ -88,7 +88,7 @@
                 .Property(e => e.Status)
                 .HasDefaultValue(AuctionSessionStatus.PENDING);
 
-            modelBuilder.Entity<Bid>().ToTable(tb => tb.HasTrigger("BIDS_PREVENT_LOWER"));
+            //modelBuilder.Entity<Bid>().ToTable(tb => tb.HasTrigger("BIDS_PREVENT_LOWER"));
 
             modelBuilder.Entity<Order>()
                 .Property(e => e.Status)
