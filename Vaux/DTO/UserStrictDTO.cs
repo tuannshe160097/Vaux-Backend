@@ -9,6 +9,7 @@
         public string District { get; set; }
         public string Street { get; set; }
         public string HouseNumber { get; set; }
+        public string Address { get; set; }
         public string CitizenId { get; set; }
         public string Gender { get; set; }
         public DateTime DoB { get; set; }
