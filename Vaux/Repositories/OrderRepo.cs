@@ -24,6 +24,8 @@ namespace Vaux.Repositories
             {
                 UserId = user.Id,
                 Address = user.Address,
+                ReceiverName = user.Name,
+                ReceiverPhone = user.Phone,
                 TotalCost = 0
             };
 
@@ -54,6 +56,7 @@ namespace Vaux.Repositories
             order.Items = items;
             order.Shipment = shipments;
 
+            _dbSet.Add(order);
             Save();
 
             return Map<TOut>(order);
