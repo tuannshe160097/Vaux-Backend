@@ -1061,6 +1061,15 @@ namespace Vaux.DbContext
                 orders.Add(order);
             }
 
+            /*
+             * Due to circular reference between Bid.ItemId and Item.HighestBidId, the migration cannot be created.
+             * I settled for the next best thing which was to accept some inconsistencies in our data by setting Iten.HighestBidId to null (Bid.ItemId was more important)
+             */
+            foreach (var i in items)
+            {
+                i.HighestBidId = null;
+            }
+
             modelBuilder.Entity<Role>().HasData(roles);
             modelBuilder.Entity<Category>().HasData(categories);
             modelBuilder.Entity<AuctionSession>().HasData(auctionSessions);
