@@ -25,9 +25,9 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(bool completed)
+        public IActionResult Get(OrderStatus status)
         {
-            return Ok(_orderRepo.GetAll<OrderOutDTO>(e => e.UserId.ToString() == User.Identity!.Name && e.Shipment.All(s => s.Status == ShipmentStatus.SHIPPED && completed)));
+            return Ok(_orderRepo.GetAll<OrderOutDTO>(e => e.UserId.ToString() == User.Identity!.Name && e.Status == status));
         }
 
         [HttpGet]
