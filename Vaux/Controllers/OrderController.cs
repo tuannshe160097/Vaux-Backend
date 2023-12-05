@@ -25,7 +25,7 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(OrderStatus status)
+        public IActionResult Get(OrderStatus status = OrderStatus.UNPAID)
         {
             return Ok(_orderRepo.GetAll<OrderOutDTO>(e => e.UserId.ToString() == User.Identity!.Name && e.Status == status));
         }

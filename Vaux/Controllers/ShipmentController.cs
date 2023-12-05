@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Vaux.DTO;
 using Vaux.Models;
 using Vaux.Models.Enums;
+using Vaux.Repositories;
 using Vaux.Repositories.Interface;
 
 namespace Vaux.Controllers
@@ -21,9 +22,19 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int pageNum = 1, int pageSize = -1, ShipmentStatus? status = null, string? search = null)
         {
-            return Ok(_shipmentRepo.GetAll<ShipmentOutDTO>(e => e.Order.UserId.ToString() == User.Identity!.Name));
+            var query = _shipmentRepo.Query().Where(e => e.Order.UserId.ToString() == User.Identity!.Name);
+            query = query.OrderByDescending(e => e.Id);
+            if (status != null)
+            {
+                query = query.Where(e => e.Status == status);
+            }
+            if (search != null)
+            {
+                query = query.Where(e => e.Items.Any(i => i.Name.Contains(search)));
+            }
+            return Ok(_shipmentRepo.WrapListResult<ShipmentOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
     }
 }
