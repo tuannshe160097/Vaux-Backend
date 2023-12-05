@@ -16,12 +16,14 @@ namespace Vaux.Controllers
         private readonly IOrderRepo _orderRepo;
         private readonly IItemRepo _itemRepo;
         private readonly IVnPayServiceRepo _vnPayService;
+        private readonly IConfiguration _configuration;
 
-        public OrderController(IOrderRepo orderRepo, IItemRepo itemRepo, IVnPayServiceRepo vnPayService)
+        public OrderController(IOrderRepo orderRepo, IItemRepo itemRepo, IVnPayServiceRepo vnPayService, IConfiguration configuration)
         {
             _orderRepo = orderRepo;
             _itemRepo = itemRepo;
             _vnPayService = vnPayService;
+            _configuration = configuration;
         }
 
         [HttpGet]
