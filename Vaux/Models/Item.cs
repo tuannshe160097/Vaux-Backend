@@ -57,6 +57,6 @@ namespace Vaux.Models
 
         public virtual ICollection<StatusChange>? StatusChanges { get; set; }
 
-        public virtual SellerPayment SellerPayment { get; set; }
+        public virtual ItemPayment SellerPayment { get; set; }
     }
 }

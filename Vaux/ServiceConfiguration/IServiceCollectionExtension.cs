@@ -24,7 +24,7 @@ namespace Vaux.ServiceConfiguration
             services.AddScoped<IPhotoRepo, PhotoRepo>();
             services.AddScoped<IAuctionSessionRepo, AuctionSessionRepo>();
             services.AddScoped<IOrderRepo, OrderRepo>();
-            services.AddScoped<ISellerPaymentRepo, SellerPaymentRepo>();
+            services.AddScoped<IItemPaymentRepo, ItemPaymentRepo>();
             services.AddScoped<INotificationRepo, NotificationRepo>();
             services.AddScoped<ISmsRepo, SmsRepo>();
             services.AddScoped<IVnPayServiceRepo, VnPayServiceRepo>();

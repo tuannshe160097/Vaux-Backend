@@ -94,9 +94,9 @@
                 .Property(e => e.Status)
                 .HasDefaultValue(OrderStatus.UNPAID);
 
-            modelBuilder.Entity<SellerPayment>()
+            modelBuilder.Entity<ItemPayment>()
                 .Property(e => e.Status)
-                .HasDefaultValue(SellerPaymentStatus.UNPAID);
+                .HasDefaultValue(ItemPaymentStatus.UNPAID);
 
             DbInitializer.Seed(modelBuilder);
         }
@@ -128,7 +128,7 @@
         public DbSet<AuctionSession> AuctionSessions { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
-        public DbSet<SellerPayment> SellerPayments { get; set;}
+        public DbSet<ItemPayment> ItemPayments { get; set;}
         public DbSet<StatusChange> StatusChanges { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
     }

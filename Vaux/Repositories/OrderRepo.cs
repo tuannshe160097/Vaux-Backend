@@ -84,7 +84,9 @@ namespace Vaux.Repositories
 
                     item.SellerPayment = new()
                     {
-                        Amount = CalculateSellerPayment(item.HighestBid!.Amount)
+                        SellerPayout = CalculateSellerPayment(item.HighestBid!.Amount),
+                        ExpertPayout = CalculateExpertPayment(item.HighestBid!.Amount),
+                        Revenue = CalculateRevenue(item.HighestBid!.Amount),
                     };
                 }
             }
@@ -99,6 +101,16 @@ namespace Vaux.Repositories
         private static long CalculateSellerPayment(long bidAmount)
         {
             return bidAmount;
+        }
+
+        private static long CalculateExpertPayment(long bidAmount)
+        {
+            return 0;
+        }
+
+        private static long CalculateRevenue(long bidAmount)
+        {
+            return 0;
         }
     }
 }

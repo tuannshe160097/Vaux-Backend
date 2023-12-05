@@ -1,4 +1,4 @@
-﻿using Vaux.Migrations;
+﻿using Vaux.Models.Enums;
 using Vaux.Models;
 
 namespace Vaux.DTO

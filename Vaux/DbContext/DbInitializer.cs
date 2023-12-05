@@ -765,6 +765,68 @@ namespace Vaux.DbContext
             for (int i = 0; i < 50; i++)
             {
                 var category = RandomElement(categories);
+                var id = items.Count + 1;
+
+                var item = new Item()
+                {
+                    Id = id,
+                    Status = ItemStatus.EXAMINATION_PENDING,
+                    SellerId = RandomElement(sellers).Id,
+                    CategoryId = category.Id,
+                    Name = category.Name + " " + id,
+                    Description = ITEM_DESCRIPTION,
+                    ThumbnailId = RandomElement(itemImages.ToArray()).Id,
+                };
+                items.Add(item);
+
+                var properties = new ItemProperty[]
+                {
+                    new()
+                    {
+                        Id = itemProperties.Count + 1,
+                        Label = "Chiều dài",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 2,
+                        Label = "Chiều rộng",
+                        Value = $"{_random.Next(20)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 3,
+                        Label = "Chiều cao",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 4,
+                        Label = "Cân nặng",
+                        Value = $"{_random.Next(500, 5000)}g",
+                        ItemId = id,
+                    },
+                };
+                itemProperties.AddRange(properties);
+
+                Image[] images = RandomElements(itemImages.ToArray(), 5);
+                for (int j = 0; j < 5; j++)
+                {
+                    var imageItem = new
+                    {
+                        ImagesId = images[j].Id,
+                        ItemsId = id,
+                    };
+                    imageItemsTable.Add(imageItem);
+                }
+            }
+
+            for (int i = 0; i < 50; i++)
+            {
+                var category = RandomElement(categories);
                 var expert = RandomElement(experts);
                 var id = items.Count + 1;
 
