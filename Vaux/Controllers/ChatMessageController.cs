@@ -44,7 +44,7 @@ namespace Vaux.Controllers
             return Ok(_chatRepo.GetAll<ChatMessageOutDTO>(e => e.ItemId == id, e => e.Created, false));
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize]
         [Route("/api/Chat")]
         public async Task <IActionResult> Send([FromForm] ChatMessageDTO chatMessage)
