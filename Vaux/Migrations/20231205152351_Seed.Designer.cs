@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vaux.DbContext;
 
@@ -11,9 +12,11 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    partial class VxDbcModelSnapshot : ModelSnapshot
+    [Migration("20231205152351_Seed")]
+    partial class Seed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36139,58 +36142,6 @@ namespace Vaux.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Vaux.Models.ItemPayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ApprovedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("ExpertPayout")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("Revenue")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("SellerPayout")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
-                    b.Property<DateTime>("Updated")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApprovedById");
-
-                    b.HasIndex("ItemId")
-                        .IsUnique()
-                        .HasFilter("[ItemId] IS NOT NULL");
-
-                    b.ToTable("ItemPayments");
-                });
-
             modelBuilder.Entity("Vaux.Models.ItemProperty", b =>
                 {
                     b.Property<int>("Id")
@@ -47167,6 +47118,52 @@ namespace Vaux.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Vaux.Models.SellerPayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<long>("Amount")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("ApprovedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
+                    b.Property<DateTime>("Updated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApprovedById");
+
+                    b.HasIndex("ItemId")
+                        .IsUnique()
+                        .HasFilter("[ItemId] IS NOT NULL");
+
+                    b.ToTable("SellerPayments");
+                });
+
             modelBuilder.Entity("Vaux.Models.Shipment", b =>
                 {
                     b.Property<int>("Id")
@@ -53874,21 +53871,6 @@ namespace Vaux.Migrations
                     b.Navigation("Thumbnail");
                 });
 
-            modelBuilder.Entity("Vaux.Models.ItemPayment", b =>
-                {
-                    b.HasOne("Vaux.Models.User", "ApprovedBy")
-                        .WithMany()
-                        .HasForeignKey("ApprovedById");
-
-                    b.HasOne("Vaux.Models.Item", "Item")
-                        .WithOne("SellerPayment")
-                        .HasForeignKey("Vaux.Models.ItemPayment", "ItemId");
-
-                    b.Navigation("ApprovedBy");
-
-                    b.Navigation("Item");
-                });
-
             modelBuilder.Entity("Vaux.Models.ItemProperty", b =>
                 {
                     b.HasOne("Vaux.Models.Item", "Item")
@@ -53943,6 +53925,21 @@ namespace Vaux.Migrations
                     b.Navigation("Portrait");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Vaux.Models.SellerPayment", b =>
+                {
+                    b.HasOne("Vaux.Models.User", "ApprovedBy")
+                        .WithMany()
+                        .HasForeignKey("ApprovedById");
+
+                    b.HasOne("Vaux.Models.Item", "Item")
+                        .WithOne("SellerPayment")
+                        .HasForeignKey("Vaux.Models.SellerPayment", "ItemId");
+
+                    b.Navigation("ApprovedBy");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Vaux.Models.Shipment", b =>

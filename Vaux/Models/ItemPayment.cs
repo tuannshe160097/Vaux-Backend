@@ -3,10 +3,13 @@ using Vaux.Models.Enums;
 
 namespace Vaux.Models
 {
-    public class SellerPayment : ModelBase
+    public class ItemPayment : ModelBase
     {
-        public long Amount { get; set; }
-        public SellerPaymentStatus Status { get; set; }
+        public long SellerPayout { get; set; }
+        public long ExpertPayout { get; set; }
+        public long Revenue { get; set; }
+
+        public ItemPaymentStatus Status { get; set; }
 
         [ForeignKey(nameof(Item))]
         public int? ItemId { get; set; }
