@@ -82,6 +82,7 @@ namespace Vaux.Controllers
             paymentInformation.OrderDescription = $"Payment for order VXBO{order.Id}";
             paymentInformation.OrderType = "200000";
             paymentInformation.Amount = order.TotalCost;
+            paymentInformation.ReturnUrl = _configuration["Audience"] + "/account/items/checkout/" + order.Id;
 
             return Ok(_vnPayService.CreatePaymentUrl(paymentInformation, HttpContext));
         }
