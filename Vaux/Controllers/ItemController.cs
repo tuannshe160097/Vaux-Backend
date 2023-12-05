@@ -164,7 +164,7 @@ namespace Vaux.Controllers
             {
                 _itemRepo.Reload(item);
 
-                if (bid.Amount <= item.HighestBid?.Amount + 10000)
+                if (bid.Amount < item.HighestBid?.Amount + 10000)
                 {
                     _logger.LogInformation($"Response for user {User.Identity.Name} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}/too low");
                     return BadRequest("Giá được trả phái lớn hơn giá hiện tại ít nhất 10.000 VND");
@@ -186,7 +186,7 @@ namespace Vaux.Controllers
                 _bidHub.Clients.Group(group).SendAsync(group, User.Identity.Name, bid.Amount);
 
                 _logger.LogInformation($"Response for user {User.Identity.Name} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}/ok");
-                return Ok(res);
+                return Ok();
             }
         }
     }
