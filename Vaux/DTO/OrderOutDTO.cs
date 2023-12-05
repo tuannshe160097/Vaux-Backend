@@ -1,4 +1,5 @@
-﻿using Vaux.Models;
+﻿using Vaux.Migrations;
+using Vaux.Models;
 
 namespace Vaux.DTO
 {
@@ -6,6 +7,7 @@ namespace Vaux.DTO
     {
         public int Id { get; set; }
         public DateTime Created { get; set; }
+        public OrderStatus Status { get; set; }
 
         public int UserId { get; set; }
         public UserMinimalDTO User { get; set; }
