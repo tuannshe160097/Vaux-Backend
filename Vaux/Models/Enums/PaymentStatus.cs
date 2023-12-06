@@ -1,6 +1,6 @@
 ﻿namespace Vaux.Models.Enums
 {
-    public enum ItemPaymentStatus 
+    public enum PaymentStatus 
     {
         UNPAID = 1,
         PAID,

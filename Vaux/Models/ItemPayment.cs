@@ -9,13 +9,17 @@ namespace Vaux.Models
         public long ExpertPayout { get; set; }
         public long Revenue { get; set; }
 
-        public ItemPaymentStatus Status { get; set; }
+        public PaymentStatus ExpertPaymentStatus { get; set; }
+        public PaymentStatus SellerPaymentStatus { get; set; }
 
         [ForeignKey(nameof(Item))]
         public int? ItemId { get; set; }
         public virtual Item? Item { get; set; }
 
-        public int? ApprovedById { get; set; }
-        public virtual User? ApprovedBy { get; set; }
+        public int? ExpertPaymentApprovedById { get; set; }
+        public virtual User? ExpertPaymentApprovedBy { get; set; }
+
+        public int? SellerPaymentApprovedById { get; set; }
+        public virtual User? SellerPaymentApprovedBy { get; set; }
     }
 }

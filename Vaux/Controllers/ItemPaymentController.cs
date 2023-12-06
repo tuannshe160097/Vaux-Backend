@@ -23,15 +23,49 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int pageNum = 1, int pageSize = -1, ItemPaymentStatus? status = null)
+        public IActionResult Get(int pageNum = 1, int pageSize = -1, bool? completed = null)
         {
             var query = _itemPaymentRepo.Query();
-            if (status != null)
+
+            if (completed == true)
             {
-                query = query.Where(e => e.Status == status);
+                query = query.Where(e => e.ExpertPaymentStatus == PaymentStatus.PAID && e.SellerPaymentStatus == PaymentStatus.PAID);
+            }
+
+            if (completed == false)
+            {
+                query = query.Where(e => e.ExpertPaymentStatus == PaymentStatus.UNPAID || e.SellerPaymentStatus == PaymentStatus.UNPAID);
             }
 
             return Ok(_itemPaymentRepo.WrapListResult<SellerApplicationOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
+        }
+
+        [HttpPatch]
+        [Route("{id}")]
+        public IActionResult PaySeller(int id)
+        {
+            var itemPayment = _itemPaymentRepo.Get<ItemPayment>(e => e.Id == id && e.SellerPaymentStatus == PaymentStatus.UNPAID);
+            if (itemPayment == null)
+            {
+                return BadRequest("Người bán đã được thanh toán");
+            }
+
+            itemPayment.SellerPaymentStatus = PaymentStatus.PAID;
+            return Ok(itemPayment);
+        }
+
+        [HttpPatch]
+        [Route("{id}")]
+        public IActionResult PayExpert(int id)
+        {
+            var itemPayment = _itemPaymentRepo.Get<ItemPayment>(e => e.Id == id && e.ExpertPaymentStatus == PaymentStatus.UNPAID);
+            if (itemPayment == null)
+            {
+                return BadRequest("Kiểm định viên đã được thanh toán");
+            }
+
+            itemPayment.ExpertPaymentStatus = PaymentStatus.PAID;
+            return Ok(itemPayment);
         }
     }
 }

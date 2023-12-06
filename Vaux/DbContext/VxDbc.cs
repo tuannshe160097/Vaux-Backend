@@ -95,8 +95,12 @@
                 .HasDefaultValue(OrderStatus.UNPAID);
 
             modelBuilder.Entity<ItemPayment>()
-                .Property(e => e.Status)
-                .HasDefaultValue(ItemPaymentStatus.UNPAID);
+                .Property(e => e.ExpertPaymentStatus)
+                .HasDefaultValue(PaymentStatus.UNPAID);
+
+            modelBuilder.Entity<ItemPayment>()
+                .Property(e => e.SellerPaymentStatus)
+                .HasDefaultValue(PaymentStatus.UNPAID);
 
             DbInitializer.Seed(modelBuilder);
         }
