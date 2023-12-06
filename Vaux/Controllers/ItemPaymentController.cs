@@ -51,6 +51,8 @@ namespace Vaux.Controllers
             }
 
             itemPayment.SellerPaymentStatus = PaymentStatus.PAID;
+            itemPayment.SellerPaymentApprovedById = int.Parse(User.Identity.ToString());
+
             return Ok(itemPayment);
         }
 
@@ -65,6 +67,7 @@ namespace Vaux.Controllers
             }
 
             itemPayment.ExpertPaymentStatus = PaymentStatus.PAID;
+            itemPayment.ExpertPaymentApprovedById = int.Parse(User.Identity.ToString());
             return Ok(itemPayment);
         }
     }

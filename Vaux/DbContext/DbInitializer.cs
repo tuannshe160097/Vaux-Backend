@@ -973,9 +973,9 @@ namespace Vaux.DbContext
                     Id = statusChanges.Count + 1,
                     ItemId = id,
                     StatusChangedById = expert.Id,
-                    StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
+                    StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),
                     StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
-                    StatusChangeReason = "Đang trong phiên đấu giá"
+                    StatusChangeReason = "Start auction"
                 };
                 statusChanges.Add(statusChange);
             }
@@ -1068,16 +1068,45 @@ namespace Vaux.DbContext
                     imageItemsTable.Add(imageItem);
                 }
 
-                var statusChange = new StatusChange()
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = expert.Id,
+                    StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
+                    StatusTo = ItemStatus.AUCTION_PENDING.ToString(),
+                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá"
+                });
+
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = 1,
+                    StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),
+                    StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
+                    StatusChangeReason = "Start auction"
+                });
+
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = 1,
+                    StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
+                    StatusTo = ItemStatus.PAYMENT_PENDING.ToString(),
+                    StatusChangeReason = $"Item won by user {bids.First(e => e.Id == item.HighestBidId).UserId}"
+                });
+
+                statusChanges.Add(new StatusChange()
                 {
                     Id = statusChanges.Count + 1,
                     ItemId = id,
                     StatusChangedById = 1,
                     StatusFrom = ItemStatus.PAYMENT_PENDING.ToString(),
                     StatusTo = ItemStatus.PAID.ToString(),
-                    StatusChangeReason = "Đã bán"
-                };
-                statusChanges.Add(statusChange);
+                    StatusChangeReason = $"Changed status from {nameof(ItemStatus.PAYMENT_PENDING)} to {nameof(ItemStatus.PAID)}"
+                });
             }
 
             List<Order> orders = new();
@@ -1128,10 +1157,10 @@ namespace Vaux.DbContext
              * Due to circular reference between Bid.ItemId and Item.HighestBidId, the migration cannot be created.
              * I settled for the next best thing which was to accept some inconsistencies in our data by setting Iten.HighestBidId to null (Bid.ItemId was more important)
              */
-            foreach (var i in items)
+            /*foreach (var i in items)
             {
                 i.HighestBidId = null;
-            }
+            }*/
 
             modelBuilder.Entity<Role>().HasData(roles);
             modelBuilder.Entity<Category>().HasData(categories);
