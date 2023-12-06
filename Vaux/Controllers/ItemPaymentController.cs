@@ -41,7 +41,7 @@ namespace Vaux.Controllers
         }
 
         [HttpPatch]
-        [Route("{id}")]
+        [Route("{id}/PaySeller")]
         public IActionResult PaySeller(int id)
         {
             var itemPayment = _itemPaymentRepo.Get<ItemPayment>(e => e.Id == id && e.SellerPaymentStatus == PaymentStatus.UNPAID);
@@ -57,7 +57,7 @@ namespace Vaux.Controllers
         }
 
         [HttpPatch]
-        [Route("{id}")]
+        [Route("{id}/PayExpert")]
         public IActionResult PayExpert(int id)
         {
             var itemPayment = _itemPaymentRepo.Get<ItemPayment>(e => e.Id == id && e.ExpertPaymentStatus == PaymentStatus.UNPAID);
