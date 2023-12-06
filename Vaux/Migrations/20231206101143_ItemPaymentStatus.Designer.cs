@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vaux.DbContext;
 
@@ -11,9 +12,11 @@ using Vaux.DbContext;
 namespace Vaux.Migrations
 {
     [DbContext(typeof(VxDbc))]
-    partial class VxDbcModelSnapshot : ModelSnapshot
+    [Migration("20231206101143_ItemPaymentStatus")]
+    partial class ItemPaymentStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35344,7 +35347,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 160,
-                            HighestBidId = 48,
                             Name = "Tiền cổ 201",
                             OrderId = 6,
                             ReservePrice = 0L,
@@ -35361,7 +35363,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 167,
-                            HighestBidId = 91,
                             Name = "Văn tự 202",
                             OrderId = 21,
                             ReservePrice = 0L,
@@ -35378,7 +35379,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 162,
-                            HighestBidId = 129,
                             Name = "Tiền cổ 203",
                             OrderId = 44,
                             ReservePrice = 0L,
@@ -35395,7 +35395,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 167,
-                            HighestBidId = 165,
                             Name = "Tiền cổ 204",
                             OrderId = 41,
                             ReservePrice = 0L,
@@ -35412,7 +35411,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 162,
-                            HighestBidId = 245,
                             Name = "Tiền cổ 205",
                             OrderId = 11,
                             ReservePrice = 0L,
@@ -35429,7 +35427,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 161,
-                            HighestBidId = 264,
                             Name = "Văn tự 206",
                             OrderId = 30,
                             ReservePrice = 0L,
@@ -35446,7 +35443,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 162,
-                            HighestBidId = 350,
                             Name = "Văn tự 207",
                             OrderId = 33,
                             ReservePrice = 0L,
@@ -35463,7 +35459,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 160,
-                            HighestBidId = 380,
                             Name = "Tranh 208",
                             OrderId = 19,
                             ReservePrice = 0L,
@@ -35480,7 +35475,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 165,
-                            HighestBidId = 448,
                             Name = "Trang phục 209",
                             OrderId = 40,
                             ReservePrice = 0L,
@@ -35497,7 +35491,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 164,
-                            HighestBidId = 486,
                             Name = "Tranh 210",
                             OrderId = 15,
                             ReservePrice = 0L,
@@ -35514,7 +35507,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 167,
-                            HighestBidId = 550,
                             Name = "Tranh 211",
                             OrderId = 43,
                             ReservePrice = 0L,
@@ -35531,7 +35523,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 166,
-                            HighestBidId = 600,
                             Name = "Đồ sưu tầm 212",
                             OrderId = 13,
                             ReservePrice = 0L,
@@ -35548,7 +35539,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 168,
-                            HighestBidId = 601,
                             Name = "Khoáng sản 213",
                             OrderId = 17,
                             ReservePrice = 0L,
@@ -35565,7 +35555,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 167,
-                            HighestBidId = 690,
                             Name = "Tiền cổ 214",
                             OrderId = 31,
                             ReservePrice = 0L,
@@ -35582,7 +35571,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 160,
-                            HighestBidId = 720,
                             Name = "Nội thất 215",
                             OrderId = 35,
                             ReservePrice = 0L,
@@ -35599,7 +35587,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 163,
-                            HighestBidId = 771,
                             Name = "Văn tự 216",
                             OrderId = 37,
                             ReservePrice = 0L,
@@ -35616,7 +35603,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 162,
-                            HighestBidId = 847,
                             Name = "Văn tự 217",
                             OrderId = 7,
                             ReservePrice = 0L,
@@ -35633,7 +35619,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 164,
-                            HighestBidId = 887,
                             Name = "Văn tự 218",
                             OrderId = 38,
                             ReservePrice = 0L,
@@ -35650,7 +35635,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 165,
-                            HighestBidId = 902,
                             Name = "Văn tự 219",
                             OrderId = 24,
                             ReservePrice = 0L,
@@ -35667,7 +35651,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 166,
-                            HighestBidId = 991,
                             Name = "Đồ sưu tầm 220",
                             OrderId = 36,
                             ReservePrice = 0L,
@@ -35684,7 +35667,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 165,
-                            HighestBidId = 1029,
                             Name = "Văn tự 221",
                             OrderId = 20,
                             ReservePrice = 0L,
@@ -35701,7 +35683,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 162,
-                            HighestBidId = 1094,
                             Name = "Văn tự 222",
                             OrderId = 27,
                             ReservePrice = 0L,
@@ -35718,7 +35699,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 166,
-                            HighestBidId = 1124,
                             Name = "Văn tự 223",
                             OrderId = 32,
                             ReservePrice = 0L,
@@ -35735,7 +35715,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 167,
-                            HighestBidId = 1164,
                             Name = "Xe 224",
                             OrderId = 3,
                             ReservePrice = 0L,
@@ -35752,7 +35731,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 160,
-                            HighestBidId = 1227,
                             Name = "Khoáng sản 225",
                             OrderId = 9,
                             ReservePrice = 0L,
@@ -35769,7 +35747,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 161,
-                            HighestBidId = 1251,
                             Name = "Trang phục 226",
                             OrderId = 22,
                             ReservePrice = 0L,
@@ -35786,7 +35763,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 169,
-                            HighestBidId = 1350,
                             Name = "Văn tự 227",
                             OrderId = 16,
                             ReservePrice = 0L,
@@ -35803,7 +35779,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 161,
-                            HighestBidId = 1384,
                             Name = "Khoáng sản 228",
                             OrderId = 36,
                             ReservePrice = 0L,
@@ -35820,7 +35795,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 164,
-                            HighestBidId = 1412,
                             Name = "Văn tự 229",
                             OrderId = 41,
                             ReservePrice = 0L,
@@ -35837,7 +35811,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 166,
-                            HighestBidId = 1478,
                             Name = "Trang sức 230",
                             OrderId = 26,
                             ReservePrice = 0L,
@@ -35854,7 +35827,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 164,
-                            HighestBidId = 1521,
                             Name = "Nội thất 231",
                             OrderId = 40,
                             ReservePrice = 0L,
@@ -35871,7 +35843,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 162,
-                            HighestBidId = 1556,
                             Name = "Tranh 232",
                             OrderId = 10,
                             ReservePrice = 0L,
@@ -35888,7 +35859,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 160,
-                            HighestBidId = 1640,
                             Name = "Xe 233",
                             OrderId = 44,
                             ReservePrice = 0L,
@@ -35905,7 +35875,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 167,
-                            HighestBidId = 1688,
                             Name = "Tiền cổ 234",
                             OrderId = 23,
                             ReservePrice = 0L,
@@ -35922,7 +35891,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 165,
-                            HighestBidId = 1728,
                             Name = "Văn tự 235",
                             OrderId = 22,
                             ReservePrice = 0L,
@@ -35939,7 +35907,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 162,
-                            HighestBidId = 1792,
                             Name = "Xe 236",
                             OrderId = 42,
                             ReservePrice = 0L,
@@ -35956,7 +35923,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 167,
-                            HighestBidId = 1847,
                             Name = "Trang sức 237",
                             OrderId = 25,
                             ReservePrice = 0L,
@@ -35973,7 +35939,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 169,
-                            HighestBidId = 1881,
                             Name = "Xe 238",
                             OrderId = 1,
                             ReservePrice = 0L,
@@ -35990,7 +35955,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 164,
-                            HighestBidId = 1931,
                             Name = "Xe 239",
                             OrderId = 2,
                             ReservePrice = 0L,
@@ -36007,7 +35971,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 160,
-                            HighestBidId = 1960,
                             Name = "Nội thất 240",
                             OrderId = 4,
                             ReservePrice = 0L,
@@ -36024,7 +35987,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 167,
-                            HighestBidId = 2028,
                             Name = "Khoáng sản 241",
                             OrderId = 34,
                             ReservePrice = 0L,
@@ -36041,7 +36003,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 162,
-                            HighestBidId = 2097,
                             Name = "Nội thất 242",
                             OrderId = 5,
                             ReservePrice = 0L,
@@ -36058,7 +36019,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 164,
-                            HighestBidId = 2129,
                             Name = "Đồ sưu tầm 243",
                             OrderId = 9,
                             ReservePrice = 0L,
@@ -36075,7 +36035,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 167,
-                            HighestBidId = 2155,
                             Name = "Đồ sưu tầm 244",
                             OrderId = 14,
                             ReservePrice = 0L,
@@ -36092,7 +36051,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 164,
-                            HighestBidId = 2216,
                             Name = "Trang sức 245",
                             OrderId = 18,
                             ReservePrice = 0L,
@@ -36109,7 +36067,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 165,
-                            HighestBidId = 2287,
                             Name = "Khoáng sản 246",
                             OrderId = 8,
                             ReservePrice = 0L,
@@ -36126,7 +36083,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 168,
-                            HighestBidId = 2332,
                             Name = "Trang phục 247",
                             OrderId = 28,
                             ReservePrice = 0L,
@@ -36143,7 +36099,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 164,
-                            HighestBidId = 2375,
                             Name = "Tranh 248",
                             OrderId = 39,
                             ReservePrice = 0L,
@@ -36160,7 +36115,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 168,
-                            HighestBidId = 2449,
                             Name = "Trang phục 249",
                             OrderId = 29,
                             ReservePrice = 0L,
@@ -36177,7 +36131,6 @@ namespace Vaux.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mattis elit in erat dapibus ornare. Donec nec facilisis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum malesuada risus non sodales. Morbi vitae rutrum leo, nec eleifend nunc. Praesent bibendum tincidunt sapien. Nulla nec gravida lectus, ac auctor justo. Donec eleifend, sapien vel varius euismod, lorem enim facilisis nisl, vitae porta urna nisl nec lectus. Maecenas laoreet metus quis libero pharetra tempor. Nulla facilisi. Aenean dictum non augue eu faucibus. Nam quis viverra leo, imperdiet convallis leo. Morbi vitae ipsum purus. In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
                             ExpertId = 166,
-                            HighestBidId = 2483,
                             Name = "Đồ sưu tầm 250",
                             OrderId = 12,
                             ReservePrice = 0L,
@@ -49586,9 +49539,9 @@ namespace Vaux.Migrations
                             Id = 151,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 151,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 163,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49597,9 +49550,9 @@ namespace Vaux.Migrations
                             Id = 152,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 152,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 162,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49608,9 +49561,9 @@ namespace Vaux.Migrations
                             Id = 153,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 153,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 162,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49619,9 +49572,9 @@ namespace Vaux.Migrations
                             Id = 154,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 154,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 166,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49630,9 +49583,9 @@ namespace Vaux.Migrations
                             Id = 155,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 155,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 167,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49641,9 +49594,9 @@ namespace Vaux.Migrations
                             Id = 156,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 156,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 165,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49652,9 +49605,9 @@ namespace Vaux.Migrations
                             Id = 157,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 157,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 163,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49663,9 +49616,9 @@ namespace Vaux.Migrations
                             Id = 158,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 158,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 169,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49674,9 +49627,9 @@ namespace Vaux.Migrations
                             Id = 159,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 159,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 165,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49685,9 +49638,9 @@ namespace Vaux.Migrations
                             Id = 160,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 160,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 166,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49696,9 +49649,9 @@ namespace Vaux.Migrations
                             Id = 161,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 161,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 167,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49707,9 +49660,9 @@ namespace Vaux.Migrations
                             Id = 162,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 162,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 162,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49718,9 +49671,9 @@ namespace Vaux.Migrations
                             Id = 163,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 163,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 161,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49729,9 +49682,9 @@ namespace Vaux.Migrations
                             Id = 164,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 164,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 167,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49740,9 +49693,9 @@ namespace Vaux.Migrations
                             Id = 165,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 165,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 166,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49751,9 +49704,9 @@ namespace Vaux.Migrations
                             Id = 166,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 166,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 162,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49762,9 +49715,9 @@ namespace Vaux.Migrations
                             Id = 167,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 167,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 166,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49773,9 +49726,9 @@ namespace Vaux.Migrations
                             Id = 168,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 168,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 165,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49784,9 +49737,9 @@ namespace Vaux.Migrations
                             Id = 169,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 169,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 161,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49795,9 +49748,9 @@ namespace Vaux.Migrations
                             Id = 170,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 170,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 163,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49806,9 +49759,9 @@ namespace Vaux.Migrations
                             Id = 171,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 171,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 163,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49817,9 +49770,9 @@ namespace Vaux.Migrations
                             Id = 172,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 172,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 162,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49828,9 +49781,9 @@ namespace Vaux.Migrations
                             Id = 173,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 173,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 163,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49839,9 +49792,9 @@ namespace Vaux.Migrations
                             Id = 174,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 174,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 169,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49850,9 +49803,9 @@ namespace Vaux.Migrations
                             Id = 175,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 175,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 164,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49861,9 +49814,9 @@ namespace Vaux.Migrations
                             Id = 176,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 176,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 165,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49872,9 +49825,9 @@ namespace Vaux.Migrations
                             Id = 177,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 177,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 161,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49883,9 +49836,9 @@ namespace Vaux.Migrations
                             Id = 178,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 178,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 160,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49894,9 +49847,9 @@ namespace Vaux.Migrations
                             Id = 179,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 179,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 163,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49905,9 +49858,9 @@ namespace Vaux.Migrations
                             Id = 180,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 180,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 167,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49916,9 +49869,9 @@ namespace Vaux.Migrations
                             Id = 181,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 181,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 169,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49927,9 +49880,9 @@ namespace Vaux.Migrations
                             Id = 182,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 182,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 168,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49938,9 +49891,9 @@ namespace Vaux.Migrations
                             Id = 183,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 183,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 167,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49949,9 +49902,9 @@ namespace Vaux.Migrations
                             Id = 184,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 184,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 164,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49960,9 +49913,9 @@ namespace Vaux.Migrations
                             Id = 185,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 185,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 165,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49971,9 +49924,9 @@ namespace Vaux.Migrations
                             Id = 186,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 186,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 166,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49982,9 +49935,9 @@ namespace Vaux.Migrations
                             Id = 187,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 187,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 164,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -49993,9 +49946,9 @@ namespace Vaux.Migrations
                             Id = 188,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 188,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 168,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50004,9 +49957,9 @@ namespace Vaux.Migrations
                             Id = 189,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 189,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 165,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50015,9 +49968,9 @@ namespace Vaux.Migrations
                             Id = 190,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 190,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 162,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50026,9 +49979,9 @@ namespace Vaux.Migrations
                             Id = 191,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 191,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 164,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50037,9 +49990,9 @@ namespace Vaux.Migrations
                             Id = 192,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 192,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 162,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50048,9 +50001,9 @@ namespace Vaux.Migrations
                             Id = 193,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 193,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 169,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50059,9 +50012,9 @@ namespace Vaux.Migrations
                             Id = 194,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 194,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 162,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50070,9 +50023,9 @@ namespace Vaux.Migrations
                             Id = 195,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 195,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 165,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50081,9 +50034,9 @@ namespace Vaux.Migrations
                             Id = 196,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 196,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 165,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50092,9 +50045,9 @@ namespace Vaux.Migrations
                             Id = 197,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 197,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 162,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50103,9 +50056,9 @@ namespace Vaux.Migrations
                             Id = 198,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 198,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 167,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50114,9 +50067,9 @@ namespace Vaux.Migrations
                             Id = 199,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 199,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 169,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50125,9 +50078,9 @@ namespace Vaux.Migrations
                             Id = 200,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 200,
-                            StatusChangeReason = "Start auction",
+                            StatusChangeReason = "Đang trong phiên đấu giá",
                             StatusChangedById = 168,
-                            StatusFrom = "AUCTION_PENDING",
+                            StatusFrom = "EXAMINATION_PENDING",
                             StatusTo = "AUCTION_IN_PROGRESS",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -50136,40 +50089,40 @@ namespace Vaux.Migrations
                             Id = 201,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 201,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 160,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 202,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 201,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 202,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 203,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 201,
-                            StatusChangeReason = "Item won by user 21",
+                            ItemId = 203,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 204,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 201,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 204,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50179,41 +50132,41 @@ namespace Vaux.Migrations
                         {
                             Id = 205,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 202,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 167,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 205,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 206,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 202,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 206,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 207,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 202,
-                            StatusChangeReason = "Item won by user 88",
+                            ItemId = 207,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 208,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 202,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 208,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50223,41 +50176,41 @@ namespace Vaux.Migrations
                         {
                             Id = 209,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 203,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 162,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 209,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 210,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 203,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 210,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 211,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 203,
-                            StatusChangeReason = "Item won by user 168",
+                            ItemId = 211,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 212,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 203,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 212,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50267,41 +50220,41 @@ namespace Vaux.Migrations
                         {
                             Id = 213,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 204,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 167,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 213,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 214,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 204,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 214,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 215,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 204,
-                            StatusChangeReason = "Item won by user 160",
+                            ItemId = 215,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 216,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 204,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 216,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50311,41 +50264,41 @@ namespace Vaux.Migrations
                         {
                             Id = 217,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 205,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 162,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 217,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 218,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 205,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 218,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 219,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 205,
-                            StatusChangeReason = "Item won by user 48",
+                            ItemId = 219,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 220,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 205,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 220,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50355,41 +50308,41 @@ namespace Vaux.Migrations
                         {
                             Id = 221,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 206,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 161,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 221,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 222,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 206,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 222,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 223,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 206,
-                            StatusChangeReason = "Item won by user 121",
+                            ItemId = 223,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 224,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 206,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 224,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50399,41 +50352,41 @@ namespace Vaux.Migrations
                         {
                             Id = 225,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 207,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 162,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 225,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 226,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 207,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 226,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 227,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 207,
-                            StatusChangeReason = "Item won by user 130",
+                            ItemId = 227,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 228,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 207,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 228,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50443,41 +50396,41 @@ namespace Vaux.Migrations
                         {
                             Id = 229,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 208,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 160,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 229,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 230,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 208,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 230,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 231,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 208,
-                            StatusChangeReason = "Item won by user 71",
+                            ItemId = 231,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 232,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 208,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 232,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50487,41 +50440,41 @@ namespace Vaux.Migrations
                         {
                             Id = 233,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 209,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 165,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 233,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 234,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 209,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 234,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 235,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 209,
-                            StatusChangeReason = "Item won by user 158",
+                            ItemId = 235,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 236,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 209,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 236,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50531,41 +50484,41 @@ namespace Vaux.Migrations
                         {
                             Id = 237,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 210,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 164,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 237,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 238,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 210,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 238,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 239,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 210,
-                            StatusChangeReason = "Item won by user 57",
+                            ItemId = 239,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 240,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 210,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 240,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50575,41 +50528,41 @@ namespace Vaux.Migrations
                         {
                             Id = 241,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 211,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 167,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 241,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 242,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 211,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 242,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 243,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 211,
-                            StatusChangeReason = "Item won by user 163",
+                            ItemId = 243,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 244,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 211,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 244,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50619,41 +50572,41 @@ namespace Vaux.Migrations
                         {
                             Id = 245,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 212,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 166,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 245,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 246,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 212,
-                            StatusChangeReason = "Start auction",
+                            ItemId = 246,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 247,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 212,
-                            StatusChangeReason = "Item won by user 50",
+                            ItemId = 247,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 248,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 212,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            ItemId = 248,
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
@@ -50663,1669 +50616,19 @@ namespace Vaux.Migrations
                         {
                             Id = 249,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 213,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 168,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
+                            ItemId = 249,
+                            StatusChangeReason = "Đã bán",
+                            StatusChangedById = 1,
+                            StatusFrom = "PAYMENT_PENDING",
+                            StatusTo = "PAID",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 250,
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 213,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 251,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 213,
-                            StatusChangeReason = "Item won by user 66",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 252,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 213,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 253,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 214,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 167,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 254,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 214,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 255,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 214,
-                            StatusChangeReason = "Item won by user 125",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 256,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 214,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 257,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 215,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 160,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 258,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 215,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 259,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 215,
-                            StatusChangeReason = "Item won by user 140",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 260,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 215,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 261,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 216,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 163,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 262,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 216,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 263,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 216,
-                            StatusChangeReason = "Item won by user 147",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 264,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 216,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 265,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 217,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 162,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 266,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 217,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 267,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 217,
-                            StatusChangeReason = "Item won by user 22",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 268,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 217,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 269,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 218,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 164,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 270,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 218,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 271,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 218,
-                            StatusChangeReason = "Item won by user 151",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 272,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 218,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 273,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 219,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 165,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 274,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 219,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 275,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 219,
-                            StatusChangeReason = "Item won by user 107",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 276,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 219,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 277,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 220,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 166,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 278,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 220,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 279,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 220,
-                            StatusChangeReason = "Item won by user 142",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 280,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 220,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 281,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 221,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 165,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 282,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 221,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 283,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 221,
-                            StatusChangeReason = "Item won by user 74",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 284,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 221,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 285,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 222,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 162,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 286,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 222,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 287,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 222,
-                            StatusChangeReason = "Item won by user 117",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 288,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 222,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 289,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 223,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 166,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 290,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 223,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 291,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 223,
-                            StatusChangeReason = "Item won by user 126",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 292,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 223,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 293,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 224,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 167,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 294,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 224,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 295,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 224,
-                            StatusChangeReason = "Item won by user 10",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 296,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 224,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 297,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 225,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 160,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 298,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 225,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 299,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 225,
-                            StatusChangeReason = "Item won by user 39",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 300,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 225,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 301,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 226,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 161,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 302,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 226,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 303,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 226,
-                            StatusChangeReason = "Item won by user 90",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 304,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 226,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 305,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 227,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 169,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 306,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 227,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 307,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 227,
-                            StatusChangeReason = "Item won by user 58",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 308,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 227,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 309,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 228,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 161,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 310,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 228,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 311,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 228,
-                            StatusChangeReason = "Item won by user 142",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 312,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 228,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 313,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 229,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 164,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 314,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 229,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 315,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 229,
-                            StatusChangeReason = "Item won by user 160",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 316,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 229,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 317,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 230,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 166,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 318,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 230,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 319,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 230,
-                            StatusChangeReason = "Item won by user 115",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 320,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 230,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 321,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 231,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 164,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 322,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 231,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 323,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 231,
-                            StatusChangeReason = "Item won by user 158",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 324,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 231,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 325,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 232,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 162,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 326,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 232,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 327,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 232,
-                            StatusChangeReason = "Item won by user 43",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 328,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 232,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 329,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 233,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 160,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 330,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 233,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 331,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 233,
-                            StatusChangeReason = "Item won by user 168",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 332,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 233,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 333,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 234,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 167,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 334,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 234,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 335,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 234,
-                            StatusChangeReason = "Item won by user 92",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 336,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 234,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 337,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 235,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 165,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 338,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 235,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 339,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 235,
-                            StatusChangeReason = "Item won by user 90",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 340,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 235,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 341,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 236,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 162,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 342,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 236,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 343,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 236,
-                            StatusChangeReason = "Item won by user 162",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 344,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 236,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 345,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 237,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 167,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 346,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 237,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 347,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 237,
-                            StatusChangeReason = "Item won by user 111",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 348,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 237,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 349,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 238,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 169,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 350,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 238,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 351,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 238,
-                            StatusChangeReason = "Item won by user 2",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 352,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 238,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 353,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 239,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 164,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 354,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 239,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 355,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 239,
-                            StatusChangeReason = "Item won by user 5",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 356,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 239,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 357,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 240,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 160,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 358,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 240,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 359,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 240,
-                            StatusChangeReason = "Item won by user 14",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 360,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 240,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 361,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 241,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 167,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 362,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 241,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 363,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 241,
-                            StatusChangeReason = "Item won by user 134",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 364,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 241,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 365,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 242,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 162,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 366,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 242,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 367,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 242,
-                            StatusChangeReason = "Item won by user 19",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 368,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 242,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 369,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 243,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 164,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 370,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 243,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 371,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 243,
-                            StatusChangeReason = "Item won by user 39",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 372,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 243,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 373,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 244,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 167,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 374,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 244,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 375,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 244,
-                            StatusChangeReason = "Item won by user 54",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 376,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 244,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 377,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 245,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 164,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 378,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 245,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 379,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 245,
-                            StatusChangeReason = "Item won by user 70",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 380,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 245,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 381,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 246,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 165,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 382,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 246,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 383,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 246,
-                            StatusChangeReason = "Item won by user 23",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 384,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 246,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 385,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 247,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 168,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 386,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 247,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 387,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 247,
-                            StatusChangeReason = "Item won by user 119",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 388,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 247,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 389,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 248,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 164,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 390,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 248,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 391,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 248,
-                            StatusChangeReason = "Item won by user 153",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 392,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 248,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 393,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 249,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 168,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 394,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 249,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 395,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 249,
-                            StatusChangeReason = "Item won by user 120",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 396,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 249,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
-                            StatusChangedById = 1,
-                            StatusFrom = "PAYMENT_PENDING",
-                            StatusTo = "PAID",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 397,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ItemId = 250,
-                            StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
-                            StatusChangedById = 166,
-                            StatusFrom = "EXAMINATION_PENDING",
-                            StatusTo = "AUCTION_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 398,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 250,
-                            StatusChangeReason = "Start auction",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_PENDING",
-                            StatusTo = "AUCTION_IN_PROGRESS",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 399,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 250,
-                            StatusChangeReason = "Item won by user 49",
-                            StatusChangedById = 1,
-                            StatusFrom = "AUCTION_IN_PROGRESS",
-                            StatusTo = "PAYMENT_PENDING",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 400,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ItemId = 250,
-                            StatusChangeReason = "Changed status from PAYMENT_PENDING to PAID",
+                            StatusChangeReason = "Đã bán",
                             StatusChangedById = 1,
                             StatusFrom = "PAYMENT_PENDING",
                             StatusTo = "PAID",
