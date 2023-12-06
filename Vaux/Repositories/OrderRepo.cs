@@ -82,7 +82,7 @@ namespace Vaux.Repositories
                         StatusChangeReason = $"Changed status from {nameof(ItemStatus.PAYMENT_PENDING)} to {nameof(ItemStatus.PAID)}"
                     });
 
-                    item.SellerPayment = new()
+                    item.ItemPayment = new()
                     {
                         SellerPayout = CalculateSellerPayment(item.HighestBid!.Amount),
                         ExpertPayout = CalculateExpertPayment(item.HighestBid!.Amount),
