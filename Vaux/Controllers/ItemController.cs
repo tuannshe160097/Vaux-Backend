@@ -153,7 +153,7 @@ namespace Vaux.Controllers
         public IActionResult Bid(int id, BidInDto bid)
         {
             _logger.LogInformation($"Request from user {User.Identity!.Name!} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}");
-            var item = _itemRepo.Get<Item>(e => e.Id == id);
+            var item = _itemRepo.Get<Item>(e => e.Id == id && e.OngoingSession.Status == AuctionSessionStatus.ONGOING);
             if (item == null)
             {
                 return BadRequest("Sản phẩm không tồn tại!");
