@@ -1113,6 +1113,7 @@ namespace Vaux.DbContext
             List<Item> soldItems = items.Where(e => e.Status == ItemStatus.PAID).ToList();
             List<User> wonUsers = users.Where(e => bids.Where(b => soldItems.Select(i => i.HighestBidId).Contains(b.Id)).Select(b => b.UserId).Contains(e.Id)).ToList();
             List<Shipment> shipments = new();
+            List<ItemPayment> itemPayments = new();
             for (int i = 0; i < wonUsers.Count; i++)
             {
                 var user = wonUsers[i];
@@ -1144,11 +1145,22 @@ namespace Vaux.DbContext
                         shipments.Add(shipment);
                         localShipments.Add(shipment);
                     }
-                    shipment.ShippingCost += 10000;
-                    shipment.ItemCost += bids.First(e => e.Id == item.HighestBidId).Amount;
+                    shipment.ShippingCost += 40000;
+                    var highestBid = bids.First(e => e.Id == item.HighestBidId);
+                    shipment.ItemCost += highestBid.Amount + CalculateBuyerProtectionFee(highestBid.Amount);
                     order.TotalCost += shipment.ItemCost + shipment.ShippingCost;
                     item.ShipmentId = shipment.Id;
                     item.OrderId = order.Id;
+
+                    ItemPayment itemPayment = new()
+                    {
+                        Id = itemPayments.Count + 1,
+                        ItemId = item.Id,
+                        SellerPayout = CalculateSellerPayment(highestBid.Amount),
+                        ExpertPayout = CalculateExpertPayment(highestBid.Amount),
+                        Revenue = CalculateRevenue(highestBid.Amount),
+                    };
+                    itemPayments.Add(itemPayment);
                 }
                 orders.Add(order);
             }
@@ -1177,6 +1189,7 @@ namespace Vaux.DbContext
             modelBuilder.Entity<Bid>().HasData(bids);
             modelBuilder.Entity<Order>().HasData(orders);
             modelBuilder.Entity<Shipment>().HasData(shipments);
+            modelBuilder.Entity<ItemPayment>().HasData(itemPayments);
         }
 
         private static T RandomElement<T>(T[] array)
@@ -1220,6 +1233,25 @@ namespace Vaux.DbContext
         private static DateTime RandomDate()
         {
             return DateTime.Today.AddDays(-_random.Next(365 * 18, 365 * 50));
+        }
+        private static long CalculateBuyerProtectionFee(long bidAmount)
+        {
+            return (long)(bidAmount * 0.09);
+        }
+
+        private static long CalculateSellerPayment(long bidAmount)
+        {
+            return (long)(bidAmount * 0.87);
+        }
+
+        private static long CalculateExpertPayment(long bidAmount)
+        {
+            return 20000 + (long)(bidAmount * 0.05);
+        }
+
+        private static long CalculateRevenue(long bidAmount)
+        {
+            return bidAmount + CalculateBuyerProtectionFee(bidAmount) - CalculateSellerPayment(bidAmount) - CalculateExpertPayment(bidAmount);
         }
     }
 }
