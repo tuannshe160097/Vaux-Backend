@@ -37,7 +37,7 @@ namespace Vaux.Controllers
                 query = query.Where(e => e.ExpertPaymentStatus == PaymentStatus.UNPAID || e.SellerPaymentStatus == PaymentStatus.UNPAID);
             }
 
-            return Ok(_itemPaymentRepo.WrapListResult<SellerApplicationOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
+            return Ok(_itemPaymentRepo.WrapListResult<ItemPaymentOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpPatch]
@@ -53,7 +53,7 @@ namespace Vaux.Controllers
             itemPayment.SellerPaymentStatus = PaymentStatus.PAID;
             itemPayment.SellerPaymentApprovedById = int.Parse(User.Identity.ToString());
 
-            return Ok(itemPayment);
+            return Ok(_itemPaymentRepo.Update<ItemPaymentOutDTO, ItemPayment>(e => e.Id == id, itemPayment));
         }
 
         [HttpPatch]
@@ -68,7 +68,8 @@ namespace Vaux.Controllers
 
             itemPayment.ExpertPaymentStatus = PaymentStatus.PAID;
             itemPayment.ExpertPaymentApprovedById = int.Parse(User.Identity.ToString());
-            return Ok(itemPayment);
+
+            return Ok(_itemPaymentRepo.Update<ItemPaymentOutDTO, ItemPayment>(e => e.Id == id, itemPayment));
         }
     }
 }
