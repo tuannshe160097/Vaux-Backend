@@ -48,8 +48,8 @@ namespace Vaux.Repositories
                 }
 
                 shipment.Items.Add(item);
-                shipment.ShippingCost += 10;
-                shipment.ItemCost += item.HighestBid!.Amount;
+                shipment.ShippingCost += 40000;
+                shipment.ItemCost += item.HighestBid!.Amount + CalculateBuyerProtectionFee(item.HighestBid.Amount);
                 order.TotalCost += shipment.ItemCost + shipment.ShippingCost;
             }
 
@@ -98,19 +98,24 @@ namespace Vaux.Repositories
             return Map<TOut>(res);
         }
 
+        private static long CalculateBuyerProtectionFee(long bidAmount)
+        {
+            return (long)(bidAmount * 0.09);
+        }
+
         private static long CalculateSellerPayment(long bidAmount)
         {
-            return bidAmount;
+            return (long)(bidAmount * 0.87);
         }
 
         private static long CalculateExpertPayment(long bidAmount)
         {
-            return 0;
+            return 20000 + (long)(bidAmount * 0.05);
         }
 
         private static long CalculateRevenue(long bidAmount)
         {
-            return 0;
+            return bidAmount + CalculateBuyerProtectionFee(bidAmount) - CalculateSellerPayment(bidAmount) - CalculateExpertPayment(bidAmount);
         }
     }
 }
