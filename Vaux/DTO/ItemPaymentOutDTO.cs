@@ -15,14 +15,13 @@ namespace Vaux.DTO
         public PaymentStatus ExpertPaymentStatus { get; set; }
         public PaymentStatus SellerPaymentStatus { get; set; }
 
-        [ForeignKey(nameof(Item))]
         public int? ItemId { get; set; }
-        public virtual Item? Item { get; set; }
+        //public ItemOutDTO? Item { get; set; }
 
         public int? ExpertPaymentApprovedById { get; set; }
-        public virtual UserMinimalDTO? ExpertPaymentApprovedBy { get; set; }
+        public UserMinimalDTO? ExpertPaymentApprovedBy { get; set; }
 
         public int? SellerPaymentApprovedById { get; set; }
-        public virtual UserMinimalDTO? SellerPaymentApprovedBy { get; set; }
+        public UserMinimalDTO? SellerPaymentApprovedBy { get; set; }
     }
 }
