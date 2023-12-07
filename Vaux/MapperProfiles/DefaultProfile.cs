@@ -26,6 +26,8 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());
 
+            CreateMap<UserWithPhotoDTO, User>();
+
             CreateMap<CategoryDTO, Category>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Items, opt => opt.Ignore());

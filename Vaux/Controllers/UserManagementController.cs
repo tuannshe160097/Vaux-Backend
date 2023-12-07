@@ -16,10 +16,12 @@ namespace Vaux.Controllers
     public class UserManagementController : ControllerBase
     {
         private readonly IUserRepo _userRepo;
+        private readonly IPhotoRepo _photoRepo;
 
-        public UserManagementController(IUserRepo userRepo)
+        public UserManagementController(IUserRepo userRepo, IPhotoRepo photoRepo)
         {
             _userRepo = userRepo;
+            _photoRepo = photoRepo;
         }
 
         [HttpGet]
@@ -122,14 +124,18 @@ namespace Vaux.Controllers
         [HttpPost]
         [Route("CreateModerator")]
         [Authorize(Roles = nameof(RoleId.ADMIN))]
-        public IActionResult CreateMod(UserStrictDTO superUser)
+        public IActionResult CreateMod(UserWithPhotoDTO superUser)
         {
             if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
             {
                 return BadRequest("Tài khoản không tồn tại!");
             }
+            var user = _userRepo.Map<User>(superUser);
+            user.RoleId = (int)RoleId.EXPERT;
+            user.CitizenIdImageId = _photoRepo.Create<Image>(superUser.RawCitizenIdImage).Id;
+            user.PortraitId = _photoRepo.Create<Image>(superUser.RawPortrait).Id;
 
-            var res = _userRepo.Create<User>(superUser, RoleId.MODERATOR);
+            var res = _userRepo.Create<UserOutDTO, User>(user);
 
             return Ok(res);
         }
@@ -137,14 +143,18 @@ namespace Vaux.Controllers
         [HttpPost]
         [Route("/api/Mod/Account/CreateExpert")]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult CreateExpert(UserStrictDTO superUser)
+        public IActionResult CreateExpert(UserWithPhotoDTO superUser)
         {
             if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
             {
                 return BadRequest("Tài khoản không tồn tại!");
             }
+            var user = _userRepo.Map<User>(superUser);
+            user.RoleId = (int)RoleId.EXPERT;
+            user.CitizenIdImageId = _photoRepo.Create<Image>(superUser.RawCitizenIdImage).Id;
+            user.PortraitId = _photoRepo.Create<Image>(superUser.RawPortrait).Id;
 
-            var res = _userRepo.Create<User>(superUser, RoleId.EXPERT);
+            var res = _userRepo.Create<UserOutDTO, User>(user);
 
             return Ok(res);
         }
