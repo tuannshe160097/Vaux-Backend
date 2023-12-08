@@ -184,8 +184,6 @@ namespace Vaux.Repositories
                 TotalRecords = query.Count()
             };
 
-            query = query.OrderBy(e => e.Id);
-
             query = query.Skip(skip < 0 ? 0 : skip);
             if (take > 0)
             {

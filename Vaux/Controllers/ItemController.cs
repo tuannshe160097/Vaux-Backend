@@ -51,10 +51,10 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null)
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, string? orderBy = null)
         {
             var query = _itemRepo.Query().Where(e => e.Status == ItemStatus.AUCTION_IN_PROGRESS);
-            query = query.OrderByDescending(e => e.ExpertId != null ? 1 : 0).ThenByDescending(e => e.Id);
+            query = query.OrderByDescending(e => e.Id);
             if (search != null)
             {
                 query = query.Where(e => e.Name.Contains(search));
@@ -62,6 +62,18 @@ namespace Vaux.Controllers
             if (category != null)
             {
                 query = query.Where(e => e.CategoryId == category);
+            }
+            if (orderBy != null)
+            {
+                switch (orderBy)
+                {
+                    case "bid":
+                        query = query.OrderByDescending(e => e.Bids!.Count());
+                        break;
+                    case "end":
+                        query = query.OrderByDescending(e => e.OngoingSession!.EndDate);
+                        break;
+                }
             }
             return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
