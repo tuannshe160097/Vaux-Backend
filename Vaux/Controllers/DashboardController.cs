@@ -9,7 +9,7 @@ namespace Vaux.Controllers
 {
     [Route("api/Mod/Dashboard")]
     [ApiController]
-    [Authorize(Roles = $"{nameof(RoleId.ADMIN)},{nameof(RoleId.MODERATOR)}")]
+    //[Authorize(Roles = $"{nameof(RoleId.ADMIN)},{nameof(RoleId.MODERATOR)}")]
     public class DashboardController : ControllerBase
     {
         private VxDbc _vxDbc;

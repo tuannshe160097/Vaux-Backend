@@ -489,6 +489,27 @@ namespace Vaux.DbContext
                 EndDate = new DateTime(2024, 1, 1).AddHours(19),
                 Status = AuctionSessionStatus.ONGOING,
             });
+            auctionSessions.Add(new AuctionSession()
+            {
+                Id = 7,
+                StartDate = start.AddHours(7),
+                EndDate = start.AddDays(6).AddHours(19),
+                Status = AuctionSessionStatus.FINISHED,
+            });
+            auctionSessions.Add(new AuctionSession()
+            {
+                Id = 8,
+                StartDate = start.AddHours(7),
+                EndDate = start.AddDays(7 + 6).AddHours(19),
+                Status = AuctionSessionStatus.FINISHED,
+            });
+            auctionSessions.Add(new AuctionSession()
+            {
+                Id = 9,
+                StartDate = start.AddHours(7),
+                EndDate = start.AddDays(14 + 6).AddHours(19),
+                Status = AuctionSessionStatus.FINISHED,
+            });
 
             List<User> users = new List<User>
             {
@@ -968,6 +989,16 @@ namespace Vaux.DbContext
                     imageItemsTable.Add(imageItem);
                 }
 
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = expert.Id,
+                    StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
+                    StatusTo = ItemStatus.AUCTION_PENDING.ToString(),
+                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá"
+                });
+
                 var statusChange = new StatusChange()
                 {
                     Id = statusChanges.Count + 1,
@@ -1000,6 +1031,8 @@ namespace Vaux.DbContext
                 };
                 items.Add(item);
 
+                int sessionId = _random.Next(7, 9);
+
                 List<Bid> bidsLocal = new();
                 for (int j = 0; j < 50; j++)
                 {
@@ -1008,7 +1041,7 @@ namespace Vaux.DbContext
                         Id = bids.Count + 1,
                         ItemId = item.Id,
                         Amount = _random.Next(50000, 50000000),
-                        AuctionSessionId = 6,
+                        AuctionSessionId = sessionId,
                         UserId = RandomElement(users.ToArray()).Id
                     };
                     bids.Add(bid);
@@ -1019,7 +1052,7 @@ namespace Vaux.DbContext
 
                 var auctionSessionItem = new
                 {
-                    AuctionSessionsId = 6,
+                    AuctionSessionsId = sessionId,
                     ItemsId = id,
                 };
                 auctionSessionItemTable.Add(auctionSessionItem);
@@ -1109,6 +1142,238 @@ namespace Vaux.DbContext
                 });
             }
 
+            for (int i = 0; i < 50; i++)
+            {
+                var category = RandomElement(categories);
+                var expert = RandomElement(experts);
+                var id = items.Count + 1;
+
+                var item = new Item()
+                {
+                    Id = id,
+                    Status = ItemStatus.RE_AUCTION_PENDING,
+                    SellerId = RandomElement(sellers).Id,
+                    ExpertId = expert.Id,
+                    CategoryId = category.Id,
+                    Name = category.Name + " " + id,
+                    Description = ITEM_DESCRIPTION,
+                    ThumbnailId = RandomElement(itemImages.ToArray()).Id,
+                };
+                items.Add(item);
+
+                var auctionSessionItem = new
+                {
+                    AuctionSessionsId = _random.Next(7, 9),
+                    ItemsId = id,
+                };
+                auctionSessionItemTable.Add(auctionSessionItem);
+
+                var properties = new ItemProperty[]
+                {
+                    new()
+                    {
+                        Id = itemProperties.Count + 1,
+                        Label = "Chiều dài",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 2,
+                        Label = "Chiều rộng",
+                        Value = $"{_random.Next(20)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 3,
+                        Label = "Chiều cao",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 4,
+                        Label = "Cân nặng",
+                        Value = $"{_random.Next(500, 5000)}g",
+                        ItemId = id,
+                    },
+                };
+                itemProperties.AddRange(properties);
+
+                Image[] images = RandomElements(itemImages.ToArray(), 5);
+                for (int j = 0; j < 5; j++)
+                {
+                    var imageItem = new
+                    {
+                        ImagesId = images[j].Id,
+                        ItemsId = id,
+                    };
+                    imageItemsTable.Add(imageItem);
+                }
+
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = expert.Id,
+                    StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
+                    StatusTo = ItemStatus.AUCTION_PENDING.ToString(),
+                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá"
+                });
+
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = 1,
+                    StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),
+                    StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
+                    StatusChangeReason = "Start auction"
+                });
+
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = 1,
+                    StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
+                    StatusTo = ItemStatus.RE_AUCTION_PENDING.ToString(),
+                    StatusChangeReason = $"Item auction failed"
+                });
+            }
+
+
+            for (int i = 0; i < 50; i++)
+            {
+                var category = RandomElement(categories);
+                var expert = RandomElement(experts);
+                var id = items.Count + 1;
+
+                var item = new Item()
+                {
+                    Id = id,
+                    Status = ItemStatus.RE_AUCTION_PENDING,
+                    SellerId = RandomElement(sellers).Id,
+                    ExpertId = expert.Id,
+                    CategoryId = category.Id,
+                    Name = category.Name + " " + id,
+                    Description = ITEM_DESCRIPTION,
+                    ThumbnailId = RandomElement(itemImages.ToArray()).Id,
+                };
+                items.Add(item);
+
+                int sessionId = _random.Next(7, 9);
+
+                List<Bid> bidsLocal = new();
+                for (int j = 0; j < 50; j++)
+                {
+                    var bid = new Bid()
+                    {
+                        Id = bids.Count + 1,
+                        ItemId = item.Id,
+                        Amount = _random.Next(50000, 50000000),
+                        AuctionSessionId = sessionId,
+                        UserId = RandomElement(users.ToArray()).Id
+                    };
+                    bids.Add(bid);
+                    bidsLocal.Add(bid);
+                }
+
+                item.HighestBidId = bidsLocal.Aggregate((i1, i2) => i1.Amount > i2.Amount ? i1 : i2).Id;
+
+                var auctionSessionItem = new
+                {
+                    AuctionSessionsId = sessionId,
+                    ItemsId = id,
+                };
+                auctionSessionItemTable.Add(auctionSessionItem);
+
+                var properties = new ItemProperty[]
+                {
+                    new()
+                    {
+                        Id = itemProperties.Count + 1,
+                        Label = "Chiều dài",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 2,
+                        Label = "Chiều rộng",
+                        Value = $"{_random.Next(20)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 3,
+                        Label = "Chiều cao",
+                        Value = $"{_random.Next(50)}cm",
+                        ItemId = id,
+                    },
+                    new()
+                    {
+                        Id = itemProperties.Count + 4,
+                        Label = "Cân nặng",
+                        Value = $"{_random.Next(500, 5000)}g",
+                        ItemId = id,
+                    },
+                };
+                itemProperties.AddRange(properties);
+
+                Image[] images = RandomElements(itemImages.ToArray(), 5);
+                for (int j = 0; j < 5; j++)
+                {
+                    var imageItem = new
+                    {
+                        ImagesId = images[j].Id,
+                        ItemsId = id,
+                    };
+                    imageItemsTable.Add(imageItem);
+                }
+
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = expert.Id,
+                    StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
+                    StatusTo = ItemStatus.AUCTION_PENDING.ToString(),
+                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá"
+                });
+
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = 1,
+                    StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),
+                    StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
+                    StatusChangeReason = "Start auction"
+                });
+
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = 1,
+                    StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
+                    StatusTo = ItemStatus.PAYMENT_PENDING.ToString(),
+                    StatusChangeReason = $"Item won by user {bids.First(e => e.Id == item.HighestBidId).UserId}"
+                });
+
+                statusChanges.Add(new StatusChange()
+                {
+                    Id = statusChanges.Count + 1,
+                    ItemId = id,
+                    StatusChangedById = 1,
+                    StatusFrom = ItemStatus.PAYMENT_PENDING.ToString(),
+                    StatusTo = ItemStatus.RE_AUCTION_PENDING.ToString(),
+                    StatusChangeReason = $"User {bids.First(e => e.Id == item.HighestBidId).UserId} did not pay"
+                });
+            }
+
             List<Order> orders = new();
             List<Item> soldItems = items.Where(e => e.Status == ItemStatus.PAID).ToList();
             List<User> wonUsers = users.Where(e => bids.Where(b => soldItems.Select(i => i.HighestBidId).Contains(b.Id)).Select(b => b.UserId).Contains(e.Id)).ToList();
@@ -1165,6 +1430,13 @@ namespace Vaux.DbContext
                 orders.Add(order);
             }
 
+            foreach (var item in items.Where(e => e.Status == ItemStatus.PAID || e.Status == ItemStatus.RE_AUCTION_PENDING))
+            {
+                if (item.HighestBidId == null) continue;
+                var highestBid = bids.First(e => e.Id == item.HighestBidId);
+                item.WonDate = auctionSessions.First(e => e.Id == highestBid.AuctionSessionId).EndDate;
+            }
+
             /*
              * Due to circular reference between Bid.ItemId and Item.HighestBidId, the migration cannot be created.
              * I settled for the next best thing which was to accept some inconsistencies in our data by setting Iten.HighestBidId to null (Bid.ItemId was more important)
@@ -1179,16 +1451,16 @@ namespace Vaux.DbContext
             modelBuilder.Entity<AuctionSession>().HasData(auctionSessions);
             modelBuilder.Entity<User>().HasData(users);
             modelBuilder.Entity<Image>().HasData(idImages);
-            modelBuilder.Entity<Image>().HasData(itemImages);
             modelBuilder.Entity<SellerApplication>().HasData(sellerApplications);
+            modelBuilder.Entity<Image>().HasData(itemImages);
+            modelBuilder.Entity<Order>().HasData(orders);
+            modelBuilder.Entity<Shipment>().HasData(shipments);
             modelBuilder.Entity<Item>().HasData(items);
             modelBuilder.Entity<StatusChange>().HasData(statusChanges);
             modelBuilder.Entity<ItemProperty>().HasData(itemProperties);
             modelBuilder.Entity("ImageItem").HasData(imageItemsTable);
             modelBuilder.Entity("AuctionSessionItem").HasData(auctionSessionItemTable);
             modelBuilder.Entity<Bid>().HasData(bids);
-            modelBuilder.Entity<Order>().HasData(orders);
-            modelBuilder.Entity<Shipment>().HasData(shipments);
             modelBuilder.Entity<ItemPayment>().HasData(itemPayments);
         }
 
