@@ -471,7 +471,7 @@ namespace Vaux.DbContext
             };
 
             List<AuctionSession> auctionSessions = new();
-            DateTime start = new DateTime(2023, 12, 4);
+            DateTime start = new DateTime(2023, 12, 4).Date;
             for (int i = 0; i < 5; i++)
             {
                 auctionSessions.Add(new AuctionSession()
@@ -489,27 +489,30 @@ namespace Vaux.DbContext
                 EndDate = new DateTime(2024, 1, 1).AddHours(19),
                 Status = AuctionSessionStatus.ONGOING,
             });
-            auctionSessions.Add(new AuctionSession()
+            List<AuctionSession> endedAuctions = new();
+            endedAuctions.Add(new AuctionSession()
             {
                 Id = 7,
                 StartDate = start.AddHours(7),
                 EndDate = start.AddDays(6).AddHours(19),
                 Status = AuctionSessionStatus.FINISHED,
             });
-            auctionSessions.Add(new AuctionSession()
+            endedAuctions.Add(new AuctionSession()
             {
                 Id = 8,
                 StartDate = start.AddHours(7),
                 EndDate = start.AddDays(7 + 6).AddHours(19),
                 Status = AuctionSessionStatus.FINISHED,
             });
-            auctionSessions.Add(new AuctionSession()
+            endedAuctions.Add(new AuctionSession()
             {
                 Id = 9,
                 StartDate = start.AddHours(7),
                 EndDate = start.AddDays(14 + 6).AddHours(19),
                 Status = AuctionSessionStatus.FINISHED,
             });
+
+            auctionSessions.AddRange(endedAuctions);
 
             List<User> users = new List<User>
             {
@@ -1031,7 +1034,7 @@ namespace Vaux.DbContext
                 };
                 items.Add(item);
 
-                int sessionId = _random.Next(7, 9);
+                int sessionId = RandomElement(endedAuctions.ToArray()).Id;
 
                 List<Bid> bidsLocal = new();
                 for (int j = 0; j < 50; j++)
@@ -1163,7 +1166,7 @@ namespace Vaux.DbContext
 
                 var auctionSessionItem = new
                 {
-                    AuctionSessionsId = _random.Next(7, 9),
+                    AuctionSessionsId = RandomElement(endedAuctions.ToArray()).Id,
                     ItemsId = id,
                 };
                 auctionSessionItemTable.Add(auctionSessionItem);
@@ -1263,7 +1266,7 @@ namespace Vaux.DbContext
                 };
                 items.Add(item);
 
-                int sessionId = _random.Next(7, 9);
+                int sessionId = RandomElement(endedAuctions.ToArray()).Id;
 
                 List<Bid> bidsLocal = new();
                 for (int j = 0; j < 50; j++)
