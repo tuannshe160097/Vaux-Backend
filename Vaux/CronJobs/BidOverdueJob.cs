@@ -40,6 +40,8 @@ namespace Vaux.CronJobs
 
                 _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã được đưa lại vào danh sách chờ do người mua không trả tiền");
 
+                var report = item.HighestBid.AuctionSession!.Report!;
+                report.UnpaidItems++;
 
                 item.HighestBid = null;
                 item.WonDate = null;
