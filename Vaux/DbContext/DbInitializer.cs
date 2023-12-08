@@ -471,6 +471,7 @@ namespace Vaux.DbContext
             };
 
             List<AuctionSession> auctionSessions = new();
+            List<AuctionSessionReport> auctionSessionsReport = new();
             DateTime start = new DateTime(2023, 12, 4).Date;
             for (int i = 0; i < 5; i++)
             {
@@ -489,6 +490,7 @@ namespace Vaux.DbContext
                 EndDate = new DateTime(2024, 1, 1).AddHours(19),
                 Status = AuctionSessionStatus.ONGOING,
             });
+
             List<AuctionSession> endedAuctions = new();
             endedAuctions.Add(new AuctionSession()
             {
@@ -496,20 +498,37 @@ namespace Vaux.DbContext
                 StartDate = start.AddHours(7),
                 EndDate = start.AddDays(6).AddHours(19),
                 Status = AuctionSessionStatus.FINISHED,
+                ReportId = auctionSessionsReport.Count() + 1
             });
+            auctionSessionsReport.Add(new AuctionSessionReport()
+            {
+                Id = auctionSessionsReport.Count() + 1,
+            });
+
             endedAuctions.Add(new AuctionSession()
             {
                 Id = 8,
                 StartDate = start.AddHours(7),
                 EndDate = start.AddDays(7 + 6).AddHours(19),
                 Status = AuctionSessionStatus.FINISHED,
+                ReportId = auctionSessionsReport.Count() + 1
             });
+            auctionSessionsReport.Add(new AuctionSessionReport()
+            {
+                Id = auctionSessionsReport.Count() + 1,
+            });
+
             endedAuctions.Add(new AuctionSession()
             {
                 Id = 9,
                 StartDate = start.AddHours(7),
                 EndDate = start.AddDays(14 + 6).AddHours(19),
                 Status = AuctionSessionStatus.FINISHED,
+                ReportId = auctionSessionsReport.Count() + 1
+            });
+            auctionSessionsReport.Add(new AuctionSessionReport()
+            {
+                Id = auctionSessionsReport.Count() + 1,
             });
 
             auctionSessions.AddRange(endedAuctions);
@@ -1034,7 +1053,8 @@ namespace Vaux.DbContext
                 };
                 items.Add(item);
 
-                int sessionId = RandomElement(endedAuctions.ToArray()).Id;
+                var session = RandomElement(endedAuctions.ToArray());
+                var report = auctionSessionsReport.First(e => e.Id == session.ReportId);
 
                 List<Bid> bidsLocal = new();
                 for (int j = 0; j < 50; j++)
@@ -1044,18 +1064,19 @@ namespace Vaux.DbContext
                         Id = bids.Count + 1,
                         ItemId = item.Id,
                         Amount = _random.Next(50000, 50000000),
-                        AuctionSessionId = sessionId,
+                        AuctionSessionId = session.Id,
                         UserId = RandomElement(users.ToArray()).Id
                     };
                     bids.Add(bid);
                     bidsLocal.Add(bid);
+                    report.ActiveBids++;
                 }
 
                 item.HighestBidId = bidsLocal.Aggregate((i1, i2) => i1.Amount > i2.Amount ? i1 : i2).Id;
 
                 var auctionSessionItem = new
                 {
-                    AuctionSessionsId = sessionId,
+                    AuctionSessionsId = session.Id,
                     ItemsId = id,
                 };
                 auctionSessionItemTable.Add(auctionSessionItem);
@@ -1143,6 +1164,10 @@ namespace Vaux.DbContext
                     StatusTo = ItemStatus.PAID.ToString(),
                     StatusChangeReason = $"Changed status from {nameof(ItemStatus.PAYMENT_PENDING)} to {nameof(ItemStatus.PAID)}"
                 });
+
+                report.AuctionedItems++;
+                report.SoldItems++;
+                report.ActiveItems++;
             }
 
             for (int i = 0; i < 50; i++)
@@ -1164,9 +1189,10 @@ namespace Vaux.DbContext
                 };
                 items.Add(item);
 
+                var session = RandomElement(endedAuctions.ToArray());
                 var auctionSessionItem = new
                 {
-                    AuctionSessionsId = RandomElement(endedAuctions.ToArray()).Id,
+                    AuctionSessionsId = session.Id,
                     ItemsId = id,
                 };
                 auctionSessionItemTable.Add(auctionSessionItem);
@@ -1244,6 +1270,10 @@ namespace Vaux.DbContext
                     StatusTo = ItemStatus.RE_AUCTION_PENDING.ToString(),
                     StatusChangeReason = $"Item auction failed"
                 });
+
+                var report = auctionSessionsReport.First(e => e.Id == session.ReportId);
+                report.UnauctionedItems++;
+                report.ActiveItems++;
             }
 
 
@@ -1266,7 +1296,8 @@ namespace Vaux.DbContext
                 };
                 items.Add(item);
 
-                int sessionId = RandomElement(endedAuctions.ToArray()).Id;
+                var session = RandomElement(endedAuctions.ToArray());
+                var report = auctionSessionsReport.First(e => e.Id == session.ReportId);
 
                 List<Bid> bidsLocal = new();
                 for (int j = 0; j < 50; j++)
@@ -1276,18 +1307,19 @@ namespace Vaux.DbContext
                         Id = bids.Count + 1,
                         ItemId = item.Id,
                         Amount = _random.Next(50000, 50000000),
-                        AuctionSessionId = sessionId,
+                        AuctionSessionId = session.Id,
                         UserId = RandomElement(users.ToArray()).Id
                     };
                     bids.Add(bid);
                     bidsLocal.Add(bid);
+                    report.ActiveBids++;
                 }
 
                 item.HighestBidId = bidsLocal.Aggregate((i1, i2) => i1.Amount > i2.Amount ? i1 : i2).Id;
 
                 var auctionSessionItem = new
                 {
-                    AuctionSessionsId = sessionId,
+                    AuctionSessionsId = session.Id,
                     ItemsId = id,
                 };
                 auctionSessionItemTable.Add(auctionSessionItem);
@@ -1375,6 +1407,10 @@ namespace Vaux.DbContext
                     StatusTo = ItemStatus.RE_AUCTION_PENDING.ToString(),
                     StatusChangeReason = $"User {bids.First(e => e.Id == item.HighestBidId).UserId} did not pay"
                 });
+
+                report.AuctionedItems++;
+                report.UnpaidItems++;
+                report.ActiveItems++;
             }
 
             List<Order> orders = new();
@@ -1429,6 +1465,9 @@ namespace Vaux.DbContext
                         Revenue = CalculateRevenue(highestBid.Amount),
                     };
                     itemPayments.Add(itemPayment);
+
+                    var report = auctionSessionsReport.First(e => e.Id == auctionSessions.First(e => e.Id == highestBid.AuctionSessionId).ReportId);
+                    report.TotalRevenue += itemPayment.Revenue;
                 }
                 orders.Add(order);
             }
@@ -1437,7 +1476,15 @@ namespace Vaux.DbContext
             {
                 if (item.HighestBidId == null) continue;
                 var highestBid = bids.First(e => e.Id == item.HighestBidId);
-                item.WonDate = auctionSessions.First(e => e.Id == highestBid.AuctionSessionId).EndDate;
+                var date = auctionSessions.First(e => e.Id == highestBid.AuctionSessionId).EndDate;
+                item.WonDate = date;
+            }
+
+            foreach (var auc in endedAuctions)
+            {
+                var report = auctionSessionsReport.First(e => e.Id == auc.ReportId);
+                report.ActiveSellers = items.Where(e => bids.FirstOrDefault(b => b.Id == e.HighestBidId)?.AuctionSessionId == auc.Id).GroupBy(e => e.SellerId).Count();
+                report.ActiveBidders = bids.Where(e => e.AuctionSessionId == auc.Id).GroupBy(e => e.UserId).Count();
             }
 
             /*
@@ -1452,6 +1499,7 @@ namespace Vaux.DbContext
             modelBuilder.Entity<Role>().HasData(roles);
             modelBuilder.Entity<Category>().HasData(categories);
             modelBuilder.Entity<AuctionSession>().HasData(auctionSessions);
+            modelBuilder.Entity<AuctionSessionReport>().HasData(auctionSessionsReport);
             modelBuilder.Entity<User>().HasData(users);
             modelBuilder.Entity<Image>().HasData(idImages);
             modelBuilder.Entity<SellerApplication>().HasData(sellerApplications);

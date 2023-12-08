@@ -27,13 +27,32 @@ namespace Vaux.CronJobs
             var eligibleAuctions = _vxDbc.AuctionSessions.Where(e => e.EndDate.Date == DateTime.Today).ToList();
             foreach (var auc in eligibleAuctions)
             {
+                AuctionSessionReport report = new AuctionSessionReport()
+                {
+                    AuctionedItems = 0,
+                    SoldItems = 0,
+                    UnauctionedItems = 0,
+                    UnpaidItems = 0,
+                    ActiveItems = 0,
+                    ActiveBids = 0,
+                    ActiveBidders = 0,
+                    ActiveSellers = 0,
+                    TotalRevenue = 0,
+                };
+                auc.Report = report;
                 auc.Status = AuctionSessionStatus.FINISHED;
+
+                report.ActiveBidders = _vxDbc.Bids.Where(e => e.AuctionSessionId == auc.Id).GroupBy(e => e.UserId).Count();
+                report.ActiveSellers = auc.Items!.GroupBy(e => e.SellerId).Count();
 
                 foreach (var item in auc.Items!)
                 {
+                    report.ActiveItems++;
+                    report.ActiveBids += item.Bids!.Count;
                     var highestBid = item.HighestBid;
                     if (highestBid?.Amount >= item.ReservePrice)
                     {
+                        report.AuctionedItems++;
                         item.Status = ItemStatus.PAYMENT_PENDING;
                         item.OngoingSession = null;
                         item.StatusChanges!.Add(new StatusChange()
@@ -53,6 +72,7 @@ namespace Vaux.CronJobs
                     }
                     else
                     {
+                        report.UnauctionedItems++;
                         item.Status = ItemStatus.RE_AUCTION_PENDING;
                         item.StatusChanges!.Add(new StatusChange()
                         {
@@ -61,6 +81,8 @@ namespace Vaux.CronJobs
                             StatusChangedById = 1,
                             StatusChangeReason = $"Item auction failed"
                         });
+
+                        item.HighestBid = null;
 
                         _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã không được đấu giá thành công");
                     }

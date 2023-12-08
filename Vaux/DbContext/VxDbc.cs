@@ -130,6 +130,7 @@
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<AuctionSession> AuctionSessions { get; set; }
+        public DbSet<AuctionSessionReport> AuctionSessionReport { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<ItemPayment> ItemPayments { get; set;}

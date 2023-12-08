@@ -9,6 +9,9 @@ namespace Vaux.Models
 
         public AuctionSessionStatus Status { get; set; }
 
+        public int? ReportId { get; set; }
+        public virtual AuctionSessionReport? Report { get; set; }
+
         public virtual ICollection<Item>? Items { get; set; }
     }
 }

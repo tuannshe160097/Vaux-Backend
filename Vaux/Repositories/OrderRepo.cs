@@ -88,6 +88,10 @@ namespace Vaux.Repositories
                         ExpertPayout = CalculateExpertPayment(item.HighestBid!.Amount),
                         Revenue = CalculateRevenue(item.HighestBid!.Amount),
                     };
+
+                    var report = item.HighestBid.AuctionSession!.Report;
+                    report!.TotalRevenue += item.ItemPayment.Revenue;
+                    report.SoldItems++;
                 }
             }
 
