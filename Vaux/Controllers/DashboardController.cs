@@ -47,7 +47,7 @@ namespace Vaux.Controllers
 
             res.Add("Result",
                 query.Where(e => e.Status == ItemStatus.PAID)
-                    .GroupBy(e => e.WonDate)
+                    .GroupBy(e => e.WonDate!.Value.Date)
                     .Select(e => new { Day = e.Key, Count = e.Count() })
                     .ToArray());
 
@@ -64,7 +64,7 @@ namespace Vaux.Controllers
 
             res.Add("Result",
                 query.Where(e => e.StatusTo == ItemStatus.RE_AUCTION_PENDING.ToString())
-                    .GroupBy(e => e.Created)
+                    .GroupBy(e => e.Created.Date)
                     .Select(e => new { Day = e.Key, Count = e.Count() })
                     .ToArray());
 
@@ -81,7 +81,7 @@ namespace Vaux.Controllers
 
             res.Add("Result",
                 query.Where(e => e.StatusFrom == ItemStatus.PAYMENT_PENDING.ToString() && e.StatusTo == ItemStatus.RE_AUCTION_PENDING.ToString())
-                    .GroupBy(e => e.Created)
+                    .GroupBy(e => e.Created.Date)
                     .Select(e => new { Day = e.Key, Count = e.Count() })
                     .ToArray());
 
