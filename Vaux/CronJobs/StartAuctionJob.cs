@@ -14,12 +14,14 @@ namespace Vaux.CronJobs
         private readonly VxDbc _vxDbc;
         private readonly ILogger<StartAuctionJob> _logger;
         private readonly INotificationRepo _notificationRepo;
+        private readonly IConfiguration _configuration;
 
-        public StartAuctionJob(VxDbc vxDbc, ILogger<StartAuctionJob> logger, INotificationRepo notificationRepo)
+        public StartAuctionJob(VxDbc vxDbc, ILogger<StartAuctionJob> logger, INotificationRepo notificationRepo, IConfiguration configuration)
         {
             _vxDbc = vxDbc;
             _logger = logger;
             _notificationRepo = notificationRepo;
+            _configuration = configuration;
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -41,7 +43,7 @@ namespace Vaux.CronJobs
                         StatusChangeReason = "Start auction"
                     });
 
-                    _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã bắt đầu được đấu giá");
+                    _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã bắt đầu được đấu giá", $"{_configuration["JWT:Audience"]}/seller/detail?itemId={item.Id}");
                 }
             }
 

@@ -16,11 +16,13 @@ namespace Vaux.Controllers
     {
         private readonly IItemRepo _itemRepo;
         private readonly INotificationRepo _notificationRepo;
+        private readonly IConfiguration _configuration;
 
-        public ItemModController(IItemRepo itemRepo, INotificationRepo notificationRepo)
+        public ItemModController(IItemRepo itemRepo, INotificationRepo notificationRepo, IConfiguration configuration)
         {
             _itemRepo = itemRepo;
             _notificationRepo = notificationRepo;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -66,7 +68,7 @@ namespace Vaux.Controllers
                 return BadRequest("Sản phẩm không tồn tại!");
             }
 
-            _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi quản trị viên");
+            _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật bởi quản trị viên", $"{_configuration["JWT:Audience"]}/seller/detail?itemId={i.Id}");
 
             return Ok(_itemRepo.Update<ItemWithBidsOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
@@ -129,7 +131,7 @@ namespace Vaux.Controllers
 
             i.ExpertId = null;
 
-            _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đang chờ xử lý");
+            _notificationRepo.Create<Notification>(e => e.Id == i.SellerId, $"Đăng ký sản phẩm \"{i.Name}\" đang chờ xử lý", $"{_configuration["JWT:Audience"]}/seller/detail?itemId={i.Id}");
 
             return Ok(_itemRepo.Update<ItemWithBidsOutDTO, Item>(e => e.Id == id, i));
         }
