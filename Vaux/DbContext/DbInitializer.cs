@@ -547,33 +547,33 @@ namespace Vaux.DbContext
                 {
                     Id = 2,
                     RoleId = (int)RoleId.MODERATOR,
-                    Name = "Admin",
-                    Phone = "08550684901",
-                    Email = "1@fpt.edu.vn"
+                    Name = "HaiPKH",
+                    Phone = "0858617701",
+                    Email = "haipkh@fpt.com"
                 },
                 new User()
                 {
                     Id = 3,
                     RoleId = (int)RoleId.MODERATOR,
-                    Name = "Admin",
-                    Phone = "08550684902",
-                    Email = "2@fpt.edu.vn"
+                    Name = "AnhLT",
+                    Phone = "0522909921",
+                    Email = "anhlthe150222@fpt.edu.vn"
                 },
                 new User()
                 {
                     Id = 4,
                     RoleId = (int)RoleId.MODERATOR,
-                    Name = "Admin",
-                    Phone = "08550684903",
-                    Email = "3@fpt.edu.vn"
+                    Name = "HuongNC",
+                    Phone = "0868196943",
+                    Email = "huongnche153002@fpt.edu.vn"
                 },
                 new User()
                 {
                     Id = 5,
                     RoleId = (int)RoleId.MODERATOR,
-                    Name = "Admin",
-                    Phone = "08550684904",
-                    Email = "4@fpt.edu.vn"
+                    Name = "MinhTA",
+                    Phone = "0949566063",
+                    Email = "minhtahe153458@fpt.edu.vn"
                 }
             };
 
