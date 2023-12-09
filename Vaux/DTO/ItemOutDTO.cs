@@ -15,10 +15,10 @@ namespace Vaux.DTO
         public CategoryDTO Category { get; set; }
 
         public int SellerId { get; set; }
-        public UserMinimalDTO Seller { get; set; }
+        public UserOutMinimalDTO Seller { get; set; }
 
         public int? ExpertId { get; set; }
-        public UserMinimalDTO? Expert { get; set; }
+        public UserOutMinimalDTO? Expert { get; set; }
 
         public string Description { get; set; }
 
@@ -26,7 +26,7 @@ namespace Vaux.DTO
 
         public BidOutDTO? HighestBid { get; set; }
 
-        public int? OngoingSessionId { get; set; }
+        public AuctionSessionMinimalDTO? OngoingSession { get; set; }
         public ICollection<AuctionSessionMinimalDTO>? AuctionSessions { get; set; }
 
         public List<int>? Images { get; set; }

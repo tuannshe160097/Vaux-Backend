@@ -19,9 +19,9 @@ namespace Vaux.DTO
         //public ItemOutDTO? Item { get; set; }
 
         public int? ExpertPaymentApprovedById { get; set; }
-        public UserMinimalDTO? ExpertPaymentApprovedBy { get; set; }
+        public UserOutMinimalDTO? ExpertPaymentApprovedBy { get; set; }
 
         public int? SellerPaymentApprovedById { get; set; }
-        public UserMinimalDTO? SellerPaymentApprovedBy { get; set; }
+        public UserOutMinimalDTO? SellerPaymentApprovedBy { get; set; }
     }
 }

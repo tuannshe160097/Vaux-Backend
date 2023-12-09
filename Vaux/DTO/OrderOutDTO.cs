@@ -10,7 +10,7 @@ namespace Vaux.DTO
         public OrderStatus Status { get; set; }
 
         public int UserId { get; set; }
-        public UserMinimalDTO User { get; set; }
+        public UserOutMinimalDTO User { get; set; }
 
         public string ReceiverName { get; set; }
         public string ReceiverPhone { get; set; }
