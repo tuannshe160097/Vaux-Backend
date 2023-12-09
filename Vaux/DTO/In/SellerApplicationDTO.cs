@@ -19,7 +19,7 @@ namespace Vaux.DTO
         public string Content { get; set; }
 
         [MaxLength(64)]
-        [RegularExpression(@"@")]
+        [RegularExpression(@".*@")]
         public string Email { get; set; }
 
         [MaxLength(100)]
