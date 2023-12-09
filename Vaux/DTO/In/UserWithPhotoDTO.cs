@@ -13,7 +13,7 @@ namespace Vaux.DTO
         public string Phone { get; set; }
 
         [MaxLength(64)]
-        [RegularExpression(@"@")]
+        [RegularExpression(@".*@")]
         public string Email { get; set; }
 
         [MaxLength(100)]
