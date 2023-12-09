@@ -14,12 +14,14 @@ namespace Vaux.CronJobs
         private readonly VxDbc _vxDbc;
         private readonly ILogger<EndAuctionJob> _logger;
         private readonly INotificationRepo _notificationRepo;
+        private readonly IConfiguration _configuration;
 
-        public EndAuctionJob(VxDbc vxDbc, ILogger<EndAuctionJob> logger, INotificationRepo notificationRepo)
+        public EndAuctionJob(VxDbc vxDbc, ILogger<EndAuctionJob> logger, INotificationRepo notificationRepo, IConfiguration configuration)
         {
             _vxDbc = vxDbc;
             _logger = logger;
             _notificationRepo = notificationRepo;
+            _configuration = configuration;
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -66,9 +68,9 @@ namespace Vaux.CronJobs
                         item.WonDate = DateTime.Today;
                         item.PaymentDueDate = DateTime.Today.AddDays(7);
 
-                        _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã được đấu giá thành công");
+                        _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã được đấu giá thành công", $"{_configuration["JWT:Audience"]}/seller/detail?itemId={item.Id}");
 
-                        _notificationRepo.Create<Notification>(e => e.Id == highestBid.UserId, $"Bạn đã thắng được sản phẩm {item.Name}");
+                        _notificationRepo.Create<Notification>(e => e.Id == highestBid.UserId, $"Bạn đã thắng được sản phẩm {item.Name}", $"{_configuration["JWT:Audience"]}/account/items");
                     }
                     else
                     {
@@ -84,7 +86,7 @@ namespace Vaux.CronJobs
 
                         item.HighestBid = null;
 
-                        _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã không được đấu giá thành công");
+                        _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã không được đấu giá thành công", $"{_configuration["JWT:Audience"]}/seller/detail?itemId={item.Id}");
                     }
                 }
             }

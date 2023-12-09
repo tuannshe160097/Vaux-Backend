@@ -17,11 +17,13 @@ namespace Vaux.Controllers
     {
         private readonly IItemRepo _itemRepo;
         private readonly INotificationRepo _notificationRepo;
+        private readonly IConfiguration _configuration;
 
-        public ItemApplicationController(IItemRepo itemRepo, INotificationRepo notificationRepo)
+        public ItemApplicationController(IItemRepo itemRepo, INotificationRepo notificationRepo, IConfiguration configuration)
         {
             _itemRepo = itemRepo;
             _notificationRepo = notificationRepo;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -76,7 +78,7 @@ namespace Vaux.Controllers
 
             if (i.ExpertId != null)
             {
-                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh");
+                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh", $"{_configuration["JWT:Audience"]}/expert/items/view?itemId={i.Id}");
             }
 
             return Ok(_itemRepo.EditThumbnail<ItemWithBidsOutDTO>(e => e.Id == id, thumbnail.Image));
@@ -95,7 +97,7 @@ namespace Vaux.Controllers
 
             if (i.ExpertId != null)
             {
-                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh");
+                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh", $"{_configuration["JWT:Audience"]}/expert/items/view?itemId={i.Id}");
             }
 
             var res = _itemRepo.AddImages<ItemWithBidsOutDTO>(e => e.Id == id, images.Images);
@@ -130,7 +132,7 @@ namespace Vaux.Controllers
 
             if (i.ExpertId != null)
             {
-                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật");
+                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật", $"{_configuration["JWT:Audience"]}/expert/items/view?itemId={i.Id}");
             }
 
             return Ok(_itemRepo.Update<ItemWithBidsOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
@@ -162,7 +164,7 @@ namespace Vaux.Controllers
 
             if (i.ExpertId != null)
             {
-                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã bị xóa");
+                _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã bị xóa", $"{_configuration["JWT:Audience"]}/expert/items/view?itemId={i.Id}");
             }
 
             return Ok(_itemRepo.Delete<ItemWithBidsOutDTO>(e => e.Id == id));
