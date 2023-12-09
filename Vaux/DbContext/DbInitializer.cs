@@ -492,46 +492,24 @@ namespace Vaux.DbContext
             });
 
             List<AuctionSession> endedAuctions = new();
-            endedAuctions.Add(new AuctionSession()
+            for (int i = 0; i < 5; i++)
             {
-                Id = 7,
-                StartDate = start.AddHours(7),
-                EndDate = start.AddDays(6).AddHours(19),
-                Status = AuctionSessionStatus.FINISHED,
-                ReportId = auctionSessionsReport.Count() + 1
-            });
-            auctionSessionsReport.Add(new AuctionSessionReport()
-            {
-                Id = auctionSessionsReport.Count() + 1,
-            });
+                var auc = new AuctionSession()
+                {
+                    Id = auctionSessions.Count + 1,
+                    StartDate = start.AddMonths((i+1) * -1).AddHours(7),
+                    EndDate = start.AddMonths((i+1) * -1).AddDays(6).AddHours(19),
+                    Status = AuctionSessionStatus.FINISHED,
+                    ReportId = auctionSessionsReport.Count() + 1,
+                };
+                auctionSessions.Add(auc);
+                endedAuctions.Add(auc);
 
-            endedAuctions.Add(new AuctionSession()
-            {
-                Id = 8,
-                StartDate = start.AddHours(7),
-                EndDate = start.AddDays(7 + 6).AddHours(19),
-                Status = AuctionSessionStatus.FINISHED,
-                ReportId = auctionSessionsReport.Count() + 1
-            });
-            auctionSessionsReport.Add(new AuctionSessionReport()
-            {
-                Id = auctionSessionsReport.Count() + 1,
-            });
-
-            endedAuctions.Add(new AuctionSession()
-            {
-                Id = 9,
-                StartDate = start.AddHours(7),
-                EndDate = start.AddDays(14 + 6).AddHours(19),
-                Status = AuctionSessionStatus.FINISHED,
-                ReportId = auctionSessionsReport.Count() + 1
-            });
-            auctionSessionsReport.Add(new AuctionSessionReport()
-            {
-                Id = auctionSessionsReport.Count() + 1,
-            });
-
-            auctionSessions.AddRange(endedAuctions);
+                auctionSessionsReport.Add(new AuctionSessionReport()
+                {
+                    Id = auctionSessionsReport.Count() + 1,
+                });
+            }
 
             List<User> users = new List<User>
             {
