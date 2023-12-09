@@ -35,7 +35,7 @@ namespace Vaux.DTO
         public string? HouseNumber { get; set; }
 
         [MaxLength(256)]
-        public string? Address { get; set; }
+        public string Address { get; set; }
 
         [MaxLength(20)]
         public string Gender { get; set; }
