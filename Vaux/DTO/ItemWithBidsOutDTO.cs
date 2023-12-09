@@ -15,10 +15,10 @@ namespace Vaux.DTO
         public CategoryDTO Category { get; set; }
 
         public int SellerId { get; set; }
-        public UserMinimalDTO Seller { get; set; }
+        public UserOutMinimalDTO Seller { get; set; }
 
         public int? ExpertId { get; set; }
-        public UserMinimalDTO? Expert { get; set; }
+        public UserOutMinimalDTO? Expert { get; set; }
 
         public string Description { get; set; }
 

@@ -5,6 +5,7 @@ namespace Vaux.DTO
 {
     public class UserWithPhotoDTO
     {
+        [MaxLength(40, ErrorMessage = "Tên không thể quá 40 ký tự")]
         public string Name { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }

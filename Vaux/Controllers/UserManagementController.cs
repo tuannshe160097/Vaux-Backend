@@ -81,7 +81,7 @@ namespace Vaux.Controllers
                 return BadRequest("Email đã được sử dụng!");
             }
 
-            var res = _userRepo.Update<User, UserStrictDTO>(e => e.Id == id, profile);
+            var res = _userRepo.Update<UserOutDTO, UserStrictDTO>(e => e.Id == id, profile);
             return Ok(res);
         }
 

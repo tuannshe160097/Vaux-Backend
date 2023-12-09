@@ -91,7 +91,7 @@ namespace Vaux.Controllers
             var res = new AuthorizationDTO
             {
                 JWT = _authRepo.GenerateJWT(u.Id),
-                User = _userRepo.Map<UserMinimalDTO>(u),
+                User = _userRepo.Map<UserOutDTO>(u),
                 Role = u.Role
             };
             return Ok(res);
@@ -107,7 +107,7 @@ namespace Vaux.Controllers
             var res = new AuthorizationDTO
             {
                 JWT = _authRepo.GenerateJWT(u!.Id),
-                User = _userRepo.Map<UserMinimalDTO>(u),
+                User = _userRepo.Map<UserOutDTO>(u),
                 Role = u.Role
             };
             return Ok(res);
