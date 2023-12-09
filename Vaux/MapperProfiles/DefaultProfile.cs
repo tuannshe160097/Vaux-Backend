@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Vaux.DTO;
+using Vaux.DTO.In;
+using Vaux.DTO.Out;
 using Vaux.Models;
 
 namespace Vaux.MapperProfiles

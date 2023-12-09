@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Security.Claims;
 using Twilio.TwiML.Voice;
 using Vaux.DbContext;
-using Vaux.DTO;
+using Vaux.DTO.Out;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;

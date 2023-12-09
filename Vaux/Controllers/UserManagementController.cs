@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Numerics;
 using Vaux.DTO;
+using Vaux.DTO.Out;
 using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories;

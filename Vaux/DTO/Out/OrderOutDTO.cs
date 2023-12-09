@@ -1,7 +1,7 @@
 ﻿using Vaux.Models.Enums;
 using Vaux.Models;
 
-namespace Vaux.DTO
+namespace Vaux.DTO.Out
 {
     public class OrderOutDTO
     {

@@ -1,6 +1,6 @@
 ﻿using Vaux.Models;
 
-namespace Vaux.DTO
+namespace Vaux.DTO.In
 {
     public class AuctionSessionUploadDTO
     {

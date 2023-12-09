@@ -1,4 +1,4 @@
-﻿namespace Vaux.DTO
+﻿namespace Vaux.DTO.Out
 {
     public class CategoryDTO
     {

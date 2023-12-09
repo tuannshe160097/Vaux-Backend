@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Linq.Expressions;
-using Vaux.DTO;
+using Vaux.DTO.Out;
 using Vaux.Models;
 
 namespace Vaux.Repositories.Interface

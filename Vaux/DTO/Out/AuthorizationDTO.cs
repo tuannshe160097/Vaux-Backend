@@ -1,11 +1,11 @@
 ﻿using Vaux.Models;
 
-namespace Vaux.DTO
+namespace Vaux.DTO.Out
 {
     public class AuthorizationDTO
     {
         public string JWT { get; set; }
-        public UserOutDTO User { get; set; }
+        public UserOutMinimalDTO User { get; set; }
         public Role Role { get; set; }
     }
 }

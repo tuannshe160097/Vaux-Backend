@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Vaux.DTO;
+using Vaux.DTO.In;
+using Vaux.DTO.Out;
 using Vaux.Hubs;
 using Vaux.Models;
 using Vaux.Models.Enums;
