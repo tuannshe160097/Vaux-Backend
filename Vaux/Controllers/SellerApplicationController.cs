@@ -146,7 +146,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Đơn đăng ký không tồn tại!");
             }
-            var sam = _userRepo.Get<User>(e => e.Email == i.Email && e.Id.ToString() != User.Identity!.Name);
+            var sam = _userRepo.Get<User>(e => e.Email == i.Email && e.Id != i.UserId);
             if (sam != null)
             {
                 return BadRequest("Email đã được sử dụng!");
