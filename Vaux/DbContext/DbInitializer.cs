@@ -1025,7 +1025,7 @@ namespace Vaux.DbContext
                 {
                     Id = statusChanges.Count + 1,
                     ItemId = id,
-                    StatusChangedById = expert.Id,
+                    StatusChangedById = 1,
                     StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),
                     StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
                     StatusChangeReason = "Start auction"
@@ -1159,7 +1159,7 @@ namespace Vaux.DbContext
                 {
                     Id = statusChanges.Count + 1,
                     ItemId = id,
-                    StatusChangedById = 1,
+                    StatusChangedById = bids.First(e => e.Id == item.HighestBidId).UserId,
                     StatusFrom = ItemStatus.PAYMENT_PENDING.ToString(),
                     StatusTo = ItemStatus.PAID.ToString(),
                     StatusChangeReason = $"Changed status from {nameof(ItemStatus.PAYMENT_PENDING)} to {nameof(ItemStatus.PAID)}"
