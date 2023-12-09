@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 using Vaux.DTO;
+using Vaux.DTO.Out;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
 
@@ -91,7 +92,7 @@ namespace Vaux.Controllers
             var res = new AuthorizationDTO
             {
                 JWT = _authRepo.GenerateJWT(u.Id),
-                User = _userRepo.Map<UserOutDTO>(u),
+                User = _userRepo.Map<UserOutMinimalDTO>(u),
                 Role = u.Role
             };
             return Ok(res);
@@ -107,7 +108,7 @@ namespace Vaux.Controllers
             var res = new AuthorizationDTO
             {
                 JWT = _authRepo.GenerateJWT(u!.Id),
-                User = _userRepo.Map<UserOutDTO>(u),
+                User = _userRepo.Map<UserOutMinimalDTO>(u),
                 Role = u.Role
             };
             return Ok(res);

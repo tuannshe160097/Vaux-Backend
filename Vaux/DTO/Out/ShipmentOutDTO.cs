@@ -1,7 +1,7 @@
 ﻿using Vaux.Models;
 using Vaux.Models.Enums;
 
-namespace Vaux.DTO
+namespace Vaux.DTO.Out
 {
     public class ShipmentOutDTO
     {

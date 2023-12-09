@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vaux.DbContext;
 using Vaux.DTO;
+using Vaux.DTO.Out;
 using Vaux.Models.Enums;
 
 namespace Vaux.Controllers
@@ -48,7 +49,7 @@ namespace Vaux.Controllers
             res.Add("Result",
                 query.Where(e => e.Status == ItemStatus.PAID)
                     .GroupBy(e => e.WonDate!.Value.Month)
-                    .Select(e => new { Day = e.Key, Count = e.Count() })
+                    .Select(e => new { Month = e.Key, Count = e.Count() })
                     .ToArray());
 
             return Ok(res);
@@ -65,7 +66,7 @@ namespace Vaux.Controllers
             res.Add("Result",
                 query.Where(e => e.StatusTo == ItemStatus.RE_AUCTION_PENDING.ToString())
                     .GroupBy(e => e.Created.Month)
-                    .Select(e => new { Day = e.Key, Count = e.Count() })
+                    .Select(e => new { Month = e.Key, Count = e.Count() })
                     .ToArray());
 
             return Ok(res);
@@ -82,7 +83,7 @@ namespace Vaux.Controllers
             res.Add("Result",
                 query.Where(e => e.StatusFrom == ItemStatus.PAYMENT_PENDING.ToString() && e.StatusTo == ItemStatus.RE_AUCTION_PENDING.ToString())
                     .GroupBy(e => e.Created.Month)
-                    .Select(e => new { Day = e.Key, Count = e.Count() })
+                    .Select(e => new { Month = e.Key, Count = e.Count() })
                     .ToArray());
 
             return Ok(res);

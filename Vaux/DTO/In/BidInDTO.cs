@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Vaux.DTO
+namespace Vaux.DTO.In
 {
     public class BidInDto
     {

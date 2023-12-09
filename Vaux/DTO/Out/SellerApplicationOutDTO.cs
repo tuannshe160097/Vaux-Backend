@@ -4,7 +4,7 @@ using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.ValidationAttributes;
 
-namespace Vaux.DTO
+namespace Vaux.DTO.Out
 {
     public class SellerApplicationOutDTO
     {

@@ -1,8 +1,8 @@
 ﻿using Vaux.Models;
 
-namespace Vaux.DTO
+namespace Vaux.DTO.Out
 {
-    public class UserOutMinimalDTO 
+    public class UserOutMinimalDTO
     {
         public int Id { get; set; }
         public DateTime Created { get; set; }

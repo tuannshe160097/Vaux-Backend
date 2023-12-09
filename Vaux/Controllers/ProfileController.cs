@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vaux.DTO;
+using Vaux.DTO.Out;
 using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
