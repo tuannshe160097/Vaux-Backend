@@ -1050,7 +1050,8 @@ namespace Vaux.DbContext
                     report.ActiveBids++;
                 }
 
-                item.HighestBidId = bidsLocal.Aggregate((i1, i2) => i1.Amount > i2.Amount ? i1 : i2).Id;
+                var highestBid = bidsLocal.Aggregate((i1, i2) => i1.Amount > i2.Amount ? i1 : i2);
+                item.HighestBidId = highestBid.Id;
 
                 var auctionSessionItem = new
                 {
@@ -1110,7 +1111,8 @@ namespace Vaux.DbContext
                     StatusChangedById = expert.Id,
                     StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
                     StatusTo = ItemStatus.AUCTION_PENDING.ToString(),
-                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá"
+                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
+                    Created = session.StartDate
                 });
 
                 statusChanges.Add(new StatusChange()
@@ -1120,7 +1122,8 @@ namespace Vaux.DbContext
                     StatusChangedById = 1,
                     StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),
                     StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
-                    StatusChangeReason = "Start auction"
+                    StatusChangeReason = "Start auction",
+                    Created = session.StartDate
                 });
 
                 statusChanges.Add(new StatusChange()
@@ -1130,7 +1133,8 @@ namespace Vaux.DbContext
                     StatusChangedById = 1,
                     StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
                     StatusTo = ItemStatus.PAYMENT_PENDING.ToString(),
-                    StatusChangeReason = $"Item won by user {bids.First(e => e.Id == item.HighestBidId).UserId}"
+                    StatusChangeReason = $"Item won by user {bids.First(e => e.Id == item.HighestBidId).UserId}",
+                    Created = session.EndDate
                 });
 
                 statusChanges.Add(new StatusChange()
@@ -1140,7 +1144,8 @@ namespace Vaux.DbContext
                     StatusChangedById = bids.First(e => e.Id == item.HighestBidId).UserId,
                     StatusFrom = ItemStatus.PAYMENT_PENDING.ToString(),
                     StatusTo = ItemStatus.PAID.ToString(),
-                    StatusChangeReason = $"Changed status from {nameof(ItemStatus.PAYMENT_PENDING)} to {nameof(ItemStatus.PAID)}"
+                    StatusChangeReason = $"Changed status from {nameof(ItemStatus.PAYMENT_PENDING)} to {nameof(ItemStatus.PAID)}",
+                    Created = session.EndDate
                 });
 
                 report.AuctionedItems++;
@@ -1226,7 +1231,8 @@ namespace Vaux.DbContext
                     StatusChangedById = expert.Id,
                     StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
                     StatusTo = ItemStatus.AUCTION_PENDING.ToString(),
-                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá"
+                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
+                    Created = session.StartDate
                 });
 
                 statusChanges.Add(new StatusChange()
@@ -1236,7 +1242,8 @@ namespace Vaux.DbContext
                     StatusChangedById = 1,
                     StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),
                     StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
-                    StatusChangeReason = "Start auction"
+                    StatusChangeReason = "Start auction",
+                    Created = session.StartDate
                 });
 
                 statusChanges.Add(new StatusChange()
@@ -1246,7 +1253,8 @@ namespace Vaux.DbContext
                     StatusChangedById = 1,
                     StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
                     StatusTo = ItemStatus.RE_AUCTION_PENDING.ToString(),
-                    StatusChangeReason = $"Item auction failed"
+                    StatusChangeReason = $"Item auction failed",
+                    Created = session.EndDate
                 });
 
                 var report = auctionSessionsReport.First(e => e.Id == session.ReportId);
@@ -1353,7 +1361,8 @@ namespace Vaux.DbContext
                     StatusChangedById = expert.Id,
                     StatusFrom = ItemStatus.EXAMINATION_PENDING.ToString(),
                     StatusTo = ItemStatus.AUCTION_PENDING.ToString(),
-                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá"
+                    StatusChangeReason = "Đã đạt tiêu chuẩn đấu giá",
+                    Created = session.StartDate
                 });
 
                 statusChanges.Add(new StatusChange()
@@ -1363,7 +1372,8 @@ namespace Vaux.DbContext
                     StatusChangedById = 1,
                     StatusFrom = ItemStatus.AUCTION_PENDING.ToString(),
                     StatusTo = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
-                    StatusChangeReason = "Start auction"
+                    StatusChangeReason = "Start auction",
+                    Created = session.StartDate
                 });
 
                 statusChanges.Add(new StatusChange()
@@ -1373,7 +1383,8 @@ namespace Vaux.DbContext
                     StatusChangedById = 1,
                     StatusFrom = ItemStatus.AUCTION_IN_PROGRESS.ToString(),
                     StatusTo = ItemStatus.PAYMENT_PENDING.ToString(),
-                    StatusChangeReason = $"Item won by user {bids.First(e => e.Id == item.HighestBidId).UserId}"
+                    StatusChangeReason = $"Item won by user {bids.First(e => e.Id == item.HighestBidId).UserId}",
+                    Created = session.EndDate
                 });
 
                 statusChanges.Add(new StatusChange()
@@ -1383,7 +1394,8 @@ namespace Vaux.DbContext
                     StatusChangedById = 1,
                     StatusFrom = ItemStatus.PAYMENT_PENDING.ToString(),
                     StatusTo = ItemStatus.RE_AUCTION_PENDING.ToString(),
-                    StatusChangeReason = $"User {bids.First(e => e.Id == item.HighestBidId).UserId} did not pay"
+                    StatusChangeReason = $"User {bids.First(e => e.Id == item.HighestBidId).UserId} did not pay",
+                    Created = session.EndDate
                 });
 
                 report.AuctionedItems++;
