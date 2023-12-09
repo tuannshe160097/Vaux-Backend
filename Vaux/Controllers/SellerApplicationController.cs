@@ -38,7 +38,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Đơn đăng ký đã tồn tại!");
             }
-            var sam = _userRepo.Get<User>(e => e.Email == sellerApplication.Email);
+            var sam = _userRepo.Get<User>(e => e.Email == sellerApplication.Email && e.Id.ToString() != User.Identity!.Name);
             if(sam != null)
             {
                 return BadRequest("Email đã được sử dụng!");
@@ -146,7 +146,7 @@ namespace Vaux.Controllers
             {
                 return BadRequest("Đơn đăng ký không tồn tại!");
             }
-            var sam = _userRepo.Get<User>(e => e.Email == i.Email);
+            var sam = _userRepo.Get<User>(e => e.Email == i.Email && e.Id.ToString() != User.Identity!.Name);
             if (sam != null)
             {
                 return BadRequest("Email đã được sử dụng!");
