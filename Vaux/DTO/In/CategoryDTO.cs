@@ -1,9 +1,12 @@
-﻿namespace Vaux.DTO.Out
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Vaux.DTO.In
 {
     public class CategoryDTO
     {
-        public int? Id { get; set; }
+        [MaxLength(30)]
         public string Name { get; set; }
+        [MaxLength(256)]
         public string? Description { get; set; }
     }
 }
