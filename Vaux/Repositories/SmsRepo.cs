@@ -9,21 +9,24 @@ namespace Vaux.Repositories
 {
     public class SmsRepo : ISmsRepo
     {
-        public SmsRepo(VxDbc vxDbc)
+        private readonly IConfiguration _config;
+
+        public SmsRepo(IConfiguration config)
         {
+            _config = config;
         }
 
         public void SendSms(string phone, string content)
         {
-            string accountSid = "ACdb5cb630bc0d972abcc437d4c3d5c161";
-            string authToken = "c375876a65b4c7e24199802d94ea5e73";
+            string accountSid = _config["Twilio:SID"]!;
+            string authToken = _config["Twilio:Auth"]!;
             string phoneNum =  "+84" + phone.Remove(0, 1);
 
             TwilioClient.Init(accountSid, authToken);
 
             var message = MessageResource.Create(
                 body: content,
-                from: new Twilio.Types.PhoneNumber("+12567279723"),
+                from: new Twilio.Types.PhoneNumber(_config["Twilio:From"]),
                 to: new Twilio.Types.PhoneNumber(phoneNum)
             );
 
