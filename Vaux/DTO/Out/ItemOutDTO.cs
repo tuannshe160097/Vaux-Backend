@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Vaux.Models.Enums;
 using Vaux.Models;
+using Vaux.DTO.In;
 
 namespace Vaux.DTO.Out
 {
@@ -12,7 +13,7 @@ namespace Vaux.DTO.Out
         public string StatusString { get; set; }
         public long ReservePrice { get; set; }
         public int CategoryId { get; set; }
-        public CategoryDTO Category { get; set; }
+        public CategoryOutDTO Category { get; set; }
 
         public int SellerId { get; set; }
         public UserOutMinimalDTO Seller { get; set; }
