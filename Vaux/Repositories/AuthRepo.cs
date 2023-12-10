@@ -71,6 +71,7 @@ namespace Vaux.Repositories
             string otp = rng.Next(0, 1000000).ToString("D6");
 
             //_smsRepo.SendSms(u.Phone, "Otp của bạn là: " + otp);
+            Console.WriteLine(otp);
 
             u.OtpHash = BCrypt.Net.BCrypt.HashPassword(otp);
             u.OtpExpiry = DateTime.Now.AddMinutes(30);
