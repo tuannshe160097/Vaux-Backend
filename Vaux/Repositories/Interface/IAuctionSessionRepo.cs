@@ -7,5 +7,9 @@ namespace Vaux.Repositories.Interface
     {
         public TOut Create<TOut, TIn>(TIn data, ICollection<int> itemIds);
         public TOut Update<TOut, TIn>(Expression<Func<AuctionSession, bool>> predicate, TIn data, ICollection<int> itemIds);
+        public void StartSession();
+        public void EndSession();
+        public void ForceStartSession(int id);
+        public void ForceEndSession(int id);
     }
 }
