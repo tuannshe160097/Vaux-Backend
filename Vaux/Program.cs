@@ -12,6 +12,8 @@ using Vaux.ServiceConfiguration;
 using Quartz;
 using Quartz.AspNetCore;
 using Vaux.CronJobs;
+using GoogleReCaptcha.V3.Interface;
+using GoogleReCaptcha.V3;
 
 namespace Vaux
 {
@@ -51,6 +53,7 @@ namespace Vaux
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddDbContext<VxDbc>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("VxConnString")));
+            builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 
             builder.Services.AddRepositories();
             builder.Services.AddMapperServices();

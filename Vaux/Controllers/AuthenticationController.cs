@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using GoogleReCaptcha.V3.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 using Vaux.DTO;
+using Vaux.DTO.In;
 using Vaux.DTO.Out;
 using Vaux.Models;
 using Vaux.Repositories.Interface;
@@ -15,11 +17,13 @@ namespace Vaux.Controllers
     {
         private readonly IAuthRepo _authRepo;
         private readonly IUserRepo _userRepo;
+        private readonly ICaptchaValidator _captchaValidator;
 
-        public AuthenticationController(IAuthRepo authRepo, IUserRepo userRepo)
+        public AuthenticationController(IAuthRepo authRepo, IUserRepo userRepo, ICaptchaValidator captchaValidator)
         {
             _authRepo = authRepo;
             _userRepo = userRepo;
+            _captchaValidator = captchaValidator;
         }
 
         [HttpPost]
@@ -45,9 +49,14 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("SendOtp")]
-        public IActionResult SendOtp(string phone)
+        public IActionResult SendOtp(SendOTPDTO sendOTPDTO)
         {
-            var u = _userRepo.Get<User>(e => e.Phone == phone);
+            if (!_captchaValidator.IsCaptchaPassedAsync(sendOTPDTO.ReCaptcha).Result)
+            {
+                return BadRequest("Lỗi ReCaptcha");
+            }
+
+            var u = _userRepo.Get<User>(e => e.Phone == sendOTPDTO.Phone);
             if (u == null)
             {
                 return BadRequest("Tài khoản không tồn tại!");
@@ -65,9 +74,9 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("VerifyOtp")]
-        public IActionResult VerifyOtp(string phone, string otp)
+        public IActionResult VerifyOtp(VerifyOTPDTO verifyOTPDTO)
         {
-            var u = _userRepo.Get<User>(e => e.Phone == phone);
+            var u = _userRepo.Get<User>(e => e.Phone == verifyOTPDTO.Phone);
 
             if (u == null)
             {
@@ -79,7 +88,7 @@ namespace Vaux.Controllers
                 return BadRequest("OTP đã hết hạn!");
             }
 
-            if (!_authRepo.CheckOtp(u.Id, otp))
+            if (!_authRepo.CheckOtp(u.Id, verifyOTPDTO.Otp))
             {
                 return BadRequest("OTP không hợp lệ!");
             }
