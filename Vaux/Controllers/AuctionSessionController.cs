@@ -104,5 +104,33 @@ namespace Vaux.Controllers
 
             return Ok(_auctionRepo.Delete<AuctionSessionIFullDTO>(e => e.Id == id));
         }
+
+        [HttpPatch]
+        [Route("{id}/ForceStart")]
+        public IActionResult ForceStart(int id)
+        {
+            if (_auctionRepo.Get<AuctionSession>(e =>  e.Id == id && e.Status == AuctionSessionStatus.PENDING) == null)
+            {
+                return BadRequest("Phiên đấu giá không tồn tại");
+            }
+
+            _auctionRepo.ForceStartSession(id);
+
+            return Ok();
+        }
+
+        [HttpPatch]
+        [Route("{id}/ForceEnd")]
+        public IActionResult ForceEnd(int id)
+        {
+            if (_auctionRepo.Get<AuctionSession>(e => e.Id == id && e.Status == AuctionSessionStatus.ONGOING) == null)
+            {
+                return BadRequest("Phiên đấu giá không tồn tại");
+            }
+
+            _auctionRepo.ForceEndSession(id);
+
+            return Ok();
+        }
     }
 }
