@@ -125,7 +125,7 @@ namespace Vaux.Controllers
         [HttpPost]
         [Route("CreateModerator")]
         [Authorize(Roles = nameof(RoleId.ADMIN))]
-        public IActionResult CreateMod(UserWithPhotoDTO superUser)
+        public IActionResult CreateMod([FromForm] UserWithPhotoDTO superUser)
         {
             if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
             {
@@ -144,7 +144,7 @@ namespace Vaux.Controllers
         [HttpPost]
         [Route("/api/Mod/Account/CreateExpert")]
         [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult CreateExpert(UserWithPhotoDTO superUser)
+        public IActionResult CreateExpert([FromForm] UserWithPhotoDTO superUser)
         {
             if (_userRepo.Get<User>(e => e.Phone == superUser.Phone || e.Email == superUser.Email) != null)
             {
