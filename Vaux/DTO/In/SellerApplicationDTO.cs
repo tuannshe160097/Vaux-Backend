@@ -16,10 +16,11 @@ namespace Vaux.DTO
         public string CitizenId { get; set; }
 
         [MaxLength(256)]
+        [Required(AllowEmptyStrings = false)]
         public string Content { get; set; }
 
         [MaxLength(64)]
-        [RegularExpression(@".*@")]
+        [Required(AllowEmptyStrings = false)]
         public string Email { get; set; }
 
         [MaxLength(100)]
@@ -35,10 +36,13 @@ namespace Vaux.DTO
         public string? HouseNumber { get; set; }
 
         [MaxLength(256)]
+        [Required(AllowEmptyStrings = false)]
         public string Address { get; set; }
 
         [MaxLength(20)]
+        [Required(AllowEmptyStrings = false)]
         public string Gender { get; set; }
+
         public DateTime DoB { get; set; }
 
         [Display(Name = "Image")]
@@ -59,12 +63,15 @@ namespace Vaux.DTO
         public int? CitizenIdImageId { get; set; }
 
         [MaxLength(20)]
+        [Required(AllowEmptyStrings = false)]
         public string BankAccountNum { get; set; }
 
         [MaxLength(20)]
+        [Required(AllowEmptyStrings = false)]
         public string BankCode { get; set; }
 
         [MaxLength(20)]
+        [Required(AllowEmptyStrings = false)]
         public string BankName { get; set; }
     }
 }
