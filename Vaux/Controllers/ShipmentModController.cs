@@ -21,9 +21,19 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int pageNum = 1, int pageSize = -1, ShipmentStatus? status = null, string? search = null)
         {
-            return Ok(_shipmentRepo.GetAll<ShipmentOutDTO>());
+            var query = _shipmentRepo.Query();
+            query = query.OrderByDescending(e => e.Id);
+            if (status != null)
+            {
+                query = query.Where(e => e.Status == status);
+            }
+            if (search != null)
+            {
+                query = query.Where(e => e.Id.ToString() == search || e.Items.Any(i => i.Name.Contains(search)));
+            }
+            return Ok(_shipmentRepo.WrapListResult<ShipmentOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpPatch]
