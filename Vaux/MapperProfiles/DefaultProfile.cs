@@ -15,7 +15,7 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());
 
-            CreateMap<UserMinimalNonOptionalDTO, User>()
+            CreateMap<RegisterDTO, User>()
                 .ForMember(dest => dest.IsVerified, opt => opt.Ignore())
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());

@@ -2,7 +2,7 @@
 
 namespace Vaux.DTO
 {
-    public class UserMinimalNonOptionalDTO
+    public class RegisterDTO
     {
         [MaxLength(40, ErrorMessage = "Tên không thể quá 40 ký tự")]
         public string Name { get; set; }
@@ -10,5 +10,6 @@ namespace Vaux.DTO
         [MaxLength(10)]
         [RegularExpression(@"^\d+$")]
         public string Phone { get; set; }
+        public string ReCaptcha { get; set; }
     }
 }

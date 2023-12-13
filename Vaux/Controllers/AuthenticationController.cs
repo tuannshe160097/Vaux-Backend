@@ -28,8 +28,13 @@ namespace Vaux.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public IActionResult Register(UserMinimalNonOptionalDTO user)
+        public IActionResult Register(RegisterDTO user)
         {
+            if (!_captchaValidator.IsCaptchaPassedAsync(user.ReCaptcha).Result)
+            {
+                return BadRequest("Lỗi ReCaptcha");
+            }
+
             var u = _userRepo.Get<User>(e => e.Phone == user.Phone);
             if (u != null && u.IsVerified)
             {
@@ -41,7 +46,7 @@ namespace Vaux.Controllers
                 _userRepo.DeletePerma<User>(e => e.Id == u.Id);
             }
 
-            var res = _userRepo.Create<User, UserMinimalNonOptionalDTO>(user);
+            var res = _userRepo.Create<User, RegisterDTO>(user);
             _authRepo.GenerateAndSendOtp(res.Id);
 
             return Ok();
