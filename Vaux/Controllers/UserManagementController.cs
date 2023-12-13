@@ -63,6 +63,25 @@ namespace Vaux.Controllers
             return Ok(_userRepo.Get<User>(e => e.Id == id));
         }
 
+        [HttpGet]
+        [Authorize(Roles = $"{nameof(RoleId.SELLER)}")]
+        [Route("/api/Mod/Account/{id}/Image/{imageId}")]
+        public IActionResult GetImage(int id, int imageId)
+        {
+            var i = _userRepo.Get<User>(e => e.Id == id);
+            if (i.PortraitId != imageId && i.CitizenIdImageId != imageId)
+            {
+                return BadRequest("Tài khoản không hợp lệ!");
+            }
+            MemoryStream? image = _photoRepo.Get(imageId);
+            if (image == null)
+            {
+                return BadRequest("Ảnh không tồn tại!");
+            }
+            byte[] bytes = image.ToArray();
+            return File(bytes, "image/jpeg");
+        }
+
         [HttpPut]
         [Route("{id}")]
         [Authorize(Roles = nameof(RoleId.ADMIN))]
