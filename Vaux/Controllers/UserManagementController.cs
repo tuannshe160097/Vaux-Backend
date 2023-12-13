@@ -64,7 +64,7 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = $"{nameof(RoleId.SELLER)}")]
+        [Authorize(Roles = $"{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
         [Route("/api/Mod/Account/{id}/Image/{imageId}")]
         public IActionResult GetImage(int id, int imageId)
         {
