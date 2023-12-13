@@ -5,13 +5,16 @@ namespace Vaux.DTO
     public class UserMinimalDTO
     {
         [MaxLength(40)]
+        [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
 
         [MaxLength(10)]
         [RegularExpression(@"^\d+$")]
+        [Required(AllowEmptyStrings = false)]
         public string Phone { get; set; }
 
         [MaxLength(64)]
+        [Required(AllowEmptyStrings = false)]
         public string? Email { get; set; }
 
         [MaxLength(100)]

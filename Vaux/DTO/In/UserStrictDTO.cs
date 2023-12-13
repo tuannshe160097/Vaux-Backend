@@ -9,9 +9,11 @@ namespace Vaux.DTO
 
         [MaxLength(10)]
         [RegularExpression(@"^\d+$")]
+        [Required(AllowEmptyStrings = false)]
         public string Phone { get; set; }
 
         [MaxLength(64)]
+        [Required(AllowEmptyStrings = false)]
         public string Email { get; set; }
 
         [MaxLength(100)]
@@ -27,24 +29,30 @@ namespace Vaux.DTO
         public string? HouseNumber { get; set; }
 
         [MaxLength(256)]
+        [Required(AllowEmptyStrings = false)]
         public string Address { get; set; }
 
         [MaxLength(13)]
         [RegularExpression(@"^\d+$")]
+        [Required(AllowEmptyStrings = false)]
         public string CitizenId { get; set; }
 
         [MaxLength(20)]
+        [Required(AllowEmptyStrings = false)]
         public string Gender { get; set; }
 
         public DateTime DoB { get; set; }
 
         [MaxLength(20)]
+        [Required(AllowEmptyStrings = false)]
         public string BankAccountNum { get; set; }
 
         [MaxLength(20)]
+        [Required(AllowEmptyStrings = false)]
         public string BankCode { get; set; }
 
         [MaxLength(200)]
+        [Required(AllowEmptyStrings = false)]
         public string BankName { get; set; }
     }
 }

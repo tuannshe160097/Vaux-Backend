@@ -8,8 +8,12 @@ namespace Vaux.DTO
     public class ItemApplicationDTO
     {
         [MaxLength(100)]
+        [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
+
         public int CategoryId { get; set; }
+
+        [Required(AllowEmptyStrings = false)]
         public string Description { get; set; }
 
         [Range(0, int.MaxValue)]
