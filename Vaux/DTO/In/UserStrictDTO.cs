@@ -44,7 +44,7 @@ namespace Vaux.DTO
         [MaxLength(20)]
         public string BankCode { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(200)]
         public string BankName { get; set; }
     }
 }
