@@ -120,7 +120,7 @@ namespace Vaux.Controllers
 
             _auctionRepo.ForceStartSession(id);
 
-            return Ok();
+            return Ok("Bắt đầu phiên đấu giá thành công");
         }
 
         [HttpPatch]
@@ -134,7 +134,7 @@ namespace Vaux.Controllers
 
             _auctionRepo.ForceEndSession(id);
 
-            return Ok();
+            return Ok("Kết thúc phiên đấu giá thành công");
         }
     }
 }
