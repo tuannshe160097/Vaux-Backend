@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using System.Security.Cryptography;
 using Vaux.DTO.In;
 using Vaux.DTO.Out;
+using Vaux.Hubs;
 using Vaux.Models;
 using Vaux.Models.Enums;
 using Vaux.Repositories.Interface;
@@ -15,10 +18,12 @@ namespace Vaux.Controllers
     public class AuctionSessionController : ControllerBase
     {
         private IAuctionSessionRepo _auctionRepo;
+        private readonly IHubContext<BidHub> _bidHub;
 
-        public AuctionSessionController(IAuctionSessionRepo auctionRepo)
+        public AuctionSessionController(IAuctionSessionRepo auctionRepo, IHubContext<BidHub> hub)
         {
             _auctionRepo = auctionRepo;
+            _bidHub = hub;
         }
 
         [HttpGet]
@@ -133,6 +138,7 @@ namespace Vaux.Controllers
             }
 
             _auctionRepo.ForceEndSession(id);
+            _bidHub.Clients.All.SendAsync("AuctionEnd");
 
             return Ok("Kết thúc phiên đấu giá thành công");
         }
