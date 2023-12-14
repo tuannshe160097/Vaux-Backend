@@ -101,7 +101,7 @@ namespace Vaux.Controllers
                 _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh", $"{_configuration["JWT:Audience"]}/expert/items/view?itemId={i.Id}");
             }
 
-            var res = _itemRepo.AddImages<ItemWithBidsOutDTO>(e => e.Id == id, images.Images);
+            var res = _itemRepo.AddImages<ItemOutDTO>(e => e.Id == id, images.Images);
 
             return Ok(res);
         }
@@ -116,7 +116,7 @@ namespace Vaux.Controllers
                 return BadRequest("Tài khoản không hợp lệ!");
             }
 
-            var res = _itemRepo.RemoveImages<ItemWithBidsOutDTO>(e => e.Id == id, imageIds);
+            var res = _itemRepo.RemoveImages<ItemOutDTO>(e => e.Id == id, imageIds);
 
             return Ok(res);
         }

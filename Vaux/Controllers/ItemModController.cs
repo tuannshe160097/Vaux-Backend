@@ -99,7 +99,7 @@ namespace Vaux.Controllers
                 return BadRequest("Sản phẩm không tồn tại!");
             }
 
-            var res = _itemRepo.AddImages<Image>(e => e.Id == id, images.Images);
+            var res = _itemRepo.AddImages<ItemOutDTO>(e => e.Id == id, images.Images);
 
             return Ok(res);
         }
@@ -114,7 +114,7 @@ namespace Vaux.Controllers
                 return BadRequest("Sản phẩm không tồn tại!");
             }
 
-            var res = _itemRepo.RemoveImages<ItemWithBidsOutDTO>(e => e.Id == id, imageIds);
+            var res = _itemRepo.RemoveImages<ItemOutDTO>(e => e.Id == id, imageIds);
 
             return Ok(res);
         }
