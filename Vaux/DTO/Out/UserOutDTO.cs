@@ -25,6 +25,6 @@ namespace Vaux.DTO.Out
         public string? BankAccountNum { get; set; }
         public string? BankCode { get; set; }
         public string? BankName { get; set; }
-        public ICollection<Notification>? Notifications { get; set; }
+        public ICollection<NotificationOutDTO>? Notifications { get; set; }
     }
 }
