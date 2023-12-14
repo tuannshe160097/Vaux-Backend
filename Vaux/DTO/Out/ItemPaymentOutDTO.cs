@@ -11,12 +11,13 @@ namespace Vaux.DTO.Out
         public long SellerPayout { get; set; }
         public long ExpertPayout { get; set; }
         public long Revenue { get; set; }
+        public long BuyerProtectionFee { get; set; }
+        public long BidAmount { get; set; }
 
         public PaymentStatus ExpertPaymentStatus { get; set; }
         public PaymentStatus SellerPaymentStatus { get; set; }
 
         public int? ItemId { get; set; }
-        //public ItemOutDTO? Item { get; set; }
 
         public int? ExpertPaymentApprovedById { get; set; }
         public UserOutMinimalDTO? ExpertPaymentApprovedBy { get; set; }

@@ -8,6 +8,7 @@ namespace Vaux.Models
         public long SellerPayout { get; set; }
         public long ExpertPayout { get; set; }
         public long Revenue { get; set; }
+        public long BuyerProtectionFee { get; set; }
 
         public PaymentStatus ExpertPaymentStatus { get; set; }
         public PaymentStatus SellerPaymentStatus { get; set; }
