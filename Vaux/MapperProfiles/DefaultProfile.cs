@@ -3,6 +3,7 @@ using Vaux.DTO;
 using Vaux.DTO.In;
 using Vaux.DTO.Out;
 using Vaux.Models;
+using Vaux.Repositories;
 
 namespace Vaux.MapperProfiles
 {
@@ -89,9 +90,11 @@ namespace Vaux.MapperProfiles
 
             CreateMap<OrderPaymentDTO, Order>();
             CreateMap<Order, OrderOutDTO>();
-            CreateMap<Shipment, ShipmentOutDTO>();
+            CreateMap<Shipment, ShipmentOutDTO>()
+                .ForMember(dest => dest.BuyerProtectionFee, src => src.MapFrom(s => s.Items.Sum(e => OrderRepo.CalculateBuyerProtectionFee(e.HighestBid!.Amount) )));
 
-            CreateMap<ItemPayment, ItemPaymentOutDTO>();
+            CreateMap<ItemPayment, ItemPaymentOutDTO>()
+                .ForMember(dest => dest.BidAmount, src => src.MapFrom(i => i.Item!.HighestBid!.Amount));
 
             CreateMap<StatusChange, StatusChangeOutDTO>();
         }

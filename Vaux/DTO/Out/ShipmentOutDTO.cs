@@ -15,6 +15,7 @@ namespace Vaux.DTO.Out
 
         public long ShippingCost { get; set; }
         public long ItemCost { get; set; }
+        public long BuyerProtectionFee { get; set; }
 
         public UserOutMinimalDTO? Seller { get; set; }
 

@@ -87,6 +87,7 @@ namespace Vaux.Repositories
                         SellerPayout = CalculateSellerPayment(item.HighestBid!.Amount),
                         ExpertPayout = CalculateExpertPayment(item.HighestBid!.Amount),
                         Revenue = CalculateRevenue(item.HighestBid!.Amount),
+                        BuyerProtectionFee = CalculateBuyerProtectionFee(item.HighestBid!.Amount),
                     };
 
                     var report = item.HighestBid.AuctionSession!.Report;
@@ -102,7 +103,7 @@ namespace Vaux.Repositories
             return Map<TOut>(res);
         }
 
-        private static long CalculateBuyerProtectionFee(long bidAmount)
+        public static long CalculateBuyerProtectionFee(long bidAmount)
         {
             return (long)(bidAmount * 0.09);
         }
@@ -119,7 +120,7 @@ namespace Vaux.Repositories
 
         private static long CalculateRevenue(long bidAmount)
         {
-            return bidAmount + CalculateBuyerProtectionFee(bidAmount) - CalculateSellerPayment(bidAmount) - CalculateExpertPayment(bidAmount);
+            return bidAmount - CalculateSellerPayment(bidAmount) - CalculateExpertPayment(bidAmount);
         }
     }
 }

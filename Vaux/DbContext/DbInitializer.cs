@@ -1453,6 +1453,7 @@ namespace Vaux.DbContext
                         SellerPayout = CalculateSellerPayment(highestBid.Amount),
                         ExpertPayout = CalculateExpertPayment(highestBid.Amount),
                         Revenue = CalculateRevenue(highestBid.Amount),
+                        BuyerProtectionFee = CalculateBuyerProtectionFee(highestBid.Amount),
                     };
                     itemPayments.Add(itemPayment);
 
@@ -1564,7 +1565,7 @@ namespace Vaux.DbContext
 
         private static long CalculateRevenue(long bidAmount)
         {
-            return bidAmount + CalculateBuyerProtectionFee(bidAmount) - CalculateSellerPayment(bidAmount) - CalculateExpertPayment(bidAmount);
+            return bidAmount - CalculateSellerPayment(bidAmount) - CalculateExpertPayment(bidAmount);
         }
     }
 }
