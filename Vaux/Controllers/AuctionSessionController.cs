@@ -35,7 +35,7 @@ namespace Vaux.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int pageNum = 1, int pageSize = -1, DateTime? from = null, DateTime? to = null)
+        public IActionResult Get(int pageNum = 1, int pageSize = -1, DateTime? from = null, DateTime? to = null, AuctionSessionStatus? status = null)
         {
             var query = _auctionRepo.Query();
             query.OrderByDescending(e => e.Id);
@@ -46,6 +46,10 @@ namespace Vaux.Controllers
             if (to != null)
             {
                 query = query.Where(e => e.StartDate < to || e.EndDate < to);
+            }
+            if (status != null)
+            {
+                query = query.Where(e => e.Status == status);
             }
             return Ok(_auctionRepo.WrapListResult<AuctionSessionMinimalDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
