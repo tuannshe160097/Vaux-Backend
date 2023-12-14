@@ -936,6 +936,7 @@ namespace Vaux.DbContext
                     Name = category.Name + " " + id,
                     Description = ITEM_DESCRIPTION,
                     ThumbnailId = RandomElement(itemImages.ToArray()).Id,
+                    ReservePrice = 500000,
                     OngoingSessionId = 6
                 };
                 items.Add(item);
