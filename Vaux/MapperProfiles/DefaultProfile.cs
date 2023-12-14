@@ -21,8 +21,11 @@ namespace Vaux.MapperProfiles
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore());
 
             CreateMap<User, UserMinimalDTO>();
-            CreateMap<User, UserOutDTO>();
+            CreateMap<User, UserOutDTO>()
+                .ForMember(dest => dest.Notifications, opt => opt.MapFrom(src => src.Notifications!.OrderByDescending(e => e.Id)));
             CreateMap<User, UserOutMinimalDTO>();
+
+            CreateMap<Notification, NotificationOutDTO>();
 
             CreateMap<UserStrictDTO, User>()
                 .ForMember(dest => dest.Role, opt => opt.Ignore())
