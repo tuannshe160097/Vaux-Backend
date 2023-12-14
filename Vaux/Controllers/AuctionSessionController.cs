@@ -38,7 +38,7 @@ namespace Vaux.Controllers
         public IActionResult Get(int pageNum = 1, int pageSize = -1, DateTime? from = null, DateTime? to = null, AuctionSessionStatus? status = null)
         {
             var query = _auctionRepo.Query();
-            query.OrderByDescending(e => e.Id);
+            query = query.OrderByDescending(e => e.Id);
             if (from != null)
             {
                 query = query.Where(e => e.StartDate > from || e.EndDate > from);

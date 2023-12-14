@@ -26,6 +26,7 @@ namespace Vaux.Controllers
         public IActionResult Get(int pageNum = 1, int pageSize = -1, bool? completed = null)
         {
             var query = _itemPaymentRepo.Query();
+            query = query.OrderByDescending(e => e.Id);
 
             if (completed == true)
             {
