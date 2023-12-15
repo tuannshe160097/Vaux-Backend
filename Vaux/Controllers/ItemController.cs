@@ -166,6 +166,9 @@ namespace Vaux.Controllers
         public IActionResult Bid(int id, BidInDto bid)
         {
             _logger.LogInformation($"Request from user {User.Identity!.Name!} at {DateTime.Now:HH:mm:ss.ffffff} for item {id} with {bid.Amount}");
+
+            bid.Amount = bid.Amount * 1000;
+
             var item = _itemRepo.Get<Item>(e => e.Id == id && e.OngoingSession.Status == AuctionSessionStatus.ONGOING);
             if (item == null)
             {

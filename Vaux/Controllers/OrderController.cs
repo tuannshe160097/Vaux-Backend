@@ -56,8 +56,8 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult CancelOrder(int id)
         {
-            var items = _orderRepo.GetAll<Item>(e => e.Id == id && e.UserId.ToString() == User.Identity!.Name && e.Status == OrderStatus.UNPAID);
-            if (items.TotalRecords == 0)
+            var order = _orderRepo.Get<Order>(e => e.Id == id && e.UserId.ToString() == User.Identity!.Name && e.Status == OrderStatus.UNPAID);
+            if (order == null)
             {
                 return BadRequest("Đã có lỗi xảy ra!");
             }

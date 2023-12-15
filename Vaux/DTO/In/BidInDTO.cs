@@ -4,7 +4,7 @@ namespace Vaux.DTO.In
 {
     public class BidInDto
     {
-        [Range(10000, int.MaxValue)]
+        [Range(10, long.MaxValue/1000)]
         public long Amount { get; set; }
     }
 }
