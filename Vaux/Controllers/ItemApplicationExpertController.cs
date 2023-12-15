@@ -41,7 +41,7 @@ namespace Vaux.Controllers
 
         [HttpGet]
         [Authorize(Roles = $"{nameof(RoleId.EXPERT)},{nameof(RoleId.MODERATOR)},{nameof(RoleId.ADMIN)}")]
-        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null)
+        public IActionResult GetAll(int pageNum = 1, int pageSize = -1, string? search = null, int? category = null, bool? selfAssigned = null)
         {
             var query = _itemRepo.Query().Where(e => e.Status == ItemStatus.EXAMINATION_PENDING);
             query = query.OrderByDescending(e => e.ExpertId != null ? 1 : 0).ThenByDescending(e => e.Id);
@@ -52,6 +52,10 @@ namespace Vaux.Controllers
             if (category != null)
             {
                 query = query.Where(e => e.CategoryId == category);
+            }
+            if (selfAssigned != null)
+            {
+                query = selfAssigned == true ? query.Where(e => e.ExpertId.ToString() == User.Identity!.Name) : query.Where(e => e.ExpertId.ToString() != User.Identity!.Name);
             }
             return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
