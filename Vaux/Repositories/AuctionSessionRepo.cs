@@ -157,7 +157,7 @@ namespace Vaux.Repositories
                         });
 
                         item.WonDate = DateTime.Today;
-                        item.PaymentDueDate = DateTime.Today.AddDays(7);
+                        item.PaymentDueDate = DateTime.Today.AddDays(7).AddHours(7);
 
                         _notificationRepo.Create<Notification>(e => e.Id == item.SellerId, $"Sản phẩm {item.Name} đã được đấu giá thành công", $"{_configuration["JWT:Audience"]}/seller/detail?itemId={item.Id}");
 
