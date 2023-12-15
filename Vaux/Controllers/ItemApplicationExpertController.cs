@@ -55,7 +55,7 @@ namespace Vaux.Controllers
             }
             if (selfAssigned != null)
             {
-                query = selfAssigned == true ? query.Where(e => e.ExpertId.ToString() == User.Identity!.Name) : query.Where(e => e.ExpertId.ToString() != User.Identity!.Name);
+                query = selfAssigned == true ? query.Where(e => e.ExpertId.ToString() == User.Identity!.Name) : query.Where(e => e.ExpertId == null);
             }
             return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
