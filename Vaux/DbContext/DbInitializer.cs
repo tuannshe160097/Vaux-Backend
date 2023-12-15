@@ -1434,13 +1434,13 @@ namespace Vaux.DbContext
                         shipment.Status = ShipmentStatus.SHIPPED;
                         shipment.OrderId = order.Id;
                         shipment.ItemCost = 0;
-                        shipment.ShippingCost = 0;
+                        shipment.ShippingCost = 40000;
                         shipment.SellerId = item.SellerId;
                         shipment.Address = sellers.First(e => e.Id == item!.SellerId).Address;
                         shipments.Add(shipment);
                         localShipments.Add(shipment);
                     }
-                    shipment.ShippingCost += 40000;
+                    shipment.ShippingCost += 5000;
                     var highestBid = bids.First(e => e.Id == item.HighestBidId);
                     shipment.ItemCost += highestBid.Amount + CalculateBuyerProtectionFee(highestBid.Amount);
                     order.TotalCost += shipment.ItemCost + shipment.ShippingCost;

@@ -39,7 +39,7 @@ namespace Vaux.Repositories
                 {
                     shipment = new();
                     shipment.ItemCost = 0;
-                    shipment.ShippingCost = 0;
+                    shipment.ShippingCost = 40000;
                     shipment.SellerId = item.SellerId;
                     shipment.Address = item.Seller.Address;
 
@@ -48,7 +48,7 @@ namespace Vaux.Repositories
                 }
 
                 shipment.Items.Add(item);
-                shipment.ShippingCost += 40000;
+                shipment.ShippingCost += 5000;
                 shipment.ItemCost += item.HighestBid!.Amount + CalculateBuyerProtectionFee(item.HighestBid.Amount);
                 order.TotalCost += shipment.ItemCost + shipment.ShippingCost;
             }
