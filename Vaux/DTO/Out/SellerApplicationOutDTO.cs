@@ -26,7 +26,7 @@ namespace Vaux.DTO.Out
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public DateTime? Deleted { get; set; }
-        public StatusChangeOutDTO StatusChange { get; set; }
+        public List<StatusChangeOutDTO> StatusChange { get; set; }
         public string BankAccountNum { get; set; }
         public string BankCode { get; set; }
         public string BankName { get; set; }
