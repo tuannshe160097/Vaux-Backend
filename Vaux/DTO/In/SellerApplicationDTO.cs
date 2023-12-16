@@ -70,7 +70,7 @@ namespace Vaux.DTO
         [Required(AllowEmptyStrings = false)]
         public string BankCode { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(200)]
         [Required(AllowEmptyStrings = false)]
         public string BankName { get; set; }
     }
