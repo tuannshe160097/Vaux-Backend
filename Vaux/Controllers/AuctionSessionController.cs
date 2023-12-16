@@ -80,10 +80,14 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Update(int id, AuctionSessionUploadDTO auction)
         {
-            var auc = _auctionRepo.Get<AuctionSession>(e => e.Id == id && e.Status == AuctionSessionStatus.PENDING);
+            var auc = _auctionRepo.Get<AuctionSession>(e => e.Id == id);
             if (auc == null)
             {
                 return BadRequest("Phiên đấu giá không tồn tại!");
+            }
+            if (auc.Status != AuctionSessionStatus.PENDING)
+            {
+                return BadRequest("Không thể cập nhật phiên đấu giá đã bắt đầu!");
             }
 
             if (auction.StartDate.Date <= DateTime.Today)
