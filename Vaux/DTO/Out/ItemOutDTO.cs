@@ -38,5 +38,7 @@ namespace Vaux.DTO.Out
         public DateTime? Deleted { get; set; }
         public DateTime? WonDate { get; set; }
         public DateTime? PaymentDueDate { get; set; }
+
+        public List<StatusChangeOutDTO>? StatusChanges { get; set; }
     }
 }
