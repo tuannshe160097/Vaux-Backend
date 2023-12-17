@@ -57,13 +57,13 @@ namespace Vaux.Controllers
             {
                 query = query.Where(e => e.Status == status);
             }
-            return Ok(_itemRepo.WrapListResult<ItemWithBidsOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
+            return Ok(_itemRepo.WrapListResult<ItemOutDTO>(query, (pageNum - 1) * pageSize, pageSize));
         }
 
         [HttpPost]
         public IActionResult Create(ItemApplicationDTO item)
         {
-            var res = _itemRepo.Create<ItemWithBidsOutDTO, ItemApplicationDTO>(item, int.Parse(User.Identity!.Name!));
+            var res = _itemRepo.Create<ItemOutDTO, ItemApplicationDTO>(item, int.Parse(User.Identity!.Name!));
             return Ok(res);
         }
 
@@ -82,7 +82,7 @@ namespace Vaux.Controllers
                 _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được thêm ảnh", $"{_configuration["JWT:Audience"]}/expert/items/view?itemId={i.Id}");
             }
 
-            return Ok(_itemRepo.EditThumbnail<ItemWithBidsOutDTO>(e => e.Id == id, thumbnail.Image));
+            return Ok(_itemRepo.EditThumbnail<ItemOutDTO>(e => e.Id == id, thumbnail.Image));
         }
 
 
@@ -136,7 +136,7 @@ namespace Vaux.Controllers
                 _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã được cập nhật", $"{_configuration["JWT:Audience"]}/expert/items/view?itemId={i.Id}");
             }
 
-            return Ok(_itemRepo.Update<ItemWithBidsOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
+            return Ok(_itemRepo.Update<ItemOutDTO, ItemApplicationDTO>(e => e.Id == id, item));
         }
 
         [HttpPatch]
@@ -150,7 +150,7 @@ namespace Vaux.Controllers
             }
 
             i.Status = ItemStatus.AUCTION_PENDING;
-            return Ok(_itemRepo.Update<ItemWithBidsOutDTO, Item>(e => e.Id == id, i));
+            return Ok(_itemRepo.Update<ItemOutDTO, Item>(e => e.Id == id, i));
         }
 
         [HttpDelete]
@@ -168,7 +168,7 @@ namespace Vaux.Controllers
                 _notificationRepo.Create<Notification>(e => e.Id == i.ExpertId, $"Đăng ký sản phẩm \"{i.Name}\" đã bị xóa", $"{_configuration["JWT:Audience"]}/expert/items/view?itemId={i.Id}");
             }
 
-            return Ok(_itemRepo.Delete<ItemWithBidsOutDTO>(e => e.Id == id));
+            return Ok(_itemRepo.Delete<ItemOutDTO>(e => e.Id == id));
         }
     }
 }
