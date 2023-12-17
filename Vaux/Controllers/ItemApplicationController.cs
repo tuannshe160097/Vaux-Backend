@@ -31,7 +31,7 @@ namespace Vaux.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var i = _itemRepo.Get<ItemWithBidsOutDTO>(e => e.Id == id);
+            var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
             if (i == null || i.SellerId.ToString() != User.Identity!.Name)
             {
                 return BadRequest("Tài khoản không hợp lệ!");
