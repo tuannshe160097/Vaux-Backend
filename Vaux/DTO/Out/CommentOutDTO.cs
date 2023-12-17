@@ -3,6 +3,7 @@
     public class CommentOutDTO
     {
         public string Content { get; set; }
-        public UserOutMinimalDTO User { get; set; }
+        public int? UserId { get; set; }
+        public DateTime Created { get; set; }
     }
 }
