@@ -16,7 +16,7 @@ namespace Vaux.DTO
         [Required(AllowEmptyStrings = false)]
         public string Description { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(0, long.MaxValue)]
         public long ReservePrice { get; set; }
         public List<ItemPropertyDTO>? ItemProperties { get; set; }
     }
