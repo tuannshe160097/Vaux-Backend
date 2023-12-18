@@ -28,6 +28,7 @@ namespace Vaux.ServiceConfiguration
             services.AddScoped<INotificationRepo, NotificationRepo>();
             services.AddScoped<ISmsRepo, SmsRepo>();
             services.AddScoped<IVnPayServiceRepo, VnPayServiceRepo>();
+            services.AddScoped<IEmailRepo, EmailRepo>();
 
             return services;
         }

@@ -12,9 +12,9 @@ namespace Vaux.Repositories
 {
     public class OrderRepo : BaseRepo<Order>, IOrderRepo
     {
-        private readonly EmailRepo _emailRepo;
+        private readonly IEmailRepo _emailRepo;
 
-        public OrderRepo(VxDbc vxDbc, IMapper mapper, IHttpContextAccessor httpContextAccessor, EmailRepo emailRepo) : base(vxDbc, mapper, httpContextAccessor)
+        public OrderRepo(VxDbc vxDbc, IMapper mapper, IHttpContextAccessor httpContextAccessor, IEmailRepo emailRepo) : base(vxDbc, mapper, httpContextAccessor)
         {
             _emailRepo = emailRepo;
         }
