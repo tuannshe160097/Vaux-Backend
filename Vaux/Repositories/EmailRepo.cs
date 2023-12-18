@@ -6,6 +6,12 @@ namespace Vaux.Repositories
 {
     public class EmailRepo : IEmailRepo
     {
+        private readonly IConfiguration _config;
+        public EmailRepo(IConfiguration configuration) 
+        {
+            _config = configuration;
+        }
+
         public void SendEmail(string to, string subject, string body)
         {
             MimeMessage message = new MimeMessage();
@@ -22,7 +28,7 @@ namespace Vaux.Repositories
             {
                 smtpClient.Connect("smtp.gmail.com", 465, true);
                 smtpClient.AuthenticationMechanisms.Remove("NTLM");
-                //smtpClient.Authenticate("haipham02122002@gmail.com", ""); //Ask me for password
+                smtpClient.Authenticate("haipham02122002@gmail.com", _config["Email:ApplicationPass"]);
                 smtpClient.Send(message);
                 Console.WriteLine("Email sent");
 
