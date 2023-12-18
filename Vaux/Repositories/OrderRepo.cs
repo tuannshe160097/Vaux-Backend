@@ -12,8 +12,11 @@ namespace Vaux.Repositories
 {
     public class OrderRepo : BaseRepo<Order>, IOrderRepo
     {
-        public OrderRepo(VxDbc vxDbc, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(vxDbc, mapper, httpContextAccessor)
+        private readonly EmailRepo _emailRepo;
+
+        public OrderRepo(VxDbc vxDbc, IMapper mapper, IHttpContextAccessor httpContextAccessor, EmailRepo emailRepo) : base(vxDbc, mapper, httpContextAccessor)
         {
+            _emailRepo = emailRepo;
         }
 
         public TOut Create<TOut>(int[] itemIds)
@@ -96,7 +99,24 @@ namespace Vaux.Repositories
                 }
             }
 
-            //@TODO: Send email
+            foreach (var shipment in res.Shipment)
+            {
+                string content =
+                    $"Mã đơn: {shipment.Id}\n" +
+                    $"Người gửi: {shipment.Seller!.Name}\n" +
+                    $"SĐT người gửi: {shipment.Seller.Phone}\n" +
+                    $"Địa chỉ gửi: {shipment.Address}\n" +
+                    $"Người nhận: {shipment.Order.User.Name}\n" +
+                    $"SĐT người nhận: {shipment.Order.User.Phone}\n" +
+                    $"Địa chỉ nhận: {shipment.Order.Address}\n\n" +
+                    $"Món hàng: \n";
+                foreach (var item in shipment.Items)
+                {
+                    content += $"- {item.Name}\n";
+                }
+
+                _emailRepo.SendEmail("tuannshe160097@fpt.edu.vn", $"Đơn ship {shipment.Id}", content);
+            }
 
             Save();
 
