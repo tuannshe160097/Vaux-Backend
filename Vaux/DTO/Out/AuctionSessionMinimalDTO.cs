@@ -8,5 +8,7 @@ namespace Vaux.DTO.Out
         public DateTime StartDate { get; set; }
         public AuctionSessionStatus Status { get; set; }
         public DateTime EndDate { get; set; }
+
+        public int ItemsInAuction { get; set; }
     }
 }

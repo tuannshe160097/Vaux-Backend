@@ -76,7 +76,8 @@ namespace Vaux.MapperProfiles
 
             CreateMap<AuctionSession, AuctionSessionIFullDTO>();
 
-            CreateMap<AuctionSession, AuctionSessionMinimalDTO>();
+            CreateMap<AuctionSession, AuctionSessionMinimalDTO>()
+                .ForMember(dest => dest.ItemsInAuction, src => src.MapFrom(e => e.Items!.Count));
 
             CreateMap<Comment, CommentOutDTO>();
 

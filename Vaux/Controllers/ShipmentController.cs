@@ -24,7 +24,7 @@ namespace Vaux.Controllers
         [HttpGet]
         public IActionResult Get(int pageNum = 1, int pageSize = -1, ShipmentStatus? status = null, string? search = null)
         {
-            var query = _shipmentRepo.Query().Where(e => e.Order.UserId.ToString() == User.Identity!.Name);
+            var query = _shipmentRepo.Query().Where(e => e.Order.UserId.ToString() == User.Identity!.Name && e.Order.Status == OrderStatus.PAID);
             query = query.OrderByDescending(e => e.Id);
             if (status != null)
             {

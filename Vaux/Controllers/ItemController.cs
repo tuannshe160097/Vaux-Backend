@@ -71,6 +71,9 @@ namespace Vaux.Controllers
                     case "bid":
                         query = query.OrderByDescending(e => e.Bids!.Count()).ThenByDescending(e => e.Id);
                         break;
+                    case "start":
+                        query = query.OrderByDescending(e => e.OngoingSession!.StartDate).ThenByDescending(e => e.Id);
+                        break;
                     case "end":
                         query = query.OrderByDescending(e => e.OngoingSession!.EndDate).ThenByDescending(e => e.Id);
                         break;
