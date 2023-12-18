@@ -43,7 +43,7 @@ namespace Vaux.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] int[] itemIds)
         {
-            var items = _itemRepo.GetAll<Item>(e => itemIds.Contains(e.Id) && e.HighestBid!.UserId.ToString() == User.Identity!.Name && e.OrderId == null);
+            var items = _itemRepo.GetAll<Item>(e => itemIds.Contains(e.Id) && e.HighestBid!.UserId.ToString() == User.Identity!.Name && e.Order == null);
             if (items.TotalRecords == 0)
             {
                 return BadRequest("Đã có lỗi xảy ra!");
