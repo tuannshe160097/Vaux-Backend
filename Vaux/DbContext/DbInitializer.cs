@@ -472,7 +472,7 @@ namespace Vaux.DbContext
 
             List<AuctionSession> auctionSessions = new();
             List<AuctionSessionReport> auctionSessionsReport = new();
-            DateTime start = new DateTime(2023, 12, 4).Date;
+            DateTime start = new DateTime(2024, 1, 15).Date;
             for (int i = 0; i < 5; i++)
             {
                 auctionSessions.Add(new AuctionSession()
@@ -487,7 +487,7 @@ namespace Vaux.DbContext
             {
                 Id = 6,
                 StartDate = start.AddHours(7),
-                EndDate = new DateTime(2024, 1, 1).AddHours(19),
+                EndDate = new DateTime(2024, 12, 1).AddHours(19),
                 Status = AuctionSessionStatus.ONGOING,
             });
 
