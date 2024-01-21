@@ -32,9 +32,13 @@ namespace Vaux.Controllers
         public IActionResult Get(int id)
         {
             var i = _itemRepo.Get<ItemOutDTO>(e => e.Id == id);
-            if (i == null || i.SellerId.ToString() != User.Identity!.Name)
+            if (i == null )
             {
-                return BadRequest("Tài khoản không hợp lệ!");
+                return BadRequest("Sản phẩm không tồn tại!");
+            }
+            if (i.SellerId.ToString() != User.Identity!.Name)
+            {
+                return BadRequest("Không có quyền thực hiện hành động này!");
             }
 
             return Ok(i);

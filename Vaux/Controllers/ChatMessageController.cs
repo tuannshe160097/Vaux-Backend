@@ -40,7 +40,7 @@ namespace Vaux.Controllers
             }
             if (User.Identity!.Name != c.ExpertId.ToString() && User.Identity.Name != c.SellerId.ToString())
             {
-                return Unauthorized("Tài khoản không hợp lệ!");
+                return BadRequest("Tài khoản không hợp lệ!");
             }
             return Ok(_chatRepo.GetAll<ChatMessageOutDTO>(e => e.ItemId == id, e => e.Created, false));
         }
